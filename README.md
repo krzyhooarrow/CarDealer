@@ -4,7 +4,9 @@ Service that offers support for vehicles transaction (buy, sell) based on [Otomo
 ### Architecture
 
 
-Microservice architecture using Eureka as service discovery, Zuul as reverse proxy. ![Architecture schema](architecture.png)
+Microservice architecture using Eureka as service discovery, Zuul as reverse proxy.
+
+![Architecture schema](architecture.png)
 
 
 
