@@ -1,5 +1,5 @@
 # CarDealer
-Service that offers support for vehicles transaction (buy, sell) based on [Otomoto](https://www.otomoto.pl/).
+Service that offers support for vehicles transaction (buy, sell) in distributed environment (based on [Otomoto](https://www.otomoto.pl/)).
 
 ### Architecture
 
