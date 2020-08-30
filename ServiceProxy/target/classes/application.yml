@@ -11,4 +11,4 @@ management:
     web:
       exposure:
         include: '*'
-      base-path: '/'
+      base-path: '/api'

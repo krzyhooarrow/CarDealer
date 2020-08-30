@@ -18,8 +18,9 @@ public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
+
     public static void main(String[] args) {   SpringApplication.run(Main.class, args);   }
-    
+
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args ->  logger.info("------STARTING APPLICATION------");
