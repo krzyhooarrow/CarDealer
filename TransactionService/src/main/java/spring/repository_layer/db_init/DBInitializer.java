@@ -80,7 +80,7 @@ public class DBInitializer {
         } catch (Exception er) {
             logger.error("Cannot find path to init files " + er.getMessage());
         }
-        createRandomOffers(cars);
+//        createRandomOffers(cars);
     }
 
     private void createRandomOffers(List<Car> cars) {

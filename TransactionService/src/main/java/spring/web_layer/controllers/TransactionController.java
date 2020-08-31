@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.User;
 import spring.service_layer.dto.OfferDTO;
+import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.SearchDTO;
 import spring.service_layer.services.TransactionService;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public class TransactionController {
 
     private TransactionService transactionService;
-    private static final Logger logger = LoggerFactory.getLogger(TransactionController.class);
+
 
     @GetMapping("/search")
     public List<Offer> searchByParameters(@RequestBody SearchDTO params) {
@@ -32,15 +33,15 @@ public class TransactionController {
     }
 
     @GetMapping("/createOffer")
-    public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO offerDTO , @RequestBody String user) throws URISyntaxException {
-          return transactionService.createNewOffer(offerDTO,user) ?
+    public ResponseEntity<Object> createOffer(@RequestBody OfferDTO offerDTO) throws URISyntaxException {
+        return transactionService.createNewOffer(offerDTO) ?
                   ResponseEntity.created(new URI("")).body(offerDTO) :
-                  ResponseEntity.status(HttpStatus.CONFLICT).body(offerDTO);
+                  ResponseEntity.status(HttpStatus.CONFLICT).body("Error creating offer");
     }
 
     @GetMapping("/removeOffer")
-    public ResponseEntity<String> removeOffer(@RequestBody Long id, @RequestBody String user) {
-        return transactionService.removeOffer(id,user) ?
+    public ResponseEntity<String> removeOffer(@RequestBody OfferRemovalDTO offerRemovalDTO) {
+        return transactionService.removeOffer(offerRemovalDTO) ?
                 ResponseEntity.ok().body("Offer deleted") :
                 ResponseEntity.status(HttpStatus.CONFLICT).body("Not allowed");
     }

@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class MainController {
 
     @GetMapping("")
-    public ResponseEntity<String> onlineVerification() throws JWTAuthException {
+    public ResponseEntity<String> onlineVerification() {
         return new ResponseEntity<>("Server online", OK);
     }
 

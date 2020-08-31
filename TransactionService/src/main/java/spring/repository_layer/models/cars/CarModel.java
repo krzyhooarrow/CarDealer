@@ -53,4 +53,12 @@ public class CarModel {
     public void setCarMark(CarMark carMark) {
         this.carMark = carMark;
     }
+
+    @Override
+    public String toString() {
+        return "CarModel{" +
+                "model='" + model + '\'' +
+                ", carMark=" + carMark +
+                '}';
+    }
 }

@@ -20,16 +20,28 @@ public class Email {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ElementCollection
-    private List<String> recipients;
+
+    private String recipients;
 
     private String subject;
 
     private String message;
 
-    public Email(List<String> recipients, String subject, String message) {
+    public Email(String recipients, String subject, String message) {
         this.recipients = recipients;
         this.subject = subject;
         this.message = message;
+    }
+
+    public String getRecipients() {
+        return recipients;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

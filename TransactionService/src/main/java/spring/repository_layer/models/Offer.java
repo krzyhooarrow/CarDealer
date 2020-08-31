@@ -27,7 +27,6 @@ public class Offer  {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-//    @JsonIgnore
     private Long id;
 
     @OneToOne()
@@ -54,4 +53,6 @@ public class Offer  {
         this.image = image;
         this.user = user;
     }
+
+
 }

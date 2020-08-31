@@ -36,4 +36,11 @@ public class CarMark {
     public void setMark(String mark) {
         this.mark = mark;
     }
+
+    @Override
+    public String toString() {
+        return "CarMark{" +
+                "mark='" + mark + '\'' +
+                '}';
+    }
 }

@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.cars.*;
-import spring.repository_layer.repositories.*;
-import spring.service_layer.dto.OfferDTO;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
+
+
+// THIS SERVICE IS ONLY CREATED FOR DATABASE INITIALIZE PURPOSE
 @Service
 @Lazy
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
@@ -39,7 +39,7 @@ public class CarService {
         Optional<CarModel> model;
         CarModel carModel1 = null;
 
-        if (!(model = repositoryService.carModelRepository.findAllByModel(carModel)).isPresent()) {
+        if (!(model = repositoryService.carModelRepository.findByModel(carModel)).isPresent()) {
             carModel1 = new CarModel(carModel, carMark);
             logger.info("Saving new carModel: " + repositoryService.carModelRepository.save(carModel1));
         }

@@ -18,76 +18,102 @@ import spring.repository_layer.repositories.CarRepository;
 import spring.repository_layer.repositories.ConcreteCarRepository;
 import spring.repository_layer.repositories.OfferRepository;
 import spring.service_layer.dto.OfferDTO;
+import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.SearchDTO;
+import spring.web_layer.exceptions.OffersNotFoundException;
+import spring.web_layer.exceptions.UserNotFoundException;
 
 import javax.transaction.Transaction;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
-@AllArgsConstructor(access = AccessLevel.PRIVATE, onConstructor = @__({ @Autowired }))
+@AllArgsConstructor(access = AccessLevel.PRIVATE, onConstructor = @__({@Autowired}))
 @NoArgsConstructor
 public class TransactionService {
 
     private RepositoryService repositoryService;
+    private MailService mailService;
+    private OfferBuilder offerBuilder;
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
-    public List<Offer> getAllOffersBySpecifiedParams(SearchDTO searchDTO){
-
-        logger.error(searchDTO.toString());
-
+    public List<Offer> getAllOffersBySpecifiedParams(SearchDTO searchDTO) {
         return repositoryService.offerRepository.findAllByParameters
                 (
-                searchDTO.getType(),
-                searchDTO.getModel(),
-                searchDTO.getMark(),
-                searchDTO.getProduction_year(),
-                FuelTypeEnum.valueOf(searchDTO.getFuelType()),
-                searchDTO.getCountry(),
-                searchDTO.getLocation_country(),
-                searchDTO.getLocation_city(),
-                searchDTO.getLowPrice(),
-                searchDTO.getHighPrice()
+                        searchDTO.getType(),
+                        searchDTO.getModel(),
+                        searchDTO.getMark(),
+                        searchDTO.getProduction_year(),
+                        FuelTypeEnum.valueOf(searchDTO.getFuelType()),
+                        searchDTO.getCountry(),
+                        searchDTO.getLocation_country(),
+                        searchDTO.getLocation_city(),
+                        searchDTO.getLowPrice(),
+                        searchDTO.getHighPrice()
                 ).orElse(new LinkedList<>());
 
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public boolean createNewOffer(OfferDTO offerDTO , String username){
+    public boolean createNewOffer(OfferDTO offerDTO) {
+        try {
 
-        Offer offer = new OfferBuilder()
-                .price(offerDTO.getPrice())
-                .description(offerDTO.getDescription())
-                .putImages(offerDTO.getImage())
-                .carModel(offerDTO.getModel())
-                .carType(offerDTO.getCarType())
-                .productionYear(offerDTO.getProduction_year())
-                .fuelType(offerDTO.getFuelType())
-                .country(offerDTO.getCountry())
-                .additionalEquipment(offerDTO.getAdditionalEquipment())
-                .locationCountry(offerDTO.getLocation_country())
-                .locationCity(offerDTO.getLocation_city())
-                .forUser(username)
-                .build();
+            Offer offer = offerBuilder.createNewOffer()
+                    .price(offerDTO.getPrice())
+                    .description(offerDTO.getDescription())
+                    .putImages(offerDTO.getImage())
+                    .carModel(offerDTO.getModel())
+                    .carType(offerDTO.getCarType())
+                    .productionYear(offerDTO.getProduction_year())
+                    .fuelType(offerDTO.getFuelType())
+                    .country(offerDTO.getCountry())
+                    .additionalEquipment(offerDTO.getAdditionalEquipment())
+                    .locationCountry(offerDTO.getLocation_country())
+                    .locationCity(offerDTO.getLocation_city())
+                    .forUser(offerDTO.getUsername())
+                    .build();
 
-        repositoryService.offerRepository.save(offer);
+            repositoryService.offerRepository.save(offer);
 
-        return true;
+            mailService.sendMail
+                    (
+                            repositoryService.userRepository.findByUsername(offerDTO.getUsername()).get().getEmail(),
+                            MailService.NotificationType.OFFER_CREATION
+                    );
+
+            return true;
+        } catch (Exception exc) {
+            logger.info("Error creating offer");
+            return false;
+        }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public boolean removeOffer(Long id, String user) {
-        List<Offer> userOffers = repositoryService.offerRepository
-         .findAllByUser(
-                repositoryService.userRepository.findByUsername(user).orElseThrow()
-         ).orElseThrow();
 
-        Offer toRemove = userOffers.stream().filter(offer -> offer.getId() == id).findAny().orElseThrow();
+    public boolean removeOffer(OfferRemovalDTO offerRemovalDTO) {
+        try {
 
-        repositoryService.offerRepository.delete(toRemove);
+            List<Offer> userOffers = repositoryService.offerRepository
+                    .findAllByUser(
+                            repositoryService.userRepository.findByUsername(offerRemovalDTO.getUsername()).orElseThrow(UserNotFoundException::new)
+                    ).orElseThrow(OffersNotFoundException::new);
 
-        return true;
+            Offer toRemove = userOffers.stream().filter(offer -> offer.getId().equals(offerRemovalDTO.getOfferId()))
+                    .findFirst().orElseThrow(OffersNotFoundException::new);
+
+            repositoryService.offerRepository.delete(toRemove);
+
+            mailService.sendMail
+                    (
+                            repositoryService.userRepository.findByUsername(offerRemovalDTO.getUsername()).get().getEmail(),
+                            MailService.NotificationType.OFFER_REMOVAL
+                    );
+
+            return true;
+        } catch (Exception exc) {
+            logger.error("Couldn't remove offer");
+            return false;
+        }
     }
 
 

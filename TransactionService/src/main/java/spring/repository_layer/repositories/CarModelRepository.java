@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface CarModelRepository  extends CrudRepository<CarModel,Long> {
 
-    Optional<CarModel> findAllByModel(String model);
+    Optional<CarModel> findByModel(String model);
 
 }
