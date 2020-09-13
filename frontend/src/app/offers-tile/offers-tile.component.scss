@@ -1,0 +1,12 @@
+.background-gray{background-color: white;}
+
+
+.mat-grid-tile .mat-figure.mat-figure {
+    justify-content: flex-start;
+    align-items: flex-start;
+ }
+
+
+mat-card::ng-deep.mat-card-header-text {
+    width: 100%;
+  }

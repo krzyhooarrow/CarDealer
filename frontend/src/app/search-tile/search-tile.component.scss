@@ -1,0 +1,17 @@
+$theme-col: brown;
+$second-theme-col:cornflowerblue;
+
+.search-btn{
+    width: 500px!important;
+    min-width: unset!important;
+    background-color: $theme-col;
+}
+
+.select-btn { color: $theme-col !important;}
+
+.mat-option.mat-active {  background: $second-theme-col !important;  }
+
+::ng-deep .mat-select-value{    color: $theme-col!important;  }
+    
+    
+.background-gray{background-color: gray;}

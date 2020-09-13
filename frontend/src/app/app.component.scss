@@ -1,0 +1,21 @@
+
+
+.spacer {flex: 1 1 auto; }
+
+.navbar{
+	position: fixed;
+	top: 0;
+	z-index: 10001;
+	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+
+}
+.content-container{
+	padding-top: 5%;
+
+}
+p{
+	// border-style: solid;
+	border-spacing: 0.1px;
+	line-height: 1px;   /* within paragraph */
+	margin-bottom: 1px;
+}

@@ -1,0 +1,13 @@
+// .price-chart{
+//     width: 100px !important;
+// }
+
+// .average-price-chart{
+//     width: 100px !important;
+// }
+.charts{
+    display: grid ;
+    grid-template-columns: auto auto auto;
+    margin-bottom: 1vh;
+}
+

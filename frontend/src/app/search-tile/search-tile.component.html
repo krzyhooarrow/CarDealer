@@ -1,0 +1,38 @@
+<mat-grid-list cols="20" [rowHeight]="rowSize" class="background-gray">
+  <mat-grid-tile *ngFor="let tile of tiles; index as i" [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color">
+
+        <mat-form-field *ngIf="tile.visible" appearance="fill">
+            <mat-label class = "select-btn" >{{tile.text}}</mat-label>
+            <mat-select class = "select-btn"  [(ngModel)]="tileValues[i]">
+              <mat-option class = "select-btn" *ngFor="let value of tile.values" [value]="value">
+                {{value}} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div *ngIf="i==17">
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip selectable="true" color="primary" selected>mefedron </mat-chip>
+            <mat-chip selectable="true" color="primary" selected>123</mat-chip>
+          </mat-chip-list>
+          </div>
+
+          <div *ngIf="i==18" class="example-button-row">
+            <div class="example-flex-container">
+              <div class="example-button-container">
+                <button mat-flat-button color="warn" class="search-btn">Search offers            
+                  <mat-icon>search</mat-icon>   
+              </button>
+              </div>
+            </div>
+          </div>
+          
+          <div *ngIf="i==19">
+            <mat-paginator [length]="100"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+          </mat-paginator>
+          </div>
+
+  </mat-grid-tile>
+</mat-grid-list>

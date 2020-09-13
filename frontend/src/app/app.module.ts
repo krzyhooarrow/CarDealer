@@ -1,0 +1,100 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+
+import { SearchTileComponent } from './search-tile/search-tile.component';
+import { OffersTileComponent } from './offers-tile/offers-tile.component';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {IvyCarouselModule} from 'angular-responsive-carousel';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCardModule} from '@angular/material/card';
+import { OfferTextComponent } from './offer-text/offer-text.component';
+import {MatRippleModule} from '@angular/material/core';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
+
+
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SearchComponent } from './search/search.component';
+import { TransactionComponent } from './transaction/transaction.component';
+import {MatDividerModule} from '@angular/material/divider';
+import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
+import { TransactionEquipmentComponent } from './transaction-equipment/transaction-equipment.component';
+import { TransactionDescriptionComponent } from './transaction-description/transaction-description.component';
+import { TransactionPriceComponent } from './transaction-price/transaction-price.component';
+import { TransactionUserDetailsComponent } from './transaction-user-details/transaction-user-details.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import { FusionChartsModule } from 'angular-fusioncharts';
+import {MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
+import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
+
+FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SearchTileComponent,
+    OffersTileComponent,
+    OfferTextComponent,
+
+    SearchComponent,
+    TransactionComponent,
+    TransactionDetailsComponent,
+    TransactionEquipmentComponent,
+    TransactionDescriptionComponent,
+    TransactionPriceComponent,
+    TransactionUserDetailsComponent
+  ],
+
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatSelectModule,
+    FormsModule,
+    MatButtonModule,
+    IvyCarouselModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatRippleModule,
+    MatChipsModule,
+    MatTabsModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatDividerModule,
+    FusionChartsModule,
+    MatListModule,
+    MatSlideToggleModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatFormFieldModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  exports: []
+})
+export class AppModule { }

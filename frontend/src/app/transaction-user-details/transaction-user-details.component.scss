@@ -1,0 +1,37 @@
+.title{
+    padding-top: 1%;
+    padding-bottom: 1%;
+    // width: 90%;
+    padding-left: 1%;
+    margin: auto;
+    display: grid ;
+    grid-template-columns: 80% 20% ;
+        h3{
+            font-weight: bolder;
+        }
+    }
+.price{
+  padding-top: 5%;
+  text-align: center;
+  padding-bottom: 10%;
+  font-size: 25px;
+  font-weight: bolder;
+  // display: inline;
+  color: green;
+}
+
+    .data{
+      padding-top: 1%;
+    }
+      .panel{
+        padding-top: 0%;
+        padding-bottom: 1%;
+        p{
+        display: grid ;
+        grid-template-columns: 95% 5%;
+        margin: auto;
+        padding-top: 3%;
+        padding-bottom: 3%;
+        }
+      }
+      mat-panel-description{   display: inline;   font-weight: bolder;  }

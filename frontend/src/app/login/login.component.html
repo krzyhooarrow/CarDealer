@@ -1,0 +1,33 @@
+<mat-card class="login">
+    
+    
+    <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input matInput type="text" [(ngModel)]="login">
+        <button mat-button *ngIf="login" matSuffix mat-icon-button aria-label="Clear" (click)="login=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="password">
+        <button mat-button *ngIf="password" matSuffix mat-icon-button aria-label="Clear" (click)="password=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      </div>
+
+      <div>
+        <div>
+          <div>
+            <button mat-flat-button color="primary" class="search-btn">Log in <mat-icon>login</mat-icon></button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="registered"> <p>Not registered?</p> Click here  </div>
+
+</mat-card>

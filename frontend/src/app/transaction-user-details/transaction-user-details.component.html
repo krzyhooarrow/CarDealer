@@ -1,0 +1,22 @@
+<div class="price">Price: {{ price }} 15 000 $</div>
+
+
+
+<div class="title"><mat-slide-toggle  *ngIf="isLogged" color="primary" checked="isSubscribing">Subscribe offer</mat-slide-toggle><h3>User details</h3></div>
+
+
+<div class="data">
+          <div class="panel">
+          <mat-divider></mat-divider>
+          <p>Username:{{ sellerUsername }} <mat-icon color="warn">account_circle</mat-icon></p>
+          <mat-divider></mat-divider>
+          <p>Phone number:{{ sellerPhoneNumber }}  <mat-icon color="warn">phone_android</mat-icon></p>
+          <mat-divider></mat-divider>
+          <p>Localization:{{ sellerLocation }}  <mat-icon color="warn">email</mat-icon></p>
+          <mat-divider></mat-divider>
+          <p>Email:{{ sellerEmail }}  <mat-icon color="warn">location_on</mat-icon></p>
+          <mat-divider></mat-divider>
+          <p>Creation date: {{ offerCreationDate }} <mat-icon color="warn">date_range</mat-icon></p>
+          <mat-divider></mat-divider>
+          </div>
+</div>

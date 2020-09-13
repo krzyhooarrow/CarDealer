@@ -1,0 +1,17 @@
+
+<div class="mat-card" style="background:lavender" >
+  <header>
+    <carousel [images]="images" cellsToScroll="1" dots="true" autoplay="true" cellsToShow="1" autoplayInterval="3000" transitionDuration="600"
+    
+    ></carousel>
+    <div class ="offer-card"><mat-card class ="offer-card"><app-transaction-user-details></app-transaction-user-details></mat-card></div>
+  </header>
+  <footer>
+     <mat-card class ="details-card">
+      <app-transaction-details></app-transaction-details><mat-divider></mat-divider>
+      <app-transaction-equipment></app-transaction-equipment><mat-divider></mat-divider>
+      <app-transaction-description></app-transaction-description><mat-divider></mat-divider>
+      <app-transaction-price></app-transaction-price><mat-divider></mat-divider>
+    </mat-card>
+  </footer>
+</div>
