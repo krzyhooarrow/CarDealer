@@ -18,37 +18,16 @@ import java.util.Optional;
 import static java.util.Collections.singletonList;
 
 @Service("userDetailsService")
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class UserDetailsServiceProvider implements UserDetailsService {
 
-    @Autowired
     private UserRepository usersRepository;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
         Optional<User> userOptional = usersRepository.findByUsername(username);
-        User user = userOptional
-                .orElseThrow(() -> new UsernameNotFoundException("No user has been found with username: " + username));
-
-        return new org.springframework.security
-                .core.userdetails.User(user.getUsername(), user.getPassword(),
-                user.isEnabled(), true, true,
-                true, getAuthorities("USER"));
+         userOptional.orElseThrow(() -> new UsernameNotFoundException("No user has been found with username: " + username));
+        return userOptional.map(spring.service_layer.services.jwt.UserDetails::new).get();
     }
-
-    private Collection<? extends GrantedAuthority> getAuthorities(String role) {
-        return singletonList(new SimpleGrantedAuthority(role));
-    }
-
-//    private Collection<? extends GrantedAuthority> getAuthorities(String role) {
-//        return singletonList(new GrantedAuthority() {
-//            @Override
-//            public String getAuthority() {
-//                return usersRepository.;
-//            }
-//        });
-//    }
-
-
 }

@@ -40,4 +40,24 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Authorities authorities;
 
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public Authorities getAuthorities() {
+        return authorities;
+    }
 }

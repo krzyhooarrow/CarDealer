@@ -63,6 +63,8 @@
                 <version>2.2.4.RELEASE</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+
 
             <dependency>
                 <groupId>org.springframework</groupId>

@@ -40,10 +40,9 @@ public class AuthService {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),authenticationRequest.getPassword()));
 
-        AuthenticationResponse a = new AuthenticationResponse(
+        return new AuthenticationResponse(
                 component.generateToken(userDetailsServiceProvider.loadUserByUsername(authenticationRequest.getUsername()))
         );
-        return a;
     }
 
 
