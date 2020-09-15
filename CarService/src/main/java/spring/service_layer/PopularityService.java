@@ -1,7 +1,7 @@
 package spring.service_layer;
 
 import lombok.AllArgsConstructor;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
