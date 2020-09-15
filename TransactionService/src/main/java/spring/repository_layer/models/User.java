@@ -32,6 +32,11 @@ public class User {
 
     private boolean enabled;
 
+    @OneToMany
+    private List<Offer> subscribedOffers;
+
+    private String phoneNumber;
+
     public User(String username, String password, String email, Authorities role) {
         this.username = username;
         this.password = password;
@@ -49,6 +54,22 @@ public class User {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public Authorities getAuthorities() {
+        return authorities;
     }
 
     @Override

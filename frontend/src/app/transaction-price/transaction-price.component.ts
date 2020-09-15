@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TransactionDTO } from 'src/models/transaction-interfaces';
 
 @Component({
   selector: 'app-transaction-price',
@@ -10,6 +11,9 @@ export class TransactionPriceComponent implements OnInit {
   averagePriceChart: Object;
   popularityChart: Object;
   title: string;
+
+  @Input() transaction:TransactionDTO;
+
   constructor() { 
 
     this.predictionChart = {

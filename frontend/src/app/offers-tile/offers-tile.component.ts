@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TransactionDTO } from 'src/models/transaction-interfaces';
 
 @Component({
   selector: 'app-offers-tile',
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OffersTileComponent implements OnInit {
 
-  query=true;
+
+  @Input() transactions:Array<TransactionDTO>;
+  
+  no_images = [ {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},
+  {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},
+  ]
+  img="https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png"
+
   rowSize = 1;
   selectSize = 20;
   bigSelectSize= 40;
@@ -22,19 +30,12 @@ export class OffersTileComponent implements OnInit {
   tiles: OfferTile[] = [
 
     {text: '', cols: this.maxCols, rows: 1, color: this.whiteColor},
-
-
     {text: '', cols: 0.02*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor},
     {text: '', cols: 0.1*this.maxCols, rows: 100/this.rowSize, color: 'lavender', isSlider:true, visible:true},
     {text: '', cols: 0.38*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor, visible:true},
     {text: '', cols: 0.1*this.maxCols, rows: 100/this.rowSize, color: 'lavender', isSlider : true, visible:true},
     {text: '', cols: 0.38*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor, visible:true},
     {text: '', cols: 0.02*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor},
-
-
-
-  
-  
     {text: '', cols: this.maxCols, rows: 1, color: this.whiteColor},
   ];
 

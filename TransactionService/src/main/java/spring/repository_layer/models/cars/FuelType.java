@@ -25,4 +25,8 @@ public class FuelType {
     public FuelType(FuelTypeEnum fuelTypeEnum) {
         this.fuelTypeEnum = fuelTypeEnum;
     }
+
+    public FuelTypeEnum getFuelTypeEnum() {
+        return fuelTypeEnum;
+    }
 }

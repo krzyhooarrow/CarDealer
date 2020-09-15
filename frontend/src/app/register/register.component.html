@@ -1,0 +1,54 @@
+<mat-card class="login">
+    <!-- <h1>Please log in!</h1> -->
+    <a routerLink="/search" routerLinkActive="active"><button mat-flat-button  color="primary" class="dealer">CarDealer<mat-icon>domain</mat-icon></button></a>
+
+    <div class="fields">
+    <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input matInput type="text" [(ngModel)]="login" maxlength="10" minlength="4">
+        <button mat-button *ngIf="login" matSuffix mat-icon-button aria-label="Clear" (click)="login=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="password" maxlength="10" minlength="4">
+        <button mat-button *ngIf="password" matSuffix mat-icon-button aria-label="Clear" (click)="password=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      </div>
+
+
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="email" [(ngModel)]="email" [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+          placeholder="Ex. xyz@example.com">
+          <button mat-button *ngIf="email" matSuffix mat-icon-button aria-label="Clear" (click)="email=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        </div>
+
+    </div>
+      <div>
+        <div>
+          <div>
+            <button mat-flat-button color="primary" class="search-btn">Register <mat-icon>login</mat-icon></button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="registered"> <p>Already registered?</p><a routerLink="/auth" routerLinkActive="active">Click here</a></div>
+
+</mat-card>

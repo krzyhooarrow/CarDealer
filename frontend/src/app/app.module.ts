@@ -10,11 +10,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
-
-import { SearchTileComponent } from './search-tile/search-tile.component';
 import { OffersTileComponent } from './offers-tile/offers-tile.component';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -45,6 +43,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
+import { RegisterComponent } from './register/register.component';
+import { HttpClientModule } from '@angular/common/http';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
 
@@ -53,17 +53,16 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
   declarations: [
     AppComponent,
     LoginComponent,
-    SearchTileComponent,
     OffersTileComponent,
     OfferTextComponent,
-
     SearchComponent,
     TransactionComponent,
     TransactionDetailsComponent,
     TransactionEquipmentComponent,
     TransactionDescriptionComponent,
     TransactionPriceComponent,
-    TransactionUserDetailsComponent
+    TransactionUserDetailsComponent,
+    RegisterComponent
   ],
 
   imports: [
@@ -91,7 +90,9 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     MatSlideToggleModule,
     MatExpansionModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

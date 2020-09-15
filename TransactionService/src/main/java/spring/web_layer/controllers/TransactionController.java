@@ -13,7 +13,9 @@ import spring.repository_layer.models.User;
 import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.SearchDTO;
+import spring.service_layer.dto.TransactionDTO;
 import spring.service_layer.services.TransactionService;
+import spring.web_layer.exceptions.OffersNotFoundException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,14 +24,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/transaction")
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TransactionController {
 
     private TransactionService transactionService;
 
 
-    @GetMapping("/search")
-    public List<Offer> searchByParameters(@RequestBody SearchDTO params) {
-    return  transactionService.getAllOffersBySpecifiedParams(params);
+    @PostMapping("/search")
+    public List<TransactionDTO> searchByParameters(@RequestBody SearchDTO params) {
+    return transactionService.getAllOffersBySpecifiedParams(params);
     }
 
     @GetMapping("/createOffer")
@@ -46,4 +49,8 @@ public class TransactionController {
                 ResponseEntity.status(HttpStatus.CONFLICT).body("Not allowed");
     }
 
+    @GetMapping("/{id}")
+    public TransactionDTO getOfferById(@PathVariable Long id) throws OffersNotFoundException {
+        return transactionService.getOfferById(id);
+    }
 }

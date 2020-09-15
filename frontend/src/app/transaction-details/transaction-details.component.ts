@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TransactionDTO } from 'src/models/transaction-interfaces';
 
 @Component({
   selector: 'app-transaction-details',
@@ -9,6 +10,8 @@ export class TransactionDetailsComponent implements OnInit {
 
   constructor() { }
 
+  @Input() transaction:TransactionDTO;
+  
   ngOnInit(): void {
   }
 

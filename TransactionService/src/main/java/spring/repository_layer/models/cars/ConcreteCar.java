@@ -39,6 +39,16 @@ public class ConcreteCar{
     private String location_country;
     private String location_city;
 
+    private int mileage;
+    private float capacity;
+    private int power;
+    @Enumerated(EnumType.STRING)
+    private GearBox gearbox;
+    private String vin;
+    private String color;
+    @Enumerated(EnumType.STRING)
+    private State state;
+
     public ConcreteCar(Car car, FuelType fuelType, String country, List<String> additionalEquipment, String location_country, String location_city) {
         this.car = car;
         this.fuelType = fuelType;
@@ -48,4 +58,27 @@ public class ConcreteCar{
         this.location_city = location_city;
     }
 
+    public Car getCar() {
+        return car;
+    }
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public List<String> getAdditionalEquipment() {
+        return additionalEquipment;
+    }
+
+    public String getLocation_country() {
+        return location_country;
+    }
+
+    public String getLocation_city() {
+        return location_city;
+    }
 }

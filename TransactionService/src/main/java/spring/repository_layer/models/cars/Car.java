@@ -40,6 +40,15 @@ public class Car {
         this.production_year = production_year;
     }
 
+    public CarType getType() {
+        return type;
+    }
 
+    public CarModel getModel() {
+        return model;
+    }
 
+    public Integer getProduction_year() {
+        return production_year;
+    }
 }

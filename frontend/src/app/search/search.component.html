@@ -1,2 +1,172 @@
-<p><app-search-tile></app-search-tile></p>
-<p><app-offers-tile></app-offers-tile></p>
+<p>
+  <mat-card class="card-container">
+  <mat-grid-list cols="18" rowHeight="100">
+    
+    <mat-grid-tile colspan="3" rowspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Car type</mat-label>
+        <mat-select [(ngModel)]="car_type">
+          <mat-option class = "theme-col" *ngFor="let options of distinctCarTypes" [value]="options[0]">
+            {{options[0]}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Car model</mat-label>
+        <mat-select [(ngModel)]="car_model" [disabled]="!car_mark" >
+          <mat-option class = "theme-col" *ngFor="let options of distinctCarModels" [value]="options[0]">
+            {{options[0]}} ({{options[1]}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Car mark</mat-label>
+        <mat-select [(ngModel)]="car_mark" (selectionChange)="onSelectMark()">
+          <mat-option class = "theme-col" *ngFor="let options of distinctCarMarks" [value]="options[0]">
+            {{options[0]}} ({{options[1]}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Production year (from)</mat-label>
+        <mat-select [(ngModel)]="production_year_from" (selectionChange)="onSelectProductionYearFrom()">
+          <mat-option class = "theme-col" *ngFor="let option of production_years_from" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Production year (to)</mat-label>
+        <mat-select [(ngModel)]="production_year_to">
+          <mat-option class = "theme-col" *ngFor="let option of production_years_to" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Fuel type</mat-label>
+        <mat-select [(ngModel)]="fuel_type">
+       
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Production country</mat-label>
+        <mat-select [(ngModel)]="production_country">
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="3" rowspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>State</mat-label>
+        <mat-select [(ngModel)]="state">
+          <mat-option class = "theme-col" value="damaged">Damaged</mat-option>
+          <mat-option class = "theme-col" value="undamaged">Undamaged</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Location city</mat-label>
+        <mat-select [(ngModel)]="location_city">
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Location country</mat-label>
+        <mat-select [(ngModel)]="location_country">
+          <mat-option class = "theme-col" *ngFor="let option of distinctLocations" [value]="option[0]">
+            {{ option[0] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Price (from)</mat-label>
+        <mat-select [(ngModel)]="price_from" (selectionChange)="onSelectPriceFrom()">
+          <mat-option class = "theme-col" *ngFor="let option of price_from_array" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Price (to)</mat-label>
+        <mat-select [(ngModel)]="price_to">
+          <mat-option class = "theme-col" *ngFor="let option of price_to_array" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Mileage (from)</mat-label>
+        <mat-select [(ngModel)]="mileage_from" (selectionChange)="onSelectMileageFrom()">
+          <mat-option class = "theme-col" *ngFor="let option of mileage_from_array" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Mileage (to)</mat-label>
+        <mat-select [(ngModel)]="mileage_to">
+          <mat-option class = "theme-col" *ngFor="let option of mileage_to_array" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="filter-options">
+    <mat-chip-list aria-label="Fish selection">
+      <mat-chip selectable="true" color="primary" selected>mefedron </mat-chip>
+      <mat-chip selectable="true" color="primary" selected>123</mat-chip>
+    </mat-chip-list>
+  
+    <button mat-flat-button color="warn" class="search-btn" (click)="onSearch()">Search offers            
+      <mat-icon>search</mat-icon>   
+    </button>
+    
+    <mat-paginator [length]="transactions ? transactions.length : 0"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 15]" (page)="pageEvent = $event">
+    </mat-paginator>
+  </div>
+  </mat-card>
+</p>
+
+
+
+<p><mat-spinner *ngIf="isLoading" diameter="150"></mat-spinner></p>
+<p><app-offers-tile *ngIf="transactions" [transactions] = "transactions_selector(transactions)" ></app-offers-tile></p>

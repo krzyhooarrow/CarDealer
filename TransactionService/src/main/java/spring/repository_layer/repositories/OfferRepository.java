@@ -16,10 +16,24 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
         Offer findByCar(ConcreteCar car);
         Optional<List<Offer>> findAllByUser(User user);
 
+        List<Offer> findAll();
+        @Query("From Offer ") Optional<List<Offer>> findAllOffers();
+
+
+        @Query("SELECT o.car.car.type.carType , COUNT (o) from Offer o GROUP BY o.car.car.type.carType")
+        List<Object> getDistinctTypesWithCounter();
+
+        @Query("SELECT o.car.car.model.carMark.mark, COUNT (o) from Offer o GROUP BY o.car.car.model.carMark.mark")
+        List<Object> getDistinctMarksWithCounter();
+
+        @Query("SELECT o.car.car.model.model, COUNT (o) from Offer o WHERE o.car.car.model.carMark.mark = :mark GROUP BY o.car.car.model.model")
+        List<Object> getDistinctModelsBasedOnMarkWithCounter(@Param("mark") String mark);
+
+        @Query("SELECT o.car.location_city, COUNT (o) from Offer o  GROUP BY o.car.location_city")
+        List<Object> getDistinctLocationsWithCounter();
 
         //query will return all cars specified by parameters
         // model mark type additional-eq  year fuel country location
-
         @Query("FROM Offer o WHERE " +
                 "(o.price BETWEEN :lowPrice and :highPrice) and" +
                 "(:fuelType is null or o.car.fuelType.fuelTypeEnum = :fuelType) and" +
@@ -45,6 +59,5 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
             @Param("lowPrice") Integer lowPrice,
             @Param("highPrice") Integer highPrice
         );
-
 }
 

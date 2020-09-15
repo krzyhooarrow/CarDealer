@@ -1,16 +1,12 @@
 
-<div *ngIf="!query"></div>
 
-<div *ngIf="query">
-<mat-grid-list [cols]="maxCols" [rowHeight]="rowSize" class="background-gray">
-    <mat-grid-tile class="position-align" 
-        *ngFor="let tile of tiles"
-        [colspan]="tile.cols"
-        [rowspan]="tile.rows"
-        [style.background]="tile.color">
-      {{tile.text}} 
-      <carousel *ngIf="tile.isSlider && tile.visible" [images]="images" [cellsToScroll]="1" [dots]="true" [loop] = "true" ></carousel>
-      <app-offer-text *ngIf="!tile.isSlider && tile.visible"></app-offer-text>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+
+
+<mat-grid-list cols="2" rowHeight="4:1" class="background-gray">
+<mat-grid-tile *ngFor="let transaction of transactions" style.background="lavender">
+<carousel *ngIf="transaction.images.length > 1" [images]="images" [cellsToScroll]="1" [dots]="true" [loop] = "true" ></carousel>
+<img *ngIf="transaction.images.length <= 1" [src]="img">
+<app-offer-text [transaction]="transaction"></app-offer-text>
+</mat-grid-tile>
+
+</mat-grid-list>

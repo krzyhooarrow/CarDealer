@@ -46,6 +46,10 @@ public class Offer  {
     @Temporal(TemporalType.DATE)
     private Date offerCreationTime;
 
+    private String title;
+
+    private String tags;
+
     public Offer(ConcreteCar car, Integer price, String description, List<String> image, User user) {
         this.car = car;
         this.price = price;
@@ -54,5 +58,27 @@ public class Offer  {
         this.user = user;
     }
 
+    public ConcreteCar getCar() {
+        return car;
+    }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<String> getImage() {
+        return image;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Date getOfferCreationTime() {
+        return offerCreationTime;
+    }
 }

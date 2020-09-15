@@ -2,11 +2,11 @@
         <header>
             <!-- <img src="https://via.placeholder.com/80"> -->
             <button mat-flat-button matRipple matRippleRadius='1' color="link" > <mat-icon>star_outline</mat-icon></button>
-            <h3>Brudny szon</h3>
-            <h4>rucha sie za 5 zł</h4>
+            <h3>{{ transaction.title }}</h3>
+            <h4>{{ transaction.tags }}</h4>
         </header>
         <footer>
-            <mat-icon>location_on</mat-icon>W dupie
+            <mat-icon>location_on</mat-icon>{{ transaction.location_city }}
             <br>
             <mat-icon>remove_red_eye</mat-icon>5
             <button mat-flat-button matRipple matRippleRadius='1' color="primary"  routerLink="/offer" routerLinkActive="active" >Zobacz ofertę</button>

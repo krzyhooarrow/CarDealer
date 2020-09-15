@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TransactionDTO } from 'src/models/transaction-interfaces';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   selector: 'app-transaction',
@@ -12,7 +14,10 @@ export class TransactionComponent implements OnInit {
     {path: 'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6InZsdzV2cHhsYjI0ei1PVE9NT1RPUEwiLCJ3IjpbeyJmbiI6IndnNGducXA2eTFmLU9UT01PVE9QTCIsInMiOiIxNiIsInAiOiIxMCwtMTAiLCJhIjoiMCJ9XX0.dBzuankVkwDu5GBQ_WP297X4MLjjRpWvWmPnmI4Ljqw/image;s=1080x720'},
 ]
 
-  constructor() { }
+  public transaction:TransactionDTO
+
+  constructor(transactionService:TransactionService) { transactionService.getTransactionById(1).subscribe(((t:TransactionDTO) => {this.transaction = t}));
+  }
 
   ngOnInit(): void {
   }

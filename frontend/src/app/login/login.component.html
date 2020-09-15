@@ -1,6 +1,9 @@
 <mat-card class="login">
-    
-    
+    <!-- <h1>Please log in!</h1> -->
+
+    <a routerLink="/search" routerLinkActive="active"><button mat-flat-button  color="primary" class="dealer">CarDealer<mat-icon>domain</mat-icon></button></a>
+
+    <div class="fields">
     <mat-form-field>
         <mat-label>Login</mat-label>
         <input matInput type="text" [(ngModel)]="login">
@@ -18,7 +21,7 @@
         </button>
       </mat-form-field>
       </div>
-
+    </div>
       <div>
         <div>
           <div>
@@ -28,6 +31,6 @@
       </div>
 
 
-      <div class="registered"> <p>Not registered?</p> Click here  </div>
+      <div class="registered"> <p>Not registered?</p> <a routerLink="/register" routerLinkActive="active">Click here</a></div>
 
 </mat-card>

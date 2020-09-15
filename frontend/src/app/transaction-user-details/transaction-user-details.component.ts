@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { TransactionDTO } from 'src/models/transaction-interfaces';
+
+
 
 @Component({
   selector: 'app-transaction-user-details',
@@ -9,14 +12,9 @@ export class TransactionUserDetailsComponent implements OnInit {
 
   public isLogged:boolean = true;
   public isSubscribing:boolean = true;
-  public price:number;
 
-  public sellerUsername:String;
-  public sellerPhoneNumber:String;
-  public sellerLocation:String;
-  public sellerEmail:String;
-  public offerCreationDate:String;
-
+  @Input() transaction:TransactionDTO;
+  
   constructor() { }
 
   ngOnInit(): void {

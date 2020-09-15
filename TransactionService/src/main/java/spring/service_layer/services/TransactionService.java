@@ -20,6 +20,7 @@ import spring.repository_layer.repositories.OfferRepository;
 import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.SearchDTO;
+import spring.service_layer.dto.TransactionDTO;
 import spring.web_layer.exceptions.OffersNotFoundException;
 import spring.web_layer.exceptions.UserNotFoundException;
 
@@ -27,6 +28,8 @@ import javax.transaction.Transaction;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(access = AccessLevel.PRIVATE, onConstructor = @__({@Autowired}))
@@ -39,8 +42,8 @@ public class TransactionService {
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
-    public List<Offer> getAllOffersBySpecifiedParams(SearchDTO searchDTO) {
-        return repositoryService.offerRepository.findAllByParameters
+    public List<TransactionDTO> getAllOffersBySpecifiedParams(SearchDTO searchDTO) {
+        List<Offer> offersList = repositoryService.offerRepository.findAllByParameters
                 (
                         searchDTO.getType(),
                         searchDTO.getModel(),
@@ -54,6 +57,7 @@ public class TransactionService {
                         searchDTO.getHighPrice()
                 ).orElse(new LinkedList<>());
 
+        return offersList.stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
     public boolean createNewOffer(OfferDTO offerDTO) {
@@ -114,6 +118,12 @@ public class TransactionService {
             logger.error("Couldn't remove offer");
             return false;
         }
+    }
+
+
+    public TransactionDTO getOfferById(Long id) throws OffersNotFoundException {
+        return new TransactionDTO(repositoryService.offerRepository.findAll().get(0));
+//        return repositoryService.offerRepository.findById(id).map(TransactionDTO::new).orElseThrow(OffersNotFoundException::new);
     }
 
 

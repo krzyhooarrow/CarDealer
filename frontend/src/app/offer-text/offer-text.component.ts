@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { TransactionDTO } from 'src/models/transaction-interfaces';
 
 
 @Component({
@@ -8,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./offer-text.component.scss']
 })
 export class OfferTextComponent implements OnInit {
+
+  @Input() transaction: TransactionDTO;
 
   constructor(public dialog: MatDialog) { }
 
