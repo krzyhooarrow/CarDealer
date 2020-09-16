@@ -13,9 +13,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import spring.service_layer.services.jwt.Encoder;
 import spring.service_layer.services.jwt.JwtRequestFilter;
 import spring.service_layer.services.jwt.UserDetailsServiceProvider;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
@@ -31,12 +38,29 @@ public class Config extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
 
+
         httpSecurity.csrf().disable().authorizeRequests()
 
-                .antMatchers("/auth","/register","/popularity").permitAll()
+                .antMatchers("/auth","/register","/popularity","/transactionservice/filters/*",
+                        "/transactionservice/offers/*").permitAll()
                 .anyRequest()
                 .authenticated()
 //                .and()
@@ -46,7 +70,8 @@ public class Config extends WebSecurityConfigurerAdapter {
 //                .authorizeRequests().antMatchers("/**").permitAll().and()        // <---
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and().cors().configurationSource(corsConfigurationSource());
 
         httpSecurity.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 

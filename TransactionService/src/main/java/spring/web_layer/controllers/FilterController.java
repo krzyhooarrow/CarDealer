@@ -19,7 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/filters")
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FilterController {
 
     private FiltersService service;

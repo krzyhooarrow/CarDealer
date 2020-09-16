@@ -1,4 +1,4 @@
-<mat-card class="login">
+<mat-card class="login" *ngIf="!this.service.isAuthenticated">
     <!-- <h1>Please log in!</h1> -->
 
     <a routerLink="/search" routerLinkActive="active"><button mat-flat-button  color="primary" class="dealer">CarDealer<mat-icon>domain</mat-icon></button></a>
@@ -25,7 +25,7 @@
       <div>
         <div>
           <div>
-            <button mat-flat-button color="primary" class="search-btn">Log in <mat-icon>login</mat-icon></button>
+            <button mat-flat-button color="primary" class="search-btn" (click)="onLogin()">Log in <mat-icon>login</mat-icon></button>
           </div>
         </div>
       </div>
@@ -33,4 +33,9 @@
 
       <div class="registered"> <p>Not registered?</p> <a routerLink="/register" routerLinkActive="active">Click here</a></div>
 
+</mat-card>
+
+
+<mat-card class="login" *ngIf="this.service.isAuthenticated">
+  <div class="fields"><p>Your are already logged!</p></div>
 </mat-card>

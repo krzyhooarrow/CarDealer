@@ -24,16 +24,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/transaction")
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TransactionController {
 
     private TransactionService transactionService;
-
-
-    @PostMapping("/search")
-    public List<TransactionDTO> searchByParameters(@RequestBody SearchDTO params) {
-    return transactionService.getAllOffersBySpecifiedParams(params);
-    }
 
     @GetMapping("/createOffer")
     public ResponseEntity<Object> createOffer(@RequestBody OfferDTO offerDTO) throws URISyntaxException {
@@ -47,10 +40,5 @@ public class TransactionController {
         return transactionService.removeOffer(offerRemovalDTO) ?
                 ResponseEntity.ok().body("Offer deleted") :
                 ResponseEntity.status(HttpStatus.CONFLICT).body("Not allowed");
-    }
-
-    @GetMapping("/{id}")
-    public TransactionDTO getOfferById(@PathVariable Long id) throws OffersNotFoundException {
-        return transactionService.getOfferById(id);
     }
 }

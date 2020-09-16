@@ -1,0 +1,10 @@
+<div *ngIf="auth.isAuthenticated">
+    <mat-card class="card-container">
+        <mat-tab-group color="primary" >
+            <mat-tab label="Your offers"><app-user-offers></app-user-offers></mat-tab>
+            <mat-tab label="Create new offer"><app-new-offer></app-new-offer></mat-tab>
+          </mat-tab-group>
+
+    </mat-card>
+</div>
+<app-not-logged *ngIf="!auth.isAuthenticated"></app-not-logged>

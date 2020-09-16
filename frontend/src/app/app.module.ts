@@ -34,6 +34,7 @@ import { TransactionDescriptionComponent } from './transaction-description/trans
 import { TransactionPriceComponent } from './transaction-price/transaction-price.component';
 import { TransactionUserDetailsComponent } from './transaction-user-details/transaction-user-details.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
@@ -45,6 +46,10 @@ import { MatInputModule } from '@angular/material/input';
 import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MyOffersComponent } from './my-offers/my-offers.component';
+import { NotLoggedComponent } from './not-logged/not-logged.component';
+import { UserOffersComponent } from './user-offers/user-offers.component';
+import { NewOfferComponent } from './new-offer/new-offer.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
 
@@ -62,7 +67,11 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     TransactionDescriptionComponent,
     TransactionPriceComponent,
     TransactionUserDetailsComponent,
-    RegisterComponent
+    RegisterComponent,
+    MyOffersComponent,
+    NotLoggedComponent,
+    UserOffersComponent,
+    NewOfferComponent
   ],
 
   imports: [
@@ -92,7 +101,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
