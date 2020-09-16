@@ -11,6 +11,8 @@ import { TransactionDTO } from 'src/models/transaction-interfaces';
 })
 export class TransactionService {
 
+  
+
 constructor(private config: Config,private http: HttpClient, private authService:AuthService) { }
 
 public getTransactionById(id:Number){ return this.http.get<TransactionDTO>(this.config.API_URL_SERVER.concat(this.config.CONCRETE_OFFER_ENDPOINT).concat(id.toString())) }

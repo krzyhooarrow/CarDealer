@@ -1,0 +1,53 @@
+mat-card::ng-deep.mat-card-header-text {
+    width: 100%;
+  }
+
+carousel, img{width: 20% !important;}
+
+
+.card-container{
+    width: 95%;
+    margin:auto;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+    margin-top: 1%;
+
+
+    display: flex;
+    align-items: flex-start;
+
+    .info{ 
+        margin-left: 1%;
+        width: 45%;  }
+    .buttons{  width: 55%;  }
+
+    button {
+        margin: 0 1%;
+        width: 30%;
+    }
+
+    header {
+        h3 {
+            margin: 8px;
+            color: #000000de;
+            text-shadow: #00000020 0 0 2px;
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        h4 {
+            margin: 8px;
+            color: #00000099;
+            text-shadow: #00000020 0 0 2px;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 24px;
+        }
+    }
+    
+    footer {
+        font-size: 30px;
+        .mat-icon{ 
+            margin-left: 1%;
+            font-size: 22px;  }
+    }
+}

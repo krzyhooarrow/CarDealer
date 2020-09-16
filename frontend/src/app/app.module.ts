@@ -50,7 +50,9 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
 import { NotLoggedComponent } from './not-logged/not-logged.component';
 import { UserOffersComponent } from './user-offers/user-offers.component';
 import { NewOfferComponent } from './new-offer/new-offer.component';
-
+import { OffersHistoryComponent } from './offers-history/offers-history.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
 FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
 
 
@@ -71,7 +73,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     MyOffersComponent,
     NotLoggedComponent,
     UserOffersComponent,
-    NewOfferComponent
+    NewOfferComponent,
+    OffersHistoryComponent
   ],
 
   imports: [
@@ -102,7 +105,9 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     MatFormFieldModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent],
