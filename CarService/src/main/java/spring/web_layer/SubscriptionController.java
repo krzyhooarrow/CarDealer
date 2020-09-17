@@ -25,6 +25,7 @@ public class SubscriptionController {
 
     private SubscriptionsService service;
 
+
     @PostMapping("/subscribe/{id}")
     public ResponseEntity<String> sub(@PathVariable Long id, HttpServletRequest request) {
         service.subscribe(Long.valueOf(request.getHeader("user-id")),id);

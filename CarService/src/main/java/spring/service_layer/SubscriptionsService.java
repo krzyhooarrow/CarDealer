@@ -1,9 +1,12 @@
 package spring.service_layer;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import spring.Main;
 import spring.repository_layer.models.UserSubscriptions;
 import spring.repository_layer.repositories.UserSubscriptionsRepository;
 import spring.service_layer.exceptions.UserNotFoundException;
@@ -19,15 +22,17 @@ import java.util.Set;
 public class SubscriptionsService {
 
     private UserSubscriptionsRepository repository;
-
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
     public void subscribe(Long userID, Long offerID) {
-        UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID,new HashSet<>()));
+        UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID));
+        if (subscriptions.getSubscribedOffers() == null)  subscriptions.setSubscribedOffers(new HashSet<>());
         subscriptions.getSubscribedOffers().add(offerID);
         repository.save(subscriptions);
     }
 
     public void unsubscribe(Long userID, Long offerID) {
-        UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID,new HashSet<>()));
+        UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID));
+        if (subscriptions.getSubscribedOffers() == null)  subscriptions.setSubscribedOffers(new HashSet<>());
         subscriptions.getSubscribedOffers().remove(offerID);
         repository.save(subscriptions);
     }
@@ -37,7 +42,7 @@ public class SubscriptionsService {
     }
 
     private UserSubscriptions newUserSubscription(Long userID){
-        UserSubscriptions userSubscriptions = new UserSubscriptions(userID,new HashSet<>());
+        UserSubscriptions userSubscriptions = new UserSubscriptions(userID);
         repository.save(userSubscriptions);
         return userSubscriptions;
     }

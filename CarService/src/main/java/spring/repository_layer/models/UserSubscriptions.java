@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisHash;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,9 +27,9 @@ public class UserSubscriptions {
         return subscribedOffers;
     }
 
-    public UserSubscriptions(Long id, Set<Long> subscribedOffers) {
+    public UserSubscriptions(Long id) {
         this.id = id;
-        this.subscribedOffers = subscribedOffers;
+        this.subscribedOffers = new HashSet<>();
     }
 
     public Long getId() {
