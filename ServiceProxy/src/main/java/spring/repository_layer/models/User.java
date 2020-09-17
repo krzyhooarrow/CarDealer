@@ -60,4 +60,6 @@ public class User {
     public Authorities getAuthorities() {
         return authorities;
     }
+
+    public Long getId() { return id; }
 }

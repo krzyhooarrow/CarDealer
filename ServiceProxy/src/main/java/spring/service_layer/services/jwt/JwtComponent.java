@@ -6,12 +6,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import spring.repository_layer.repositories.UserRepository;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -26,16 +28,18 @@ import static io.jsonwebtoken.Jwts.parser;
 @PropertySource("classpath:application.properties")
 public class JwtComponent {
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Value("${JWTTokenKey}")
     private String secretKey;
 
     @Value("${expirationTime}")
     private Long jwtExpirationInMillis;
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtComponent.class);
-
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id",userRepository.findByUsername(userDetails.getUsername()).get().getId());
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -72,4 +76,6 @@ public class JwtComponent {
     private Claims extractClaims(String jwt) {
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
     }
+
+    public Object extractId(String jwt) {  return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody().get("id");  }
 }

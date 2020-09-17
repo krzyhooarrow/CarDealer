@@ -15,8 +15,10 @@ import spring.Main;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.*;
 
 @Component
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
@@ -26,13 +28,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtComponent jwtComponent;
 
     private static final Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         try {
             final String authHeader = httpServletRequest.getHeader("Authorization");
 
-            String username = null;
-            String jwt = null;
+            String username = null,jwt = null;
+
 
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 jwt = authHeader.substring(7);
@@ -47,6 +50,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetailsServiceProvider, null, userDetailsServiceProvider.getAuthorities());
                     usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+
                 }
             }
         } catch (Exception e) {

@@ -23,10 +23,9 @@ import static org.springframework.http.HttpStatus.OK;
 public class AuthController {
 
     private AuthService authService;
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @RequestMapping(value = "/auth",method = RequestMethod.POST)
-    public ResponseEntity<?> getToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
+    public ResponseEntity<?> getToken(@RequestBody AuthenticationRequest authenticationRequest) {
         return ResponseEntity.ok(authService.authenticateUser(authenticationRequest));
     }
 
@@ -38,7 +37,7 @@ public class AuthController {
     }
 
     @GetMapping("")
-    public ResponseEntity<String> onlineVerification() throws JWTAuthException {
+    public ResponseEntity<String> onlineVerification() {
         return new ResponseEntity<>("", OK);
     }
 
