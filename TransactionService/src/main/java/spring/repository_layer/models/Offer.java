@@ -81,4 +81,10 @@ public class Offer  {
     public Date getOfferCreationTime() {
         return offerCreationTime;
     }
+
+    public Long getId() {  return id;  }
+
+    public String getTitle() {  return title;   }
+
+    public String getTags() {   return tags;   }
 }

@@ -28,14 +28,14 @@ public class TransactionDTO {
 
     */
 
-
-    private Integer price = 12321;
-    private String carType = "test transactrion";
-    private String model = "test transactrion";
-    private String mark = "test transactrion";
-    private Integer production_year = 12321;
-    private String fuelType = "test transactrion";
-    private String location_city = "test transactrion";
+    private Long id;
+    private Integer price;
+    private String carType;
+    private String model;
+    private String mark;
+    private Integer production_year;
+    private String fuelType;
+    private String location_city;
     private int mileage = 1000;
     private float capacity = 1.978F;
     private int power = 100;
@@ -56,6 +56,7 @@ public class TransactionDTO {
     private List<String> images = new ArrayList<>();
 
     public TransactionDTO(Offer offer){
+    this.id = offer.getId();
     this.price = offer.getPrice();
     this.carType = offer.getCar().getCar().getType().getCarType();
     this.model = offer.getCar().getCar().getModel().getModel();
@@ -161,5 +162,9 @@ public class TransactionDTO {
 
     public List<String> getImages() {
         return images;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
