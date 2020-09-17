@@ -12,14 +12,14 @@ export class OffersHistoryComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   
-  displayedColumns: string[] = ['item', 'cost'];
+  displayedColumns: string[] = ['offerID','offerTitle', 'date'];
   transactions: Transaction[] = [
-    {item: 'Beach ball', cost: 4},
-    {item: 'Towel', cost: 5},
-    {item: 'Frisbee', cost: 2},
-    {item: 'Sunscreen', cost: 4},
-    {item: 'Cooler', cost: 25},
-    {item: 'Swim suit', cost: 15},
+    {item: 'Beach ball', date: 4},
+    {item: 'Towel', date: 5},
+    {item: 'Frisbee', date: 2},
+    {item: 'Sunscreen', date: 4},
+    {item: 'Cooler', date: 25},
+    {item: 'Swim suit', date: 15},
   ];
 
   sortData(sort: MatSort) {
@@ -32,18 +32,14 @@ export class OffersHistoryComponent implements OnInit {
     this.transactions = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'cost': return this.compare(a.cost, b.cost, isAsc);
+        case 'date': return this.compare(a.date, b.date, isAsc);
         default: return 0;
       }
     });
   }
   
   compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1);  }
-
-  
-  getTotalCost() {
-    return this.transactions.map(t => t.cost).reduce((acc, value) => acc + value, 0);
-  }
+  getTotalCost() { return this.transactions.map(t => t.date).reduce((acc, value) => acc + value, 0);  }
 
   ngOnInit(): void {
   }
@@ -52,5 +48,5 @@ export class OffersHistoryComponent implements OnInit {
 }
 interface Transaction{
   item:String,
-  cost:number
+  date:number
 }

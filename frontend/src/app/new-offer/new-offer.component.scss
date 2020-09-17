@@ -1,0 +1,31 @@
+.card-container{
+    margin:auto;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+}
+mat-form-field{
+    margin-left: 3%;
+    width: 30%;
+}
+
+mat-label{ margin-left: 3%;}
+mat-radio-group{ mat-radio-button{margin-left: 2%;}}
+mat-selection-list{ margin-left: 3%;}
+.margin{ margin-left: 3%; }
+.space{  margin-top: 1%}
+.big-space{ margin-top: 5%;}
+.big-margin{ margin-left:5%}
+.grid{display: flex; flex-wrap: wrap; ngx-dropzone-image-preview{width: 30%;}}
+.example-full-width {
+    width: 100%;
+  }
+
+.description-area{
+    height: 300px;
+}
+
+
+mat-card{
+    width: 95%;
+    margin:auto !important;
+}
+  

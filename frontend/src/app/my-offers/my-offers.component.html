@@ -1,6 +1,7 @@
 <div *ngIf="auth.isAuthenticated">
     <mat-card class="card-container">
         <mat-tab-group color="primary" >
+            <mat-tab label="Create new offer"><app-new-offer></app-new-offer></mat-tab>
             <mat-tab label="Your offers">
                 <app-user-offers *ngIf = "transactions" [transactions] = "transactions"></app-user-offers>
                 <p *ngIf="!transactions"> You haven't any available offers</p>

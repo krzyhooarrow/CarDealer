@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
+import {MatStepperModule} from '@angular/material/stepper';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -22,6 +23,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -35,6 +37,8 @@ import { TransactionPriceComponent } from './transaction-price/transaction-price
 import { TransactionUserDetailsComponent } from './transaction-user-details/transaction-user-details.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
@@ -107,7 +111,10 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     HttpClientModule,
     MatSnackBarModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatStepperModule,
+    MatRadioModule,
+    NgxDropzoneModule
   ],
   providers: [],
   bootstrap: [AppComponent],

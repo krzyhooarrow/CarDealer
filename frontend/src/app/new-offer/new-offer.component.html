@@ -1,1 +1,175 @@
-<p>new-offer works!</p>
+<mat-card >
+    <mat-horizontal-stepper linear #stepper class="card-container">
+
+        <mat-step [stepControl]="firstFormGroup" editable="true">
+          <form [formGroup]="firstFormGroup" class="space">
+            <ng-template matStepLabel>Offer data</ng-template>
+
+            <mat-form-field>
+                <mat-label>Offer title</mat-label>
+                <input matInput formControlName="title"  required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Offer tags</mat-label>
+                <input matInput formControlName="tags"  required>
+            </mat-form-field>
+           
+            <mat-form-field>
+                <mat-label>Price</mat-label>
+                <input matInput formControlName="price"  required type="number"> <span matSuffix>$</span>
+            </mat-form-field>
+               
+            <div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Place for offer description (optional)</mat-label>
+                    <textarea class="description-area" matInput formControlName="description" ></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="big-space">
+              <button mat-button matStepperNext color="primary" (click)="onNext()">Next</button>
+            </div>
+
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="secondFormGroup" editable="true">
+            <form [formGroup]="secondFormGroup">
+              <ng-template matStepLabel>Car data</ng-template>
+
+            <mat-form-field>
+                <mat-label>Car type</mat-label>
+                <mat-select matInput formControlName="type" >
+                  <mat-option class = "theme-col" *ngFor="let options of distinctCarTypes" [value]="options[0]">{{options[0]}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field>
+                <mat-label>Car mark</mat-label>
+                <mat-select matInput formControlName="mark" (selectionChange)="onSelectMark($event.value)">
+                  <mat-option class = "theme-col" *ngFor="let options of distinctCarMarks" [value]="options[0]">{{options[0]}} 
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Car model</mat-label>
+                <mat-select  matInput formControlName="model" [disabled]="!distinctCarModels" >
+                  <mat-option class = "theme-col" *ngFor="let options of distinctCarModels" [value]="options[0]">
+                    {{options[0]}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Production year</mat-label>
+                <mat-select matInput formControlName="year" >
+                  <mat-option class = "theme-col" *ngFor="let option of production_years" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Fuel type</mat-label>
+                <mat-select  matInput formControlName="fuel"  >
+       
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Location</mat-label><input matInput formControlName="location" required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Mileage</mat-label><input matInput formControlName="mileage" type="number" required><span matSuffix>km</span>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Engine capacity (cm<sup>3</sup>)</mat-label><input matInput formControlName="capacity" placeholder="Ex. 1968" required><span matSuffix>cm<sup>3</sup></span>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Power (KM)</mat-label><input matInput formControlName="power" type="number" required><span matSuffix>KM</span>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Gearbox type</mat-label>
+                <mat-select  matInput formControlName="gearbox" >
+                  <mat-option class = "theme-col" value="manual">
+                    Manual
+                  </mat-option>
+                  <mat-option class = "theme-col" value="automatic">
+                    Automatic
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>VIN number</mat-label><input matInput formControlName="vin" type="number" required minlength="11" maxlength="17">
+            </mat-form-field>
+ 
+            <mat-label>State: </mat-label>
+                <mat-radio-group  matInput formControlName="state" color="primary">
+                    <mat-radio-button value="undamaged" [checked]="true">Undamaged</mat-radio-button>
+                    <mat-radio-button value="damaged">Damaged</mat-radio-button>
+                </mat-radio-group>       
+
+            <div class="space">
+              <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>Additional equipment</mat-panel-title>
+                    <mat-panel-description>Select car equipment from expandable list</mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p> 
+                  
+                    <mat-selection-list matInput formControlName="equipment">
+                        <mat-list-option *ngFor="let item of distinctAdditionalEquipmentList" [value]="item">
+                          {{item}}
+                        </mat-list-option>
+                    </mat-selection-list></p>
+                </mat-expansion-panel>
+              </mat-accordion>
+             
+            </div>
+     
+              <div class="margin big-space">
+                <button mat-button matStepperPrevious color="primary">Back</button>
+                <button mat-button matStepperNext color="primary" (click)="onNext()">Next</button>
+              </div>
+            </form>
+        </mat-step>
+
+
+
+
+
+
+        <mat-step  editable="true">
+            <ng-template matStepLabel>Images</ng-template>
+
+            <ngx-dropzone (change)="onSelect($event)">
+              <ngx-dropzone-label>Drop images</ngx-dropzone-label>
+              <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+              </ngx-dropzone-preview>
+          </ngx-dropzone>
+          <div class="grid">
+          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          </ngx-dropzone-image-preview>
+
+
+        </div>
+            <div class="margin big-space">
+              <button mat-button matStepperPrevious color="primary">Back</button>
+              <button mat-button color="warn"> Finish</button>
+        </div>
+      </mat-step>
+
+      </mat-horizontal-stepper>
+</mat-card>
