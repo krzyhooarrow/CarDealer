@@ -33,13 +33,13 @@ public class SubscriptionController {
     }
 
     @PostMapping("/unsubscribe/{id}")
-    public ResponseEntity<String> unsub(@PathVariable Long id, HttpServletRequest request) {
+    public ResponseEntity<String> unsub(@PathVariable Long id, HttpServletRequest request) throws UserNotFoundException {
         service.unsubscribe(Long.valueOf(request.getHeader("user-id")),id);
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/getSubscriptions")
-    public Set<Long> getSubscriptions(HttpServletRequest request) {
+    public Set<Long> getSubscriptions(HttpServletRequest request) throws UserNotFoundException {
         return service.getSubscribedOffersIDs(Long.valueOf(request.getHeader("user-id")));
     }
 }

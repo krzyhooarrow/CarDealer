@@ -22,30 +22,23 @@ import java.util.Set;
 public class SubscriptionsService {
 
     private UserSubscriptionsRepository repository;
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public void subscribe(Long userID, Long offerID) {
         UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID));
-        if (subscriptions.getSubscribedOffers() == null)  subscriptions.setSubscribedOffers(new HashSet<>());
         subscriptions.getSubscribedOffers().add(offerID);
         repository.save(subscriptions);
     }
 
-    public void unsubscribe(Long userID, Long offerID) {
-        UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID));
-        if (subscriptions.getSubscribedOffers() == null)  subscriptions.setSubscribedOffers(new HashSet<>());
+    public void unsubscribe(Long userID, Long offerID) throws UserNotFoundException {
+        UserSubscriptions subscriptions = repository.findById(userID).orElseThrow(UserNotFoundException::new);
         subscriptions.getSubscribedOffers().remove(offerID);
         repository.save(subscriptions);
     }
 
-    public Set<Long> getSubscribedOffersIDs(Long userID) {
-       return repository.findById(userID).orElse(newUserSubscription(userID)).getSubscribedOffers();
+    public Set<Long> getSubscribedOffersIDs(Long userID) throws UserNotFoundException {
+       return repository.findById(userID).orElseThrow(UserNotFoundException::new).getSubscribedOffers();
     }
 
-    private UserSubscriptions newUserSubscription(Long userID){
-        UserSubscriptions userSubscriptions = new UserSubscriptions(userID);
-        repository.save(userSubscriptions);
-        return userSubscriptions;
-    }
 
 
 
