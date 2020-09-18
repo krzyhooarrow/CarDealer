@@ -23,13 +23,19 @@ public class PopularityService {
     private static final Logger logger = LoggerFactory.getLogger(PopularityService.class);
     private OfferPopularityRepository offerPopularityRepository;
 
-    public void updateOfferPopularity(Long offerID) throws OfferNotFoundException {
-        OfferPopularity o = offerPopularityRepository.findById(offerID).orElseThrow(OfferNotFoundException::new);
+    public void updateOfferPopularity(Long offerID) {
+        OfferPopularity o = offerPopularityRepository.findById(offerID).orElseGet(()->new OfferPopularity(offerID));
         o.setVisitsCounter(o.getVisitsCounter()+1);
         offerPopularityRepository.save(o);
     }
 
-    public Integer getOfferPopularity(Long offerID) throws OfferNotFoundException {
-      return offerPopularityRepository.findById(offerID).orElseThrow(OfferNotFoundException::new).getVisitsCounter();
+    public Integer getOfferPopularity(Long offerID) {
+      return offerPopularityRepository.findById(offerID).orElseGet(()->newOfferPopularity(offerID)).getVisitsCounter();
+    }
+
+    private OfferPopularity newOfferPopularity(Long offerID){
+        OfferPopularity o = new OfferPopularity(offerID);
+        offerPopularityRepository.save(o);
+        return o;
     }
 }

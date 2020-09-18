@@ -27,4 +27,9 @@ public class OfferPopularity {
     public void setVisitsCounter(int visitsCounter) { this.visitsCounter = visitsCounter;  }
 
     public Long getId() {   return id;  }
+
+    public OfferPopularity(Long id) {
+        this.id = id;
+        this.visitsCounter = 0;
+    }
 }
