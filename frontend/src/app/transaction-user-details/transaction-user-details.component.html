@@ -1,7 +1,7 @@
 <div class="price">Price: {{ transaction.price }}$</div>
 
 
-<div class="title"><mat-slide-toggle  *ngIf="isLogged" color="primary" checked="isSubscribing">Subscribe offer</mat-slide-toggle><h3>User details</h3></div>
+<div class="title"><mat-slide-toggle  *ngIf="isLogged" color="primary" [disabled]="!subscribedList && tryingToSub" [checked]="subscribedList?.indexOf(transaction.id) > -1? true:false"  (change)="sub_or_unsub()">Subscribe offer</mat-slide-toggle><h3>User details</h3></div>
 <div class="data">
           <div class="panel">
           <mat-divider></mat-divider>
@@ -15,5 +15,9 @@
           <mat-divider></mat-divider>
           <p>Creation date: {{ transaction.creationDate }} <mat-icon color="warn">date_range</mat-icon></p>
           <mat-divider></mat-divider>
+          <div *ngIf="watchers"><p>Visitors: {{ watchers }} <mat-icon color="warn">remove_red_eye</mat-icon></p>
+          <mat-divider></mat-divider></div>
           </div>
 </div>
+
+

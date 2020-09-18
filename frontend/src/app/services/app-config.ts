@@ -17,7 +17,11 @@ export class Config {
   public MARKS_WITH_COUNTER_ENDPOINT="/transactionservice/filters/marks"
   public MODELS_WITH_COUNTER_ENDPOINT="/transactionservice/filters/models"
   public LOCATIONS_WITH_COUNTER_ENDPOINT="/transactionservice/filters/locations"
-  public OFFER_VISITED_ENDPOINT=""
+  public POPULARIZE_OFFER_ENDPOINT="/carservice/popularity/popularize"
+  public OFFER_WATCHED_ENDPOINT="/carservice/popularity/getPopularity"
+  public GET_USER_SUBSCRIPTIONS="/carservice/subscriptions/getSubscriptions"
+  public SUBSCRIBE_OFFER="/carservice/subscriptions/subscribe"
+  public UNSUBSCRIBE_OFFER="/carservice/subscriptions/unsubscribe"
   public CAR_TYPES_ENDPOINT="/transactionservice/filters/carType"
   public HEADER = { headers:{"Content-type":"application/json"}}
 }

@@ -31,8 +31,6 @@ public removeOffer(offerDTO: OfferRemovalDTO){ this.http.post(this.config.API_UR
 
 public createOffer(offerDTO: OfferDTO){ this.http.post(this.config.API_URL_SERVER.concat(this.config.CREATE_OFFER_ENDPOINT),offerDTO,this.authService.getAuthHeader()).subscribe()}
 
-public sendOfferVisitedPost(offerId:number){ this.http.post(this.config.API_URL_SERVER.concat(this.config.OFFER_VISITED_ENDPOINT),offerId).subscribe()  }
-
 }
 
 export interface SelectMap extends Array<string|number>{0:string; 1:number}

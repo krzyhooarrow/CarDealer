@@ -9,7 +9,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent },
-  { path: 'offer', component: TransactionComponent },
+  { path: 'offer/:id', component: TransactionComponent },
   { path: 'auth', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'myOffers', component: MyOffersComponent },

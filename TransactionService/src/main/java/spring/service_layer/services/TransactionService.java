@@ -122,8 +122,7 @@ public class TransactionService {
 
 
     public TransactionDTO getOfferById(Long id) throws OffersNotFoundException {
-        return new TransactionDTO(repositoryService.offerRepository.findAll().get(0));
-//        return repositoryService.offerRepository.findById(id).map(TransactionDTO::new).orElseThrow(OffersNotFoundException::new);
+        return repositoryService.offerRepository.findById(id).map(TransactionDTO::new).orElseThrow(OffersNotFoundException::new);
     }
 
 

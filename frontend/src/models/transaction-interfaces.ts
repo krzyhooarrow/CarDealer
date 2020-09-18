@@ -1,5 +1,5 @@
 export interface TransactionDTO{
-
+    id:number
     price:number
     carType:String
     model:String

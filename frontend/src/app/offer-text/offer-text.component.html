@@ -1,14 +1,17 @@
     <div class="mat-card" >
         <header>
-            <!-- <img src="https://via.placeholder.com/80"> -->
-            <button mat-flat-button matRipple matRippleRadius='1' color="link" > <mat-icon>star_outline</mat-icon></button>
+            <!-- <img src="https://via.placeholder.com/80">  //link   [color]="subscriptions?.indexOf(transaction.id) > -1? 'link':'accent'"--> 
+            <button *ngIf="auth.isAuthenticated && subscribedList" (click)="sub_or_unsub(transaction.id)" mat-flat-button matRipple matRippleRadius='1'
+              matInput [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'background-color':'#ff4081'} : {'color':'white'}" [value]="transaction.id"> <mat-icon [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'color':'white'} : {'color':'black'}" >star_outline</mat-icon></button>
+              <!-- [color]="subscribedList?.indexOf(transaction.id) > -1? 'accent':'link'" -->
             <h3>{{ transaction.title }}</h3>
             <h4>{{ transaction.tags }}</h4>
         </header>
         <footer>
             <mat-icon>location_on</mat-icon>{{ transaction.location_city }}
             <br>
-            <mat-icon>remove_red_eye</mat-icon>5
-            <button mat-flat-button matRipple matRippleRadius='1' color="primary"  routerLink="/offer" routerLinkActive="active" >Zobacz ofertę</button>
+            <mat-icon>language</mat-icon>{{ transaction.id }}
+            <button mat-flat-button matRipple matRippleRadius='1' color="primary"   [routerLink]="['/offer', transaction.id]" routerLinkActive="active" >Zobacz ofertę</button>
         </footer>
+        <div class="space"></div>
     </div>

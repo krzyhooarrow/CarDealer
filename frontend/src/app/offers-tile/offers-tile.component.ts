@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TransactionDTO } from 'src/models/transaction-interfaces';
+import { SubscriptionService } from '../services/subscription.service';
 
 @Component({
   selector: 'app-offers-tile',
@@ -10,7 +11,8 @@ export class OffersTileComponent implements OnInit {
 
 
   @Input() transactions:Array<TransactionDTO>;
-  
+  subscriptions:number[];
+
   no_images = [ {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},
   {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},
   ]
@@ -39,9 +41,13 @@ export class OffersTileComponent implements OnInit {
     {text: '', cols: this.maxCols, rows: 1, color: this.whiteColor},
   ];
 
-  constructor() { }
+  constructor(public subs: SubscriptionService) { }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {   this.subs.getUserSubscriptions().subscribe(
+    (list : number[]) => {this.subscriptions = list
+    }
+  );
+ }
 
 }
 export interface OfferTile {

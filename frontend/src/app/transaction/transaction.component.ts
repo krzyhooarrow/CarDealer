@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TransactionDTO } from 'src/models/transaction-interfaces';
+import { SubscriptionService } from '../services/subscription.service';
 import { TransactionService } from '../services/transaction.service';
 
 @Component({
@@ -16,10 +18,17 @@ export class TransactionComponent implements OnInit {
 
   public transaction:TransactionDTO
 
-  constructor(transactionService:TransactionService) { transactionService.getTransactionById(1).subscribe(((t:TransactionDTO) => {this.transaction = t}));
+  constructor(public transactionService:TransactionService,public subs:SubscriptionService,public router:Router) {
+    this.transactionService.getTransactionById(+this.router.url.replace('/offer/',''))
+    .subscribe(
+      ((t:TransactionDTO) => {
+        this.transaction = t;
+        this.subs.sendOfferVisitedPost(t.id)
+      }));
   }
 
   ngOnInit(): void {
+   
   }
 
 }

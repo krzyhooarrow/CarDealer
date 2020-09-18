@@ -1,4 +1,3 @@
-.background-gray{background-color: white;}
 
 
 .mat-grid-tile .mat-figure.mat-figure {
@@ -10,5 +9,9 @@
 mat-card::ng-deep.mat-card-header-text {
     width: 100%;
   }
+  .images{height:80% !important;   width: 20% !important;}
+carousel, img{width: 100% !important;}
 
-carousel, img{width: 20% !important;}
+app-offer-text{
+  width: 65%;
+}
