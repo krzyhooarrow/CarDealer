@@ -47,17 +47,22 @@ export interface CarMark{
 }
 
 export interface SearchDTO{
-    type:String
-    model:String
-    mark:String
-    production_year:number
-    fuelType:String
-    country:String
-    additionalEquipment?:Array<String>
-    location_country:String
-    location_city:String
-    highPrice:number
-    lowPrice:number
+    type?:String
+    model?:String
+    mark?:String
+    production_year_from?:number
+    production_year_to?:number
+    state?:String
+    fuelType?:String
+    mileage_from?:number
+    mileage_to?:number
+    capacity_from?:number
+    capacity_to?:number
+    gearbox?:String
+    power_from?:number
+    power_to?:number
+    highPrice?:number
+    lowPrice?:number
 }
 
 export interface OfferDTO{

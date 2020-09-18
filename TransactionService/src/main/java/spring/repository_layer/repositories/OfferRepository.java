@@ -16,6 +16,9 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
         Offer findByCar(ConcreteCar car);
         Optional<List<Offer>> findAllByUser(User user);
 
+        @Query("from Offer o WHERE o.user.id = :userId ")
+        Optional<List<Offer>> getOffersByUserId( @Param("userId") Long userId);
+
         List<Offer> findAll();
         @Query("From Offer ") Optional<List<Offer>> findAllOffers();
 
@@ -35,15 +38,22 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
         //query will return all cars specified by parameters
         // model mark type additional-eq  year fuel country location
         @Query("FROM Offer o WHERE " +
-                "(o.price BETWEEN :lowPrice and :highPrice) and" +
-                "(:fuelType is null or o.car.fuelType.fuelTypeEnum = :fuelType) and" +
-                "(:mark is null or o.car.car.model.carMark.mark = :mark) and" +
-                "(:productionCountry is null or o.car.country = :productionCountry) and" +
-                "(:locationCountry is null or o.car.location_country = :locationCountry) and" +
-                "(:locationCity is null or o.car.location_city = :locationCity) and" +
                 "(:carType is null or o.car.car.type.carType = :carType) and " +
                 "(:model is null or o.car.car.model.model = :model) and" +
-                "(:productionYear is null or o.car.car.production_year = :productionYear) " +
+                "(:mark is null or o.car.car.model.carMark.mark = :mark) and" +
+                "(:productionYearFrom is null or o.car.car.production_year > :productionYearFrom) and " +
+                "(:productionYearTo is null or o.car.car.production_year < :productionYearTo) and" +
+                "(:state is null or o.car.state = :state) and" +
+                "(:fuelType is null or o.car.fuelType.fuelTypeEnum = :fuelType) and" +
+                "(:mileage_from is null or o.car.mileage > :mileage_from ) and" +
+                "(:mileage_to is null or o.car.mileage < :mileage_to ) and" +
+                "(:lowPrice is null or o.price > :lowPrice ) and" +
+                "(:highPrice is null or o.price < :highPrice ) and" +
+                "(:capacityFrom is null or o.car.capacity > :capacityFrom ) and" +
+                "(:capacityTo is null or o.car.capacity < :capacityTo ) and" +
+                "(:gearbox is null or o.car.gearbox = :gearbox ) and" +
+                "(:powerFrom is null or o.car.power > :powerFrom ) and" +
+                "(:powerTo is null or o.car.power < :powerTo ) " +
                 "" )
 
         Optional<List<Offer>> findAllByParameters
@@ -51,13 +61,23 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
             @Param("carType") String carType,
             @Param("model") String model,
             @Param("mark") String mark,
-            @Param("productionYear") Integer productionYear,
+            @Param("productionYearFrom") Integer productionYearFrom,
+            @Param("productionYearTo") Integer productionYearTo,
+            @Param("state") State state,
             @Param("fuelType") FuelTypeEnum fuelType,
-            @Param("productionCountry") String productionCountry,
-            @Param("locationCountry") String locationCountry,
-            @Param("locationCity") String locationCity,
+            @Param("mileage_from") Integer mileageFrom,
+            @Param("mileage_to") Integer mileageTo,
             @Param("lowPrice") Integer lowPrice,
-            @Param("highPrice") Integer highPrice
+            @Param("highPrice") Integer highPrice,
+            @Param("capacityFrom") Float capacityFrom,
+            @Param("capacityTo") Float capacityTo,
+            @Param("gearbox") GearBox gearbox,
+            @Param("powerFrom") Integer powerFrom,
+            @Param("powerTo") Integer powerTo
         );
+
+
+        @Query("From Offer o where o.id in :offerIds")
+        Optional<List<Offer>> getOffersList( @Param("offerIds") List<Long> offerIds);
 }
 

@@ -11,6 +11,7 @@ export class OffersTileComponent implements OnInit {
 
 
   @Input() transactions:Array<TransactionDTO>;
+  @Input() results:number;
   subscriptions:number[];
 
   no_images = [ {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},

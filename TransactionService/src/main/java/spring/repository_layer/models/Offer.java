@@ -87,4 +87,6 @@ public class Offer  {
     public String getTitle() {  return title;   }
 
     public String getTags() {   return tags;   }
+
+
 }

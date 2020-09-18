@@ -1,8 +1,8 @@
 <p>
   <mat-card class="card-container">
-  <mat-grid-list cols="18" rowHeight="100">
+  <mat-grid-list cols="16" rowHeight="100">
     
-    <mat-grid-tile colspan="3" rowspan="2">
+    <mat-grid-tile colspan="2" >
       <mat-form-field appearance="fill" >
         <mat-label>Car type</mat-label>
         <mat-select [(ngModel)]="car_type">
@@ -59,23 +59,6 @@
 
     <mat-grid-tile colspan="2">
       <mat-form-field appearance="fill" >
-        <mat-label>Fuel type</mat-label>
-        <mat-select [(ngModel)]="fuel_type">
-       
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
-
-    <mat-grid-tile colspan="2">
-      <mat-form-field appearance="fill" >
-        <mat-label>Production country</mat-label>
-        <mat-select [(ngModel)]="production_country">
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
-
-    <mat-grid-tile colspan="3" rowspan="2">
-      <mat-form-field appearance="fill" >
         <mat-label>State</mat-label>
         <mat-select [(ngModel)]="state">
           <mat-option class = "theme-col" value="damaged">Damaged</mat-option>
@@ -83,22 +66,34 @@
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
-    
+
     <mat-grid-tile colspan="2">
       <mat-form-field appearance="fill" >
-        <mat-label>Location city</mat-label>
-        <mat-select [(ngModel)]="location_city">
+        <mat-label>Mileage (from)</mat-label>
+        <mat-select [(ngModel)]="mileage_from" (selectionChange)="onSelectMileageFrom()">
+          <mat-option class = "theme-col" *ngFor="let option of mileage_from_array" [value]="option">
+            {{ option }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
 
     <mat-grid-tile colspan="2">
       <mat-form-field appearance="fill" >
-        <mat-label>Location country</mat-label>
-        <mat-select [(ngModel)]="location_country">
-          <mat-option class = "theme-col" *ngFor="let option of distinctLocations" [value]="option[0]">
-            {{ option[0] }}
+        <mat-label>Mileage (to)</mat-label>
+        <mat-select [(ngModel)]="mileage_to">
+          <mat-option class = "theme-col" *ngFor="let option of mileage_to_array" [value]="option">
+            {{ option }}
           </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Fuel type</mat-label>
+        <mat-select [(ngModel)]="fuel_type">
+       
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
@@ -125,11 +120,48 @@
       </mat-form-field>
     </mat-grid-tile>
 
+    
     <mat-grid-tile colspan="2">
       <mat-form-field appearance="fill" >
-        <mat-label>Mileage (from)</mat-label>
-        <mat-select [(ngModel)]="mileage_from" (selectionChange)="onSelectMileageFrom()">
-          <mat-option class = "theme-col" *ngFor="let option of mileage_from_array" [value]="option">
+        <mat-label>Capacity (from)</mat-label>
+        <mat-select [(ngModel)]="capacity_from" (selectionChange)="onSelectCapacityFrom()">
+          <mat-option class = "theme-col" *ngFor="let option of capacity_from_array" [value]="option">
+            {{ option.toFixed(2) }}L
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Capacity (to)</mat-label>
+        <mat-select [(ngModel)]="capacity_to">
+          <mat-option class = "theme-col" *ngFor="let option of capacity_to_array" [value]="option">
+            {{ option.toFixed(2) }}L
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Gearbox </mat-label>
+        <mat-select [(ngModel)]="gearbox">
+          <mat-option class = "theme-col" value="manual">
+            Manual
+          </mat-option>
+          <mat-option class = "theme-col" value="automatic">
+            Automatic
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <mat-form-field appearance="fill" >
+        <mat-label>Power (from)</mat-label>
+        <mat-select [(ngModel)]="power_from" (selectionChange)="onSelectPowerFrom()">
+          <mat-option class = "theme-col" *ngFor="let option of power_from_array" [value]="option">
             {{ option }}
           </mat-option>
         </mat-select>
@@ -138,31 +170,46 @@
 
     <mat-grid-tile colspan="2">
       <mat-form-field appearance="fill" >
-        <mat-label>Mileage (to)</mat-label>
-        <mat-select [(ngModel)]="mileage_to">
-          <mat-option class = "theme-col" *ngFor="let option of mileage_to_array" [value]="option">
+        <mat-label>Power (to)</mat-label>
+        <mat-select [(ngModel)]="power_to">
+          <mat-option class = "theme-col" *ngFor="let option of power_to_array" [value]="option">
             {{ option }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
+
   </mat-grid-list>
 
   <div class="filter-options">
 
-    
-    <mat-chip-list aria-label="Fish selection">
-      <mat-chip selectable="true" color="primary" selected>mefedron </mat-chip>
-      <mat-chip selectable="true" color="primary" selected>123</mat-chip>
-    </mat-chip-list>
-  
-    <button mat-flat-button color="warn" class="search-btn" (click)="onSearch()">Search offers            
+
+    <mat-form-field appearance="fill" class="reduce-width">
+      <mat-label>Sort by:</mat-label>
+      <mat-select [(ngModel)]="sort" (selectionChange)="onSortChange()">
+        <mat-option value="1">
+          Price asc
+        </mat-option>
+        <mat-option value="2">
+          Price desc
+        </mat-option>
+        <mat-option value="3">
+          Creation date asc
+        </mat-option>
+        <mat-option value="4">
+          Creation date desc
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <button mat-flat-button color="primary" class="search-btn" (click)="onSearch()">Search offers            
       <mat-icon>search</mat-icon>   
     </button>
     
     <mat-paginator [length]="transactions ? transactions.length : 0"
       [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 15]" (page)="pageEvent = $event">
+      [pageSizeOptions]="[6, 10, 20]" (page)="pageEvent = $event">
     </mat-paginator>
   </div>
   </mat-card>
@@ -171,4 +218,4 @@
 
 
 <p><mat-spinner *ngIf="isLoading" diameter="150"></mat-spinner></p>
-<p><app-offers-tile *ngIf="transactions" [transactions] = "transactions_selector(transactions)" ></app-offers-tile></p>
+<p><app-offers-tile *ngIf="transactions?.length>0 && !isLoading" [transactions] = "transactions_selector(transactions)" [results] = "transactions.length"></app-offers-tile></p>

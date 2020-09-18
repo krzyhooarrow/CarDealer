@@ -12,21 +12,26 @@ mat-grid-list{
 }  
 
 mat-form-field{
-    width: 100%!important;
+    max-width: 100%!important;
 }
 
-:host ::ng-deep.mat-chip-list .mat-chip-list-wrapper{
-    justify-content: center !important;
+.reduce-width{
+    max-width: 50% !important;
 }
+
+// :host ::ng-deep.mat-chip-list .mat-chip-list-wrapper{
+//     justify-content: center !important;
+// }
 .search-btn{
     width: 100%!important;
     min-width: unset!important;
-    background-color: $theme-col;
+    // background-color: $theme-col;
 }
 
 .filter-options{
     display: grid;
     grid-template-columns: 35% auto 35%;
+    // justify-content: center;
     padding-top: 1%;
     button{
         max-height: 70%;

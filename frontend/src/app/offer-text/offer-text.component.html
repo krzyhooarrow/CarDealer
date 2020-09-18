@@ -2,7 +2,7 @@
         <header>
             <!-- <img src="https://via.placeholder.com/80">  //link   [color]="subscriptions?.indexOf(transaction.id) > -1? 'link':'accent'"--> 
             <button *ngIf="auth.isAuthenticated && subscribedList" (click)="sub_or_unsub(transaction.id)" mat-flat-button matRipple matRippleRadius='1'
-              matInput [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'background-color':'#ff4081'} : {'color':'white'}" [value]="transaction.id"> <mat-icon [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'color':'white'} : {'color':'black'}" >star_outline</mat-icon></button>
+              matInput [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'background-color':'brown'} : {'color':'white'}" [value]="transaction.id"> <mat-icon [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'color':'white'} : {'color':'black'}" >star_outline</mat-icon></button>
               <!-- [color]="subscribedList?.indexOf(transaction.id) > -1? 'accent':'link'" -->
             <h3>{{ transaction.title }}</h3>
             <h4>{{ transaction.tags }}</h4>

@@ -32,14 +32,12 @@ export class MyOffersComponent implements OnInit {
       "type": "Sedan",
       "model": null,
       "mark": null,
-      "production_year": 2010,
+      
       "fuelType": "diesel",
-      "country": null,
-      "additionalEquipment": null,
-      "location_country": null,
-      "location_city": null,
+
+    
       "highPrice":12000,
-      "lowPrice": -1000
+      "lowPrice": 11000
   }
   ).subscribe((offers: Array<TransactionDTO>) =>   {    this.transactions = offers    } ); 
 

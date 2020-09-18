@@ -16,36 +16,59 @@ export class SearchComponent implements OnInit {
   isLoading:boolean;
   pageSize = 10;
   currentPage = 1;
-
+  sort;
   constructor(service:TransactionService) { this.service = service; }
 
    onSearch(){
     this.isLoading = true; 
     this.service.getAllOffersByQuery(
       {
-      "type": "Sedan",
-      "model": null,
-      "mark": null,
-      "production_year": 2010,
-      "fuelType": "diesel",
-      "country": null,
-      "additionalEquipment": null,
-      "location_country": null,
-      "location_city": null,
-      "highPrice":12000,
-      "lowPrice": -1000
+      "type": this.car_type? this.car_type : null,
+      "model": this.car_model? this.car_model : null,
+      "mark": this.car_mark? this.car_mark : null,
+      "production_year_from": this.production_year_from? +this.production_year_from:null,
+      "production_year_to": this.production_year_to? +this.production_year_to:null,
+      "state":this.state? this.state:null,
+      "fuelType":this.fuel_type? this.fuel_type:null,
+      "mileage_from":this.mileage_from? +this.mileage_from:null,
+      "mileage_to": this.mileage_to? +this.mileage_to:null,
+      "capacity_from": this.capacity_from? +this.capacity_from : null,
+      "capacity_to": this.capacity_to? +this.capacity_to : null,
+      "gearbox" : this.gearbox? this.gearbox : null,
+      "power_from" : this.power_from? +this.power_from : null,
+      "power_to": this.power_to? +this.power_to : null,
+      "lowPrice": this.price_from? +this.price_from : null,
+      "highPrice": this.price_to? +this.price_to : null,
+
   }
   ).subscribe((offers: Array<TransactionDTO>) => 
-    {    this.transactions = offers
+    {    
+         this.transactions = offers
          this.isLoading = false;
      }
   );  }
+    
+  onSortChange(){
+ 
+        if(this.sort == 1)
+        this.transactions.sort((t1:TransactionDTO,t2:TransactionDTO) => {return t1.price - t2.price})
 
+        else if(this.sort == 2)
+        this.transactions.sort((t1:TransactionDTO,t2:TransactionDTO) => {return t2.price - t1.price})
+
+        else if(this.sort == 3)
+        this.transactions.sort((t1:TransactionDTO,t2:TransactionDTO) => {return t2.creationDate > t1.creationDate ? 1:-1;})
+
+        else if(this.sort == 4)
+        this.transactions.sort((t1:TransactionDTO,t2:TransactionDTO) => {return t2.creationDate < t1.creationDate ? 1:-1;})
+  }
  
   onSelectMark(){   this.service.getDistinctCarModelsByMarkWithCounter(this.car_mark).subscribe((types: Array<SelectMap>) => {this.distinctCarModels = types }) }
   onSelectProductionYearFrom(){  this.production_years_to = this.array_creator(11,1970,5).filter( value => value >= +this.production_year_from);  }
   onSelectMileageFrom(){ this.mileage_to_array = this.array_creator(11,0,25000).filter( value => value >= +this.mileage_from);  } 
   onSelectPriceFrom(){ this.price_to_array = this.array_creator(20,0,20000).filter( value => value >= +this.price_from);  } 
+  onSelectCapacityFrom(){ this.capacity_to_array = this.array_creator(20,1,0.2).filter( value => value >= +this.capacity_from); }
+  onSelectPowerFrom(){ this.power_to_array = this.array_creator(30,50,25).filter( value => value >= +this.power_from); }
 
   public car_type:String;
   public car_model:String
@@ -61,6 +84,13 @@ export class SearchComponent implements OnInit {
   public price_to:String;
   public mileage_from:String;
   public mileage_to:String;
+  public capacity_from:String;
+  public capacity_to:String;
+  public power_from:String;
+  public power_to:String
+  public gearbox:String;
+
+
 
   distinctCarTypes:Array<SelectMap>;
   distinctCarMarks:Array<SelectMap>;
@@ -84,6 +114,12 @@ export class SearchComponent implements OnInit {
 
   public price_from_array = this.array_creator(20,0,20000);
   public price_to_array =  this.array_creator(20,0,20000);
+
+  public power_from_array = this.array_creator(30,50,25);
+  public power_to_array =  this.array_creator(30,50,25);
+
+  public capacity_from_array = this.array_creator(20,1,0.2);
+  public capacity_to_array =  this.array_creator(20,1,0.2);
 
   array_creator(howManyNumbers: number, startFrom: number, iterator:number): number[] {
     return [...Array(howManyNumbers).keys()].map(i => i*iterator + startFrom);

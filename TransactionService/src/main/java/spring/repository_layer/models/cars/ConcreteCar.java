@@ -81,4 +81,33 @@ public class ConcreteCar{
     public String getLocation_city() {
         return location_city;
     }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public float getCapacity() {
+        return capacity;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public GearBox getGearbox() {
+        return gearbox;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public State getState() {
+        return state;
+    }
+
 }

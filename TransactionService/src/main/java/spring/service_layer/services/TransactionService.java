@@ -14,6 +14,8 @@ import spring.repository_layer.builders.OfferBuilder;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.User;
 import spring.repository_layer.models.cars.FuelTypeEnum;
+import spring.repository_layer.models.cars.GearBox;
+import spring.repository_layer.models.cars.State;
 import spring.repository_layer.repositories.CarRepository;
 import spring.repository_layer.repositories.ConcreteCarRepository;
 import spring.repository_layer.repositories.OfferRepository;
@@ -48,13 +50,19 @@ public class TransactionService {
                         searchDTO.getType(),
                         searchDTO.getModel(),
                         searchDTO.getMark(),
-                        searchDTO.getProduction_year(),
-                        FuelTypeEnum.valueOf(searchDTO.getFuelType()),
-                        searchDTO.getCountry(),
-                        searchDTO.getLocation_country(),
-                        searchDTO.getLocation_city(),
+                        searchDTO.getProduction_year_from(),
+                        searchDTO.getProduction_year_to(),
+                        searchDTO.getState() != null? State.valueOf(searchDTO.getState()):null,
+                        searchDTO.getFuelType() != null? FuelTypeEnum.valueOf(searchDTO.getFuelType()):null,
+                        searchDTO.getMileage_from(),
+                        searchDTO.getMileage_to(),
                         searchDTO.getLowPrice(),
-                        searchDTO.getHighPrice()
+                        searchDTO.getHighPrice(),
+                        searchDTO.getCapacity_from(),
+                        searchDTO.getCapacity_to(),
+                        searchDTO.getGearbox() != null? GearBox.valueOf(searchDTO.getGearbox()):null,
+                        searchDTO.getPower_from(),
+                        searchDTO.getPower_to()
                 ).orElse(new LinkedList<>());
 
         return offersList.stream().map(TransactionDTO::new).collect(Collectors.toList());

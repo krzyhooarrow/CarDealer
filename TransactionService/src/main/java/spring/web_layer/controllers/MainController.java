@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.repository_layer.db_init.RandomDataGenerator;
-import spring.web_layer.exceptions.JWTAuthException;
+
 
 import static org.springframework.http.HttpStatus.OK;
 

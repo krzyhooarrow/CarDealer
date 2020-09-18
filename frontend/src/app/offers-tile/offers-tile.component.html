@@ -1,11 +1,13 @@
+<mat-card class="card-container">
+
 <mat-grid-list cols="2" rowHeight="4:1">
 <mat-grid-tile *ngFor="let transaction of transactions" style.background="lavender">
-    
 <div class="images">
 <carousel *ngIf="transaction.images.length > 1" [images]="images" [cellsToScroll]="1" [dots]="true" [loop] = "true" ></carousel>
 <img *ngIf="transaction.images.length <= 1" [src]="img">
 </div>
 <app-offer-text [transaction]="transaction" [subscribedList]="subscriptions"></app-offer-text>
 </mat-grid-tile>
-
 </mat-grid-list>
+
+</mat-card>

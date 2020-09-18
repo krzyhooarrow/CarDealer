@@ -8,6 +8,9 @@
             </mat-tab> 
             <mat-tab label="Create new offer"><app-new-offer></app-new-offer></mat-tab>
             <mat-tab label="History"><app-offers-history></app-offers-history></mat-tab>
+            <mat-tab label="Subscribed offers">
+                <app-subscribed-offers *ngIf = "transactions" [transactions] = "transactions"></app-subscribed-offers>
+            </mat-tab>
           </mat-tab-group>
 
     </mat-card>

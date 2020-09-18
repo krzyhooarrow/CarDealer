@@ -10,24 +10,6 @@ import java.util.List;
 public class TransactionDTO {
 
 
-    /* czego brakuje:
-
-    mileage
-    capacity
-    power
-    gearbox
-    vin
-    color
-    state
-
-
-    number
-    *
-
-
-
-    */
-
     private Long id;
     private Integer price;
     private String carType;

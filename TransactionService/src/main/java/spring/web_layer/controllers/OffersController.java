@@ -28,4 +28,5 @@ public class OffersController {
     public TransactionDTO getOfferById(@PathVariable Long id) throws OffersNotFoundException {
         return transactionService.getOfferById(id);
     }
+
 }
