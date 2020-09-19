@@ -21,5 +21,7 @@ public class RepositoryService {
     public ConcreteCarRepository concreteCarRepository;
     public EmailRepository emailRepository;
     public OfferRepository offerRepository;
+    public HistoryRepository historyRepository;
+
 
 }

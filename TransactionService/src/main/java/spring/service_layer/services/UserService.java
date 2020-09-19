@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.service_layer.dto.HistoryDTO;
 import spring.service_layer.dto.TransactionDTO;
+import spring.web_layer.exceptions.HistoryNotFoundException;
 import spring.web_layer.exceptions.OffersNotFoundException;
 
 import java.util.List;
@@ -30,6 +32,15 @@ public class UserService {
         return service.offerRepository.getOffersList(userIds).orElseThrow(OffersNotFoundException::new)
                 .stream()
                 .map(TransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<HistoryDTO> getUserHistory(Long userId) throws HistoryNotFoundException {
+        return service.historyRepository
+                .findAllByUserId(userId)
+                .orElseThrow(HistoryNotFoundException::new)
+                .stream()
+                .map(HistoryDTO::new)
                 .collect(Collectors.toList());
     }
 }

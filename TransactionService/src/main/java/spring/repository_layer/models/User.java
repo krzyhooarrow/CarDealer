@@ -37,6 +37,7 @@ public class User {
 
     private String phoneNumber;
 
+
     public User(String username, String password, String email, Authorities role) {
         this.username = username;
         this.password = password;
@@ -81,5 +82,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
     }
 }

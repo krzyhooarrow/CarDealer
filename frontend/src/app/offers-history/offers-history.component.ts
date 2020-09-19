@@ -39,14 +39,20 @@ export class OffersHistoryComponent implements OnInit {
   }
   
   compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1);  }
-  getTotalCost() { return this.transactions.map(t => t.date).reduce((acc, value) => acc + value, 0);  }
 
-  ngOnInit(): void {
-  }
+
+  ngOnInit(): void { }
 
  
 }
 interface Transaction{
   item:String,
   date:number
+}
+
+
+export interface HistoryDTO{
+  date:Date,
+  action:String,
+  offerId:number
 }

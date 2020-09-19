@@ -22,6 +22,7 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
         List<Offer> findAll();
         @Query("From Offer ") Optional<List<Offer>> findAllOffers();
 
+        Optional<Offer> findById(Long id);
 
         @Query("SELECT o.car.car.type.carType , COUNT (o) from Offer o GROUP BY o.car.car.type.carType")
         List<Object> getDistinctTypesWithCounter();

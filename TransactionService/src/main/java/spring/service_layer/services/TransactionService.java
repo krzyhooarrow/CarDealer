@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import spring.repository_layer.builders.OfferBuilder;
+import spring.repository_layer.models.History;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.User;
 import spring.repository_layer.models.cars.FuelTypeEnum;
@@ -19,6 +20,8 @@ import spring.repository_layer.models.cars.State;
 import spring.repository_layer.repositories.CarRepository;
 import spring.repository_layer.repositories.ConcreteCarRepository;
 import spring.repository_layer.repositories.OfferRepository;
+import spring.repository_layer.triggers.Trigger;
+import spring.repository_layer.triggers.Triggerable;
 import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.SearchDTO;
@@ -44,6 +47,7 @@ public class TransactionService {
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
+
     public List<TransactionDTO> getAllOffersBySpecifiedParams(SearchDTO searchDTO) {
         List<Offer> offersList = repositoryService.offerRepository.findAllByParameters
                 (
@@ -63,11 +67,13 @@ public class TransactionService {
                         searchDTO.getGearbox() != null? GearBox.valueOf(searchDTO.getGearbox()):null,
                         searchDTO.getPower_from(),
                         searchDTO.getPower_to()
+
                 ).orElse(new LinkedList<>());
 
         return offersList.stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
+    @Triggerable
     public boolean createNewOffer(OfferDTO offerDTO) {
         try {
 
@@ -88,6 +94,16 @@ public class TransactionService {
 
             repositoryService.offerRepository.save(offer);
 
+            new Trigger() {
+                @Override
+                public void update() {
+                    repositoryService.historyRepository
+                    .save(new History("OFFER CREATION",offer,
+                            repositoryService.userRepository.findByUsername(offerDTO.getUsername()).get()
+                ));
+                }
+            };
+
             mailService.sendMail
                     (
                             repositoryService.userRepository.findByUsername(offerDTO.getUsername()).get().getEmail(),
@@ -101,7 +117,7 @@ public class TransactionService {
         }
     }
 
-
+    @Triggerable
     public boolean removeOffer(OfferRemovalDTO offerRemovalDTO) {
         try {
 
@@ -114,6 +130,16 @@ public class TransactionService {
                     .findFirst().orElseThrow(OffersNotFoundException::new);
 
             repositoryService.offerRepository.delete(toRemove);
+
+            new Trigger() {
+                @Override
+                public void update() {
+                    repositoryService.historyRepository
+                            .save(new History("OFFER REMOVAL",toRemove,
+                                    repositoryService.userRepository.findByUsername(offerRemovalDTO.getUsername()).get()
+                            ));
+                }
+            };
 
             mailService.sendMail
                     (

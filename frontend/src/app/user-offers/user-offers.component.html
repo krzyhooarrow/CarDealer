@@ -1,3 +1,4 @@
+<div *ngIf="transactions">
 <div *ngFor="let transaction of transactions">
     <mat-card class="card-container">
         <carousel *ngIf="transaction.images.length > 1" [images]="images" [cellsToScroll]="1" [dots]="true" [loop] = "true" ></carousel>
@@ -15,3 +16,5 @@
         </div>
     </mat-card>
 </div> 
+</div>
+<p *ngIf="!transactions"> You haven't any available offers</p>

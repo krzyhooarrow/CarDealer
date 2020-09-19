@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionDTO } from 'src/models/transaction-interfaces';
 import { AuthService } from '../services/auth.service';
+import { SubscriptionService } from '../services/subscription.service';
 import { TransactionService } from '../services/transaction.service';
 
 @Component({
@@ -10,40 +11,8 @@ import { TransactionService } from '../services/transaction.service';
 })
 export class MyOffersComponent implements OnInit {
 
+  constructor(public auth:AuthService) { }
 
-  auth:AuthService
-  transactionService:TransactionService
-  transactions:TransactionDTO[]
-
-  constructor(auth:AuthService,transactionService:TransactionService) {
-    this.transactionService = transactionService;
-    this.auth = auth 
-    auth.authenticationCheck()
-
-    
-    this.getTransactions()
-  }
-
-
-
-  getTransactions(){
-    this.transactionService.getAllOffersByQuery(
-      {
-      "type": "Sedan",
-      "model": null,
-      "mark": null,
-      
-      "fuelType": "diesel",
-
-    
-      "highPrice":12000,
-      "lowPrice": 11000
-  }
-  ).subscribe((offers: Array<TransactionDTO>) =>   {    this.transactions = offers    } ); 
-
-}
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

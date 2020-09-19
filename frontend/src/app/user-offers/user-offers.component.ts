@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TransactionDTO } from 'src/models/transaction-interfaces';
+import { AuthService } from '../services/auth.service';
+import { SubscriptionService } from '../services/subscription.service';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   selector: 'app-user-offers',
@@ -8,9 +11,18 @@ import { TransactionDTO } from 'src/models/transaction-interfaces';
 })
 export class UserOffersComponent implements OnInit {
 
-  @Input() transactions:TransactionDTO[]
+  transactions:TransactionDTO[]
 
-  constructor() { }
+  constructor(public auth:AuthService,public transactionService:TransactionService, public subsriptions:SubscriptionService) {  
+    auth.authenticationCheck()
+    if(this.auth.isAuthenticated)
+    this.getTransactions()
+  }
+
+  getTransactions(){
+    this.transactionService.getUserOffers().subscribe((offers: Array<TransactionDTO>) =>   {  this.transactions = offers  } ); 
+   
+  }
 
 
   no_images = [ {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},

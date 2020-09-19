@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.service_layer.dto.HistoryDTO;
 import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.TransactionDTO;
 import spring.service_layer.services.UserService;
+import spring.web_layer.exceptions.HistoryNotFoundException;
 import spring.web_layer.exceptions.OffersNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,5 +31,10 @@ public class UserOffersController {
     @PostMapping("/getSubscriptions")
     public List<TransactionDTO> getSubscribedOffer(@RequestBody List<Long> ids) throws OffersNotFoundException {
         return service.getOffersByIdsList(ids);
+    }
+
+    @GetMapping("/getHistory")
+    public List<HistoryDTO> getUserHistory(HttpServletRequest request) throws HistoryNotFoundException {
+        return service.getUserHistory(Long.valueOf(request.getHeader("user-id")));
     }
 }

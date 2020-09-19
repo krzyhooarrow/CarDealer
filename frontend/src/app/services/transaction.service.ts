@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Offer, OfferRemovalDTO, OfferDTO, SearchDTO } from '../../models/interfaces'
 import { AuthService } from './auth.service';
 import { TransactionDTO } from 'src/models/transaction-interfaces';
+import { HistoryDTO } from '../offers-history/offers-history.component';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,12 @@ public getAllOffersByQuery(offerDTO:SearchDTO){  return this.http.post<Array<Tra
 public removeOffer(offerDTO: OfferRemovalDTO){ this.http.post(this.config.API_URL_SERVER.concat(this.config.REMOVE_OFFER_ENDPOINT),offerDTO,this.authService.getAuthHeader()).subscribe()}
 
 public createOffer(offerDTO: OfferDTO){ this.http.post(this.config.API_URL_SERVER.concat(this.config.CREATE_OFFER_ENDPOINT),offerDTO,this.authService.getAuthHeader()).subscribe()}
+
+public getUserOffers(){  return this.http.get<Array<TransactionDTO>>(this.config.API_URL_SERVER.concat(this.config.GET_USER_OFFERS),this.authService.getAuthHeader()) }
+
+public getUserSubscribedOffers(ids:number[]){  return this.http.post<Array<TransactionDTO>>(this.config.API_URL_SERVER.concat(this.config.GET_USER_SUBSCRIBED_OFFERS),ids,this.authService.getAuthHeader()) }
+
+public getUserHistory(){  return this.http.get<Array<HistoryDTO>>(this.config.API_URL_SERVER.concat(this.config.GET_USER_HISTORY),this.authService.getAuthHeader()) }
 
 }
 
