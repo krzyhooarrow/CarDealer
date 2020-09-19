@@ -24,6 +24,9 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
 
         Optional<Offer> findById(Long id);
 
+        @Query("From Offer o where o.user.id =:userId and o.id =:offerId")
+        Optional<Offer> findByUserIdAndOfferId(@Param("userId") Long userId,@Param("offerId") Long offerId);
+
         @Query("SELECT o.car.car.type.carType , COUNT (o) from Offer o GROUP BY o.car.car.type.carType")
         List<Object> getDistinctTypesWithCounter();
 

@@ -58,6 +58,20 @@ public class ConcreteCar{
         this.location_city = location_city;
     }
 
+    public ConcreteCar(Car car, FuelType fuelType, String country,
+         List<String> additionalEquipment, int mileage, float capacity, int power, GearBox gearbox, String vin, State state) {
+        this.car = car;
+        this.fuelType = fuelType;
+        this.country = country;
+        this.additionalEquipment = additionalEquipment;
+        this.mileage = mileage;
+        this.capacity = capacity;
+        this.power = power;
+        this.gearbox = gearbox;
+        this.vin = vin;
+        this.state = state;
+    }
+
     public Car getCar() {
         return car;
     }

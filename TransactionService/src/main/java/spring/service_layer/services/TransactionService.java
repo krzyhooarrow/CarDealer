@@ -8,32 +8,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import spring.repository_layer.builders.OfferBuilder;
 import spring.repository_layer.models.History;
 import spring.repository_layer.models.Offer;
-import spring.repository_layer.models.User;
 import spring.repository_layer.models.cars.FuelTypeEnum;
 import spring.repository_layer.models.cars.GearBox;
 import spring.repository_layer.models.cars.State;
-import spring.repository_layer.repositories.CarRepository;
-import spring.repository_layer.repositories.ConcreteCarRepository;
-import spring.repository_layer.repositories.OfferRepository;
 import spring.repository_layer.triggers.Trigger;
 import spring.repository_layer.triggers.Triggerable;
 import spring.service_layer.dto.OfferDTO;
-import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.SearchDTO;
 import spring.service_layer.dto.TransactionDTO;
 import spring.web_layer.exceptions.OffersNotFoundException;
 import spring.web_layer.exceptions.UserNotFoundException;
 
-import javax.transaction.Transaction;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,24 +64,30 @@ public class TransactionService {
     }
 
     @Triggerable
-    public boolean createNewOffer(OfferDTO offerDTO) {
+    public boolean createNewOffer(OfferDTO offerDTO,Long userID) {
         try {
-
+            logger.error("here ");
             Offer offer = offerBuilder.createNewOffer()
+                    .title(offerDTO.getTitle())
+                    .tags(offerDTO.getTags())
                     .price(offerDTO.getPrice())
                     .description(offerDTO.getDescription())
-                    .putImages(offerDTO.getImage())
-                    .carModel(offerDTO.getModel())
                     .carType(offerDTO.getCarType())
+                    .carModel(offerDTO.getModel())
                     .productionYear(offerDTO.getProduction_year())
                     .fuelType(offerDTO.getFuelType())
-                    .country(offerDTO.getCountry())
+                    .locatedIn(offerDTO.getLocation())
+                    .withMileage(offerDTO.getMileage())
+                    .withCapacity(offerDTO.getCapacity())
+                    .ofPower(offerDTO.getPower())
+                    .withGearboxType(offerDTO.getGearbox())
+                    .withVINNumber(offerDTO.getVin())
+                    .atState(offerDTO.getState())
                     .additionalEquipment(offerDTO.getAdditionalEquipment())
-                    .locationCountry(offerDTO.getLocation_country())
-                    .locationCity(offerDTO.getLocation_city())
-                    .forUser(offerDTO.getUsername())
+                    .putImages(offerDTO.getImages())
+                    .forUser(userID)
                     .build();
-
+            logger.error("here 2");
             repositoryService.offerRepository.save(offer);
 
             new Trigger() {
@@ -99,14 +95,14 @@ public class TransactionService {
                 public void update() {
                     repositoryService.historyRepository
                     .save(new History("OFFER CREATION",offer,
-                            repositoryService.userRepository.findByUsername(offerDTO.getUsername()).get()
+                            repositoryService.userRepository.findById(userID).get()
                 ));
                 }
             };
 
             mailService.sendMail
                     (
-                            repositoryService.userRepository.findByUsername(offerDTO.getUsername()).get().getEmail(),
+                            repositoryService.userRepository.findById(userID).get().getEmail(),
                             MailService.NotificationType.OFFER_CREATION
                     );
 
@@ -118,16 +114,13 @@ public class TransactionService {
     }
 
     @Triggerable
-    public boolean removeOffer(OfferRemovalDTO offerRemovalDTO) {
+    public boolean removeOffer(Long offerId,Long userID) {
         try {
 
-            List<Offer> userOffers = repositoryService.offerRepository
-                    .findAllByUser(
-                            repositoryService.userRepository.findByUsername(offerRemovalDTO.getUsername()).orElseThrow(UserNotFoundException::new)
-                    ).orElseThrow(OffersNotFoundException::new);
-
-            Offer toRemove = userOffers.stream().filter(offer -> offer.getId().equals(offerRemovalDTO.getOfferId()))
-                    .findFirst().orElseThrow(OffersNotFoundException::new);
+            Offer toRemove = repositoryService
+                    .offerRepository
+                    .findByUserIdAndOfferId(userID,offerId)
+                    .orElseThrow(OffersNotFoundException::new);
 
             repositoryService.offerRepository.delete(toRemove);
 
@@ -136,14 +129,14 @@ public class TransactionService {
                 public void update() {
                     repositoryService.historyRepository
                             .save(new History("OFFER REMOVAL",toRemove,
-                                    repositoryService.userRepository.findByUsername(offerRemovalDTO.getUsername()).get()
+                                    repositoryService.userRepository.findById(userID).get()
                             ));
                 }
             };
 
             mailService.sendMail
                     (
-                            repositoryService.userRepository.findByUsername(offerRemovalDTO.getUsername()).get().getEmail(),
+                            repositoryService.userRepository.findById(offerId).get().getEmail(),
                             MailService.NotificationType.OFFER_REMOVAL
                     );
 

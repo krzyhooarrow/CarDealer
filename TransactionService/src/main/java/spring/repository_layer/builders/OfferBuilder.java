@@ -28,28 +28,40 @@ public class OfferBuilder {
 
     private RepositoryService repositoryService;
     private CarService carService;
-    private static final Logger logger = LoggerFactory.getLogger(OfferBuilder.class);
-
     public Builder createNewOffer() {  return new Builder();   }
+
 
 
     public class Builder {
 
-
+        private String title;
+        private String tags;
         private Integer price;
         private String description;
-        private List<String> image;
-        private User user;
-        private CarType type;
+        private CarType carType;
         private CarModel model;
         private Integer production_year;
         private FuelTypeEnum fuelType;
-        private String country;
+        private String location;
+        private Integer mileage;
+        private Float capacity;
+        private Integer power;
+        private GearBox gearbox;
+        private String vin;
+        private State state;
         private List<String> additionalEquipment;
-        private String location_country;
-        private String location_city;
+        private List<String> images;
+        private User user;
 
+        public Builder title(@NonNull String title){
+            this.title = title;
+            return this;
+        }
 
+        public Builder tags(@NonNull String tags){
+            this.tags = tags;
+            return this;
+        }
 
         public Builder price(@NonNull int price) {
             this.price = price;
@@ -61,18 +73,8 @@ public class OfferBuilder {
             return this;
         }
 
-        public Builder putImages(List<String> image) {
-            this.image = image == null ? new LinkedList<>() : image;
-            return this;
-        }
-
-        public Builder forUser(@NonNull String user) throws UserNotFoundException {
-            this.user = repositoryService.userRepository.findByUsername(user).orElseThrow(UserNotFoundException::new);
-            return this;
-        }
-
         public Builder carType(@NonNull String carType) throws CarTypeNotFoundException {
-            this.type = repositoryService.carTypeRepository.findByCarType(carType).orElseThrow(CarTypeNotFoundException::new);
+            this.carType = repositoryService.carTypeRepository.findByCarType(carType).orElseThrow(CarTypeNotFoundException::new);
             return this;
         }
 
@@ -87,25 +89,42 @@ public class OfferBuilder {
         }
 
         public Builder fuelType(@NonNull String fuelType) {
-            Arrays.stream(FuelTypeEnum.values()).forEach(value ->
-            {
-                if (value.name().equals(fuelType)) this.fuelType = value;
-            });
+            this.fuelType = FuelTypeEnum.valueOf(fuelType);
             return this;
         }
 
-        public Builder country(@NonNull String country) {
-            this.country = country;
+        public Builder locatedIn(@NonNull String location) {
+            this.location = location;
             return this;
         }
 
-        public Builder locationCountry(@NonNull String location_country) {
-            this.location_country = location_country;
+        public Builder withMileage(@NonNull Integer mileage) {
+            this.mileage = mileage;
             return this;
         }
 
-        public Builder locationCity(@NonNull String location_city) {
-            this.location_city = location_city;
+        public Builder withCapacity(@NonNull Float capacity) {
+            this.capacity = capacity;
+            return this;
+        }
+
+        public Builder ofPower(@NonNull Integer power) {
+            this.power = power;
+            return this;
+        }
+
+        public Builder withGearboxType(@NonNull String gearboxType) {
+            this.gearbox = GearBox.valueOf(gearboxType);
+            return this;
+        }
+
+        public Builder withVINNumber(@NonNull String VIN) {
+            this.vin = VIN;
+            return this;
+        }
+
+        public Builder atState(@NonNull String state) {
+            this.state = State.valueOf(state);
             return this;
         }
 
@@ -114,12 +133,26 @@ public class OfferBuilder {
             return this;
         }
 
+        public Builder putImages(List<String> image) {
+            this.images = image == null ? new LinkedList<>() : image;
+            return this;
+        }
+
+        public Builder forUser(@NonNull Long userId) throws UserNotFoundException {
+            this.user = repositoryService.userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+            return this;
+        }
+
         public Offer build() {
-            Car car = carService.addNewCarDefinition(production_year, model, type);
+            Car car = carService.addNewCarDefinition(production_year, model, carType);
 
-            ConcreteCar concreteCar = carService.addNewConcreteCar(car, fuelType, country, additionalEquipment, location_country, location_city);
+            ConcreteCar concreteCar =  repositoryService.concreteCarRepository.save(
+                    new ConcreteCar(car,repositoryService.
+                            fuelTypeRepository.findByFuelTypeEnum(fuelType).get(),location,
+                            additionalEquipment, mileage,capacity,power,gearbox,vin ,state));
 
-            return new Offer(concreteCar, price, description, image, user);
+
+            return new Offer(concreteCar, price, description, images, user,title,tags);
         }
 
     }

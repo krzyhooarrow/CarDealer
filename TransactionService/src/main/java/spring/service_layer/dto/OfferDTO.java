@@ -18,22 +18,32 @@ import java.util.function.Function;
 @NoArgsConstructor
 public class OfferDTO {
 
-    private int id;
+
+    private String title;
+    private String tags;
     private Integer price;
     private String description;
-    private List<String> image;
     private String carType;
+    private String mark;
     private String model;
     private Integer production_year;
     private String fuelType;
-    private String country;
+    private String location;
+    private Integer mileage;
+    private Float capacity;
+    private Integer power;
+    private String gearbox;
+    private String vin;
+    private String state;
     private List<String> additionalEquipment;
-    private String location_country;
-    private String location_city;
-    private String username;
+    private List<String> images;
 
-    public int getId() {
-        return id;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getTags() {
+        return tags;
     }
 
     public Integer getPrice() {
@@ -44,12 +54,12 @@ public class OfferDTO {
         return description;
     }
 
-    public List<String> getImage() {
-        return image;
-    }
-
     public String getCarType() {
         return carType;
+    }
+
+    public String getMark() {
+        return mark;
     }
 
     public String getModel() {
@@ -64,23 +74,39 @@ public class OfferDTO {
         return fuelType;
     }
 
-    public String getCountry() {
-        return country;
+    public String getLocation() {
+        return location;
+    }
+
+    public Integer getMileage() {
+        return mileage;
+    }
+
+    public Float getCapacity() {
+        return capacity;
+    }
+
+    public Integer getPower() {
+        return power;
+    }
+
+    public String getGearbox() {
+        return gearbox;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public String getState() {
+        return state;
     }
 
     public List<String> getAdditionalEquipment() {
         return additionalEquipment;
     }
 
-    public String getLocation_country() {
-        return location_country;
-    }
-
-    public String getLocation_city() {
-        return location_city;
-    }
-
-    public String getUsername() {
-        return username;
+    public List<String> getImages() {
+        return images;
     }
 }

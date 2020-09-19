@@ -3,11 +3,8 @@ package spring.web_layer.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.service_layer.dto.HistoryDTO;
-import spring.service_layer.dto.OfferRemovalDTO;
 import spring.service_layer.dto.TransactionDTO;
 import spring.service_layer.services.UserService;
 import spring.web_layer.exceptions.HistoryNotFoundException;
