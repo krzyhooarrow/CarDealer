@@ -35,6 +35,8 @@ public class Offer  {
 
     private Integer price;
 
+    @Lob
+    @Column(name="description", columnDefinition = "TEXT" ,length=512)
     private String description;
 
     @ElementCollection

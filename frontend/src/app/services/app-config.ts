@@ -24,7 +24,7 @@ export class Config {
   public CAR_TYPES_ENDPOINT="/transactionservice/filters/carType"
   public GET_USER_SUBSCRIBED_OFFERS="/transactionservice/user/getSubscriptions"
   public GET_USER_OFFERS="/transactionservice/user/getOffers"
-  public GET_USER_HISTORY="/transactionservice/user/getUserHistory"
+  public GET_USER_HISTORY="/transactionservice/user/getHistory"
 
   // SUBSCRIPTIONS SERVICE ENDPOINTS
   public POPULARIZE_OFFER_ENDPOINT="/carservice/popularity/popularize"

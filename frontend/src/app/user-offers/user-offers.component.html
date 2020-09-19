@@ -11,8 +11,8 @@
        </div>
         <div class="buttons">
         <button mat-flat-button matRipple matRippleRadius='1' color="primary"  [routerLink]="['/offer',transaction.id]" routerLinkActive="active" >Zobacz ofertę</button>
-        <button mat-flat-button matRipple matRippleRadius='1' color="accent"  routerLinkActive="active" >Edytuj ofertę</button>
-        <button mat-flat-button matRipple matRippleRadius='1' color="warn"   routerLinkActive="active" >Usuń ofertę</button>
+        <button mat-flat-button matRipple matRippleRadius='1' color="accent"   (click)="editOffer(transaction.id)">Edytuj ofertę</button>
+        <button mat-flat-button matRipple matRippleRadius='1' color="warn"  (click)="deleteOffer(transaction.id)">Usuń ofertę</button>
         </div>
     </mat-card>
 </div> 

@@ -1,19 +1,19 @@
-<mat-card  matSort (matSortChange)="sortData($event)">
-<table mat-table [dataSource]="transactions" class="mat-elevation-z8">
+<mat-card *ngIf="transactionHistory?.length>0" matSort (matSortChange)="sortData($event)">
+<table mat-table [dataSource]="transactionHistory" class="mat-elevation-z8">
 
     <ng-container matColumnDef="offerID">
       <th mat-header-cell *matHeaderCellDef> Offer ID </th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.item}} </td>
+      <td mat-cell *matCellDef="let history"> {{history.offerId}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="offerTitle">
+    <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action type </th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.item}} </td>
+      <td mat-cell *matCellDef="let history"> {{history.action}} </td>
     </ng-container>
   
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef  mat-sort-header="date"> Date </th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.date | currency}} </td>
+      <td mat-cell *matCellDef="let history"> {{history.date}} </td>
     </ng-container>
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns" class="example-first-header-row"></tr>

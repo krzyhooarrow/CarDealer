@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
+import { AuthService } from '../services/auth.service';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   selector: 'app-offers-history',
@@ -8,48 +10,36 @@ import { MatSort } from '@angular/material/sort';
 })
 export class OffersHistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth:AuthService,private transactionService:TransactionService) { }
 
   @ViewChild(MatSort) sort: MatSort;
   
-  displayedColumns: string[] = ['offerID','offerTitle', 'date'];
-  transactions: Transaction[] = [
-    {item: 'Beach ball', date: 4},
-    {item: 'Towel', date: 5},
-    {item: 'Frisbee', date: 2},
-    {item: 'Sunscreen', date: 4},
-    {item: 'Cooler', date: 25},
-    {item: 'Swim suit', date: 15},
-  ];
+  displayedColumns: string[] = ['offerID','action', 'date'];
+  
+  transactionHistory:HistoryDTO[]
 
   sortData(sort: MatSort) {
-    const data = this.transactions.slice();
+    const data = this.transactionHistory.slice();
     if (!sort.active || sort.direction === '') {
-      this.transactions = data;
+      this.transactionHistory = data;
       return;
     }
 
-    this.transactions = data.sort((a, b) => {
+    this.transactionHistory = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'date': return this.compare(a.date, b.date, isAsc);
+        case 'date': return a.date>b.date ? isAsc ? 1 :-1  -1 : 1 
         default: return 0;
       }
     });
   }
-  
-  compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1);  }
 
-
-  ngOnInit(): void { }
-
- 
+  ngOnInit(): void { 
+    this.auth.authenticationCheck()
+    if(this.auth.isAuthenticated)
+    this.transactionService.getUserHistory().subscribe((history:HistoryDTO[])=>this.transactionHistory = history,()=>null)
+  }
 }
-interface Transaction{
-  item:String,
-  date:number
-}
-
 
 export interface HistoryDTO{
   date:Date,

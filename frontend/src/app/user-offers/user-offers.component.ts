@@ -20,9 +20,11 @@ export class UserOffersComponent implements OnInit {
   }
 
   getTransactions(){
-    this.transactionService.getUserOffers().subscribe((offers: Array<TransactionDTO>) =>   {  this.transactions = offers  } ); 
-   
+    this.transactionService.getUserOffers().subscribe((offers: Array<TransactionDTO>) =>   {  this.transactions = offers  },()=>null ); 
   }
+
+  deleteOffer(id:number){}
+  editOffer(id:number){}
 
 
   no_images = [ {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},
@@ -38,10 +40,8 @@ export class UserOffersComponent implements OnInit {
   images = [
     {path: 'https://i.pinimg.com/originals/58/67/49/5867496ec9a6f50592a70f2219203aaf.jpg'},
     {path: 'https://i.pinimg.com/originals/58/67/49/5867496ec9a6f50592a70f2219203aaf.jpg'}
-  
+
 ]
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

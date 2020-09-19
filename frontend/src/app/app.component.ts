@@ -8,12 +8,9 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'frontend';
-
-  auth:AuthService;
   isUserAuthenticated = false;
 
-    constructor(auth:AuthService){ 
-      this.auth = auth; 
+    constructor(public auth:AuthService){ 
       auth.authenticationCheck()
     }
 

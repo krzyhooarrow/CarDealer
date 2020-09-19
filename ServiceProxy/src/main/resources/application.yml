@@ -17,3 +17,16 @@ management:
       exposure:
         include: '*'
       base-path: '/api'
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+              timeoutInMilliseconds: 10000
+
+
+
+

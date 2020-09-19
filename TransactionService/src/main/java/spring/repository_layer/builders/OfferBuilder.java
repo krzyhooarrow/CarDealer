@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import spring.repository_layer.db_init.DBInitializer;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.User;
 import spring.repository_layer.models.cars.*;
@@ -28,6 +29,8 @@ public class OfferBuilder {
 
     private RepositoryService repositoryService;
     private CarService carService;
+    private static final Logger logger = LoggerFactory.getLogger(DBInitializer.class);
+
     public Builder createNewOffer() {  return new Builder();   }
 
 
@@ -144,6 +147,7 @@ public class OfferBuilder {
         }
 
         public Offer build() {
+
             Car car = carService.addNewCarDefinition(production_year, model, carType);
 
             ConcreteCar concreteCar =  repositoryService.concreteCarRepository.save(

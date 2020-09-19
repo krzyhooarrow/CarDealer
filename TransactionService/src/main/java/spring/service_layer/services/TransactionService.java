@@ -66,7 +66,7 @@ public class TransactionService {
     @Triggerable
     public boolean createNewOffer(OfferDTO offerDTO,Long userID) {
         try {
-            logger.error("here ");
+
             Offer offer = offerBuilder.createNewOffer()
                     .title(offerDTO.getTitle())
                     .tags(offerDTO.getTags())
@@ -87,7 +87,7 @@ public class TransactionService {
                     .putImages(offerDTO.getImages())
                     .forUser(userID)
                     .build();
-            logger.error("here 2");
+
             repositoryService.offerRepository.save(offer);
 
             new Trigger() {
@@ -100,11 +100,13 @@ public class TransactionService {
                 }
             };
 
+            new Thread(()->
             mailService.sendMail
                     (
                             repositoryService.userRepository.findById(userID).get().getEmail(),
                             MailService.NotificationType.OFFER_CREATION
-                    );
+                    )
+            ).start();
 
             return true;
         } catch (Exception exc) {
@@ -134,11 +136,13 @@ public class TransactionService {
                 }
             };
 
+            new Thread(()->
             mailService.sendMail
                     (
                             repositoryService.userRepository.findById(offerId).get().getEmail(),
                             MailService.NotificationType.OFFER_REMOVAL
-                    );
+                    )
+            ).start();
 
             return true;
         } catch (Exception exc) {
