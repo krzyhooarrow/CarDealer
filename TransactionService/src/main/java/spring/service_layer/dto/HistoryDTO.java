@@ -15,8 +15,11 @@ public class HistoryDTO {
     private Long offerId;
 
     public HistoryDTO(History history) {
+
         this.date = history.getDate();
         this.action = history.getAction();
         this.offerId = history.getOfferId().getId();
     }
+
+
 }

@@ -7,7 +7,6 @@ import java.util.Date;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @NonNull
 public class History {
@@ -48,4 +47,6 @@ public class History {
     public User getUser() {
         return user;
     }
+
+    public History(){}
 }

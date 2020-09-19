@@ -21,7 +21,9 @@ public class UserService {
     private RepositoryService service;
 
     public List<TransactionDTO> getUserOffers(Long userID) throws OffersNotFoundException {
-        return service.offerRepository.getOffersByUserId(userID).orElseThrow(OffersNotFoundException::new)
+        return service.offerRepository
+                .getOffersByUserId(userID)
+                .orElseThrow(OffersNotFoundException::new)
                 .stream()
                 .map(TransactionDTO::new)
                 .collect(Collectors.toList());
@@ -29,7 +31,9 @@ public class UserService {
 
 
     public List<TransactionDTO> getOffersByIdsList(List<Long> userIds) throws OffersNotFoundException {
-        return service.offerRepository.getOffersList(userIds).orElseThrow(OffersNotFoundException::new)
+        return service.offerRepository
+                .getOffersList(userIds)
+                .orElseThrow(OffersNotFoundException::new)
                 .stream()
                 .map(TransactionDTO::new)
                 .collect(Collectors.toList());
