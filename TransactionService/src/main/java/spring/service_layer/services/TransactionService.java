@@ -14,8 +14,6 @@ import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.cars.FuelTypeEnum;
 import spring.repository_layer.models.cars.GearBox;
 import spring.repository_layer.models.cars.State;
-import spring.repository_layer.triggers.Trigger;
-import spring.repository_layer.triggers.Triggerable;
 import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.dto.SearchDTO;
 import spring.service_layer.dto.TransactionDTO;
@@ -63,7 +61,7 @@ public class TransactionService {
         return offersList.stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
-    @Triggerable
+
     public boolean createNewOffer(OfferDTO offerDTO,Long userID) {
         try {
 
@@ -90,6 +88,8 @@ public class TransactionService {
 
             repositoryService.offerRepository.save(offer);
 
+
+
             repositoryService.historyRepository
                     .save(new History("OFFER CREATION", offer,
                             repositoryService.userRepository.findById(userID).get()
@@ -110,7 +110,6 @@ public class TransactionService {
         }
     }
 
-    @Triggerable
     public boolean removeOffer(Long offerId,Long userID) {
         try {
 

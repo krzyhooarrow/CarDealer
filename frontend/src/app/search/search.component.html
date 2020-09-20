@@ -93,7 +93,9 @@
       <mat-form-field appearance="fill" >
         <mat-label>Fuel type</mat-label>
         <mat-select [(ngModel)]="fuel_type">
-       
+          <mat-option class = "theme-col" *ngFor="let option of distinctFuelTypes" [value]="option">
+            {{ option }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
@@ -214,8 +216,6 @@
   </div>
   </mat-card>
 </p>
-
-
 
 <p><mat-spinner *ngIf="isLoading" diameter="150"></mat-spinner></p>
 <p><app-offers-tile *ngIf="transactions?.length>0 && !isLoading" [transactions] = "transactions_selector(transactions)" [results] = "transactions.length"></app-offers-tile></p>

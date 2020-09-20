@@ -19,7 +19,6 @@ public class CarModel {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-
     private String model;
 
     @OneToOne

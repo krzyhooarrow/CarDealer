@@ -23,7 +23,7 @@ export class UserOffersComponent implements OnInit {
     this.transactionService.getUserOffers().subscribe((offers: Array<TransactionDTO>) =>   {  this.transactions = offers  },()=>null ); 
   }
 
-  deleteOffer(id:number){}
+  deleteOffer(id:number){this.transactionService.removeOffer(id).subscribe(()=>this.transactions = this.transactions.filter(transaction => transaction.id != id),()=>this.transactions = this.transactions.filter(transaction => transaction.id != id))}
   editOffer(id:number){}
 
 

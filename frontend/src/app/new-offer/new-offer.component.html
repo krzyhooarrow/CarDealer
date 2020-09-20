@@ -76,7 +76,9 @@
             <mat-form-field>
                 <mat-label>Fuel type</mat-label>
                 <mat-select  matInput formControlName="fuel"  >
-       
+                  <mat-option class = "theme-col" *ngFor="let option of distinctFuelTypes" [value]="option">
+                    {{ option }}
+                  </mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -118,7 +120,7 @@
                     <mat-radio-button value="damaged">Damaged</mat-radio-button>
                 </mat-radio-group>       
 
-            <div class="space">
+            <div class="space" *ngIf="distinctAdditionalEquipmentList?.length>0">
               <mat-accordion>
                 <mat-expansion-panel hideToggle>
                   <mat-expansion-panel-header>
@@ -126,7 +128,6 @@
                     <mat-panel-description>Select car equipment from expandable list</mat-panel-description>
                   </mat-expansion-panel-header>
                   <p> 
-                  
                     <mat-selection-list matInput formControlName="equipment">
                         <mat-list-option *ngFor="let item of distinctAdditionalEquipmentList" [value]="item">
                           {{item}}

@@ -13,7 +13,7 @@
           <mat-divider></mat-divider>
           <p>Email:{{ transaction.email }}  <mat-icon color="warn">location_on</mat-icon></p>
           <mat-divider></mat-divider>
-          <p>Creation date: {{ transaction.creationDate }} <mat-icon color="warn">date_range</mat-icon></p>
+          <p>Creation date: {{ transaction.creationDate | date}} <mat-icon color="warn">date_range</mat-icon></p>
           <mat-divider></mat-divider>
           <div *ngIf="watchers"><p>Visitors: {{ watchers }} <mat-icon color="warn">remove_red_eye</mat-icon></p>
           <mat-divider></mat-divider></div>

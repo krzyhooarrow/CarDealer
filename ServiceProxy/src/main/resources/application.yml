@@ -18,15 +18,24 @@ management:
         include: '*'
       base-path: '/api'
 
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: THREAD
-          thread:
+zuul:
+  ribbon-isolation-strategy: thread
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 60000
+    connection-request-timeout-millis: 5000
+  ribbon:
+    ConnectTimeout: 5000
+    ReadTimeout: 60000
+  hystrix:
+    command:
+      default:
+        execution:
+          isolation:
+            thread:
               timeoutInMilliseconds: 10000
-
+          timeout:
+            enabled: false
 
 
 

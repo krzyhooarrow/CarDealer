@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: subscriptionservice
+  profiles:
+    active: default
+  cloud:
+    config:
+      enabled: true
+  redis:
+    host: localhost
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+

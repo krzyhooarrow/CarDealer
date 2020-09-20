@@ -71,7 +71,7 @@ public class CarService {
         return carMark0.orElse(carMark1);
     }
 
-    public ConcreteCar addNewConcreteCar(Car car, FuelTypeEnum fuelTypeEnum, String country, List<String> additionalEquipment, String location_country, String location_city) {
+    public ConcreteCar addNewConcreteCar(Car car, FuelTypeEnum fuelTypeEnum, String country, List<Equipment> additionalEquipment, String location_country, String location_city) {
             addFuelTypeDefinition(fuelTypeEnum);
 
         return repositoryService.concreteCarRepository.save(new ConcreteCar(car,

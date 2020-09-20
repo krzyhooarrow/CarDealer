@@ -11,6 +11,7 @@ import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.services.FiltersService;
 import spring.service_layer.services.TransactionService;
 
+import javax.persistence.GeneratedValue;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -41,5 +42,25 @@ public class FilterController {
     @GetMapping("/locations")
     public ResponseEntity<List<Object>> getDistinctLocations()  {
         return ResponseEntity.ok(service.getDistinctLocationCities());
+    }
+
+    @GetMapping("/fuelTypes")
+    public ResponseEntity<List<String>> fuelTypes()  {
+        return ResponseEntity.ok(service.getDistinctFuelTypes());
+    }
+
+    @GetMapping("/additionalEquipment")
+    public ResponseEntity<List<String>> getAdditionalEquipment()  {
+        return ResponseEntity.ok(service.getAdditionalEquipment());
+    }
+
+    @GetMapping("/gearboxes")
+    public ResponseEntity<List<String>> getGearboxTypes()  {
+        return ResponseEntity.ok(service.getGearboxes());
+    }
+
+    @GetMapping("/states")
+    public ResponseEntity<List<String>> getStates()  {
+        return ResponseEntity.ok(service.getStates());
     }
 }

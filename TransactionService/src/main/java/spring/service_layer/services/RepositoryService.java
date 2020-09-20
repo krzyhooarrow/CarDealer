@@ -22,6 +22,6 @@ public class RepositoryService {
     public EmailRepository emailRepository;
     public OfferRepository offerRepository;
     public HistoryRepository historyRepository;
-
+    public EquipmentRepository equipmentRepository;
 
 }

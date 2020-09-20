@@ -34,8 +34,9 @@ public class ConcreteCar{
     private FuelType fuelType;
     private String country;
 
-    @ElementCollection
-    private List<String> additionalEquipment;
+    @OneToMany
+    private List<Equipment> additionalEquipment;
+
     private String location_country;
     private String location_city;
 
@@ -49,7 +50,7 @@ public class ConcreteCar{
     @Enumerated(EnumType.STRING)
     private State state;
 
-    public ConcreteCar(Car car, FuelType fuelType, String country, List<String> additionalEquipment, String location_country, String location_city) {
+    public ConcreteCar(Car car, FuelType fuelType, String country, List<Equipment> additionalEquipment, String location_country, String location_city) {
         this.car = car;
         this.fuelType = fuelType;
         this.country = country;
@@ -59,7 +60,7 @@ public class ConcreteCar{
     }
 
     public ConcreteCar(Car car, FuelType fuelType, String country,
-         List<String> additionalEquipment, int mileage, float capacity, int power, GearBox gearbox, String vin, State state) {
+         List<Equipment> additionalEquipment, int mileage, float capacity, int power, GearBox gearbox, String vin, State state) {
         this.car = car;
         this.fuelType = fuelType;
         this.country = country;
@@ -84,7 +85,7 @@ public class ConcreteCar{
         return country;
     }
 
-    public List<String> getAdditionalEquipment() {
+    public List<Equipment> getAdditionalEquipment() {
         return additionalEquipment;
     }
 

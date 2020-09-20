@@ -16,9 +16,9 @@ export class NewOfferComponent implements OnInit {
   distinctCarMarks:Array<SelectMap>;
   distinctCarModels:Array<SelectMap>;
   distinctLocations:Array<SelectMap>;
-  distinctFuelTypes:Array<SelectMap>;
+  distinctFuelTypes:Array<String>;
   distinctProductionCountry:Array<SelectMap>; 
-  distinctAdditionalEquipmentList:Array<String> = ["123","456"];
+  distinctAdditionalEquipmentList:Array<String>;
 
   public car_type:String;
   public car_model:String
@@ -38,7 +38,7 @@ export class NewOfferComponent implements OnInit {
 
   ngOnInit(): void {
     this.firstFormGroup = this._formBuilder.group({  
-      title: ['', Validators.required],  tags: ['', Validators.required],  
+      title: ['', [Validators.required,Validators.minLength(5)]],  tags: ['', Validators.required],  
       price: ['', Validators.required],  description : ['',],
     });
 
@@ -49,12 +49,12 @@ export class NewOfferComponent implements OnInit {
       model: ['', Validators.required],
       year: ['', Validators.required],
       fuel: ['', Validators.required],
-      location: ['', Validators.required],
-      mileage: ['', Validators.required],
-      capacity: ['', Validators.required],
-      power: ['', Validators.required],
+      location: ['', [Validators.required, Validators.maxLength(15)]],
+      mileage: ['', [Validators.required,Validators.max(1000000)]],
+      capacity: ['', [Validators.required,Validators.max(7000)]],
+      power: ['', [Validators.required,Validators.max(1000)]],
       gearbox: ['', Validators.required],
-      vin: ['', Validators.required],
+      vin: ['', [Validators.required,Validators.minLength(11),Validators.maxLength(17)]],
       state: ['undamaged', Validators.required],
       equipment: ['', ]
     });
@@ -62,6 +62,8 @@ export class NewOfferComponent implements OnInit {
     this.service.getDistinctCarTypesWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarTypes = types })
     this.service.getDistinctCarMarksWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarMarks = types })
     this.service.getDistinctLocationsWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctLocations = types })  
+    this.service.getDistinctFuelTypes().subscribe((types: Array<String>) => {this.distinctFuelTypes = types })
+    this.service.getDistinctAdditionalEquipment().subscribe((types: Array<String>) => {this.distinctAdditionalEquipmentList = types })
   }
 
   onSelectMark(value:String){   this.service.getDistinctCarModelsByMarkWithCounter(value).subscribe((types: Array<SelectMap>) => {this.distinctCarModels = types }) }

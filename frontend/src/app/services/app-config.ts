@@ -20,6 +20,8 @@ export class Config {
   public CONCRETE_OFFER_ENDPOINT = "/transactionservice/offers/"
   public MARKS_WITH_COUNTER_ENDPOINT="/transactionservice/filters/marks"
   public MODELS_WITH_COUNTER_ENDPOINT="/transactionservice/filters/models"
+  public GET_FUEL_TYPES="/transactionservice/filters/fuelTypes"
+  public GET_ADDITIONAL_EQUIPMENT="/transactionservice/filters/additionalEquipment"
   public LOCATIONS_WITH_COUNTER_ENDPOINT="/transactionservice/filters/locations"
   public CAR_TYPES_ENDPOINT="/transactionservice/filters/carType"
   public GET_USER_SUBSCRIBED_OFFERS="/transactionservice/user/getSubscriptions"

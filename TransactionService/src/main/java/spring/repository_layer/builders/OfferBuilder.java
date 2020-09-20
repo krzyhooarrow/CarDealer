@@ -52,7 +52,7 @@ public class OfferBuilder {
         private GearBox gearbox;
         private String vin;
         private State state;
-        private List<String> additionalEquipment;
+        private List<Equipment> additionalEquipment;
         private List<String> images;
         private User user;
 
@@ -132,7 +132,8 @@ public class OfferBuilder {
         }
 
         public Builder additionalEquipment(List<String> eq) {
-            this.additionalEquipment = eq == null ? new LinkedList<>() : eq;
+            this.additionalEquipment = eq == null ? new LinkedList<>() :
+                    repositoryService.equipmentRepository.findByList(eq).orElseGet(LinkedList::new);
             return this;
         }
 

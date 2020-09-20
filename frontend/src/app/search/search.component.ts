@@ -39,8 +39,7 @@ export class SearchComponent implements OnInit {
       "power_to": this.power_to? +this.power_to : null,
       "lowPrice": this.price_from? +this.price_from : null,
       "highPrice": this.price_to? +this.price_to : null,
-
-  }
+      }
   ).subscribe((offers: Array<TransactionDTO>) => 
     {    
          this.transactions = offers
@@ -49,7 +48,7 @@ export class SearchComponent implements OnInit {
   );  }
     
   onSortChange(){
- 
+        if(this.transactions)
         if(this.sort == 1)
         this.transactions.sort((t1:TransactionDTO,t2:TransactionDTO) => {return t1.price - t2.price})
 
@@ -90,19 +89,18 @@ export class SearchComponent implements OnInit {
   public power_to:String
   public gearbox:String;
 
-
-
   distinctCarTypes:Array<SelectMap>;
   distinctCarMarks:Array<SelectMap>;
   distinctCarModels:Array<SelectMap>;
   distinctLocations:Array<SelectMap>;
-  distinctFuelTypes:Array<SelectMap>;
+  distinctFuelTypes:Array<String>;
   distinctProductionCountry:Array<SelectMap>;   
 
   ngOnInit(): void { 
     this.service.getDistinctCarTypesWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarTypes = types })
     this.service.getDistinctCarMarksWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarMarks = types })
     this.service.getDistinctLocationsWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctLocations = types })
+    this.service.getDistinctFuelTypes().subscribe((types: Array<String>) => {this.distinctFuelTypes = types })
   }
 
 

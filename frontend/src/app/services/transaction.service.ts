@@ -26,11 +26,15 @@ public getDistinctLocationsWithCounter(){ return this.http.get<SelectMap[]>(this
 
 public getDistinctCarModelsByMarkWithCounter(mark:String){ return this.http.post<SelectMap[]>(this.config.API_URL_SERVER.concat(this.config.MODELS_WITH_COUNTER_ENDPOINT),mark) }
 
+public getDistinctFuelTypes(){return  this.http.get<String[]>(this.config.API_URL_SERVER.concat(this.config.GET_FUEL_TYPES)) }
+
+public getDistinctAdditionalEquipment(){return  this.http.get<String[]>(this.config.API_URL_SERVER.concat(this.config.GET_ADDITIONAL_EQUIPMENT)) }
+
 public getAllOffersByQuery(offerDTO:SearchDTO){  return this.http.post<Array<TransactionDTO>>(this.config.API_URL_SERVER.concat(this.config.OFFER_SEARCH_ENDPOINT),offerDTO,this.config.HEADER) }
 
-public removeOffer(id: number){ this.http.post(this.config.API_URL_SERVER.concat(this.config.REMOVE_OFFER_ENDPOINT).concat('/').concat(id.toString()),null,this.authService.getAuthHeader())}
+public removeOffer(id: number){ return this.http.get(this.config.API_URL_SERVER.concat(this.config.REMOVE_OFFER_ENDPOINT).concat('/').concat(id.toString()),this.authService.getAuthHeader())}
 
-public createOffer(offerDTO: OfferDTO){ this.http.post(this.config.API_URL_SERVER.concat(this.config.CREATE_OFFER_ENDPOINT),offerDTO,this.authService.getAuthHeader())}
+public createOffer(offerDTO: OfferDTO){return this.http.post(this.config.API_URL_SERVER.concat(this.config.CREATE_OFFER_ENDPOINT),offerDTO,this.authService.getAuthHeader())}
 
 public getUserOffers(){  return this.http.get<Array<TransactionDTO>>(this.config.API_URL_SERVER.concat(this.config.GET_USER_OFFERS),this.authService.getAuthHeader()) }
 
