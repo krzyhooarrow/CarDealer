@@ -90,15 +90,10 @@ public class TransactionService {
 
             repositoryService.offerRepository.save(offer);
 
-            new Trigger() {
-                @Override
-                public void update() {
-                    repositoryService.historyRepository
-                    .save(new History("OFFER CREATION",offer,
+            repositoryService.historyRepository
+                    .save(new History("OFFER CREATION", offer,
                             repositoryService.userRepository.findById(userID).get()
-                ));
-                }
-            };
+                    ));
 
             new Thread(()->
             mailService.sendMail
@@ -126,15 +121,10 @@ public class TransactionService {
 
             repositoryService.offerRepository.delete(toRemove);
 
-            new Trigger() {
-                @Override
-                public void update() {
-                    repositoryService.historyRepository
+            repositoryService.historyRepository
                             .save(new History("OFFER REMOVAL",toRemove,
                                     repositoryService.userRepository.findById(userID).get()
                             ));
-                }
-            };
 
             new Thread(()->
             mailService.sendMail

@@ -42,6 +42,7 @@ public class History {
         this.action = action;
         this.offerId = offerId;
         this.user = user;
+        this.date = new Date();
     }
 
     public User getUser() {
