@@ -12,10 +12,10 @@ cd target
 nohup java -jar TransactionService-0.0.1-SNAPSHOT.jar &
 
 cd ../..
-cd CarService
+cd SubscriptionService
 mvn package
 cd target
-nohup java -jar CarService-1.0-SNAPSHOT.jar &
+nohup java -jar SubscriptionService-1.0-SNAPSHOT.jar &
 
 cd ../..
 cd ServiceProxy
