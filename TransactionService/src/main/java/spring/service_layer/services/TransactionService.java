@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import spring.repository_layer.builders.OfferBuilder;
 import spring.repository_layer.models.History;
 import spring.repository_layer.models.Offer;
@@ -20,8 +21,7 @@ import spring.service_layer.dto.TransactionDTO;
 import spring.web_layer.exceptions.OffersNotFoundException;
 import spring.web_layer.exceptions.UserNotFoundException;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +32,7 @@ public class TransactionService {
     private RepositoryService repositoryService;
     private MailService mailService;
     private OfferBuilder offerBuilder;
+    private ImagesService imagesService;
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
@@ -64,6 +65,8 @@ public class TransactionService {
 
     public boolean createNewOffer(OfferDTO offerDTO,Long userID) {
         try {
+            Map<MultipartFile,String> filesWithUrl = offerDTO.getImages().stream()
+                            .collect(Collectors.toMap(image->image,image->imagesService.getFileUrl(image)));
 
             Offer offer = offerBuilder.createNewOffer()
                     .title(offerDTO.getTitle())
@@ -82,18 +85,18 @@ public class TransactionService {
                     .withVINNumber(offerDTO.getVin())
                     .atState(offerDTO.getState())
                     .additionalEquipment(offerDTO.getAdditionalEquipment())
-                    .putImages(offerDTO.getImages())
+                    .putImages(new ArrayList<>(filesWithUrl.values()))
                     .forUser(userID)
                     .build();
 
             repositoryService.offerRepository.save(offer);
 
-
-
             repositoryService.historyRepository
                     .save(new History("OFFER CREATION", offer,
                             repositoryService.userRepository.findById(userID).get()
                     ));
+
+            filesWithUrl.forEach((image,url) -> imagesService.uploadFile(image,url));
 
             new Thread(()->
             mailService.sendMail
@@ -124,6 +127,8 @@ public class TransactionService {
                             .save(new History("OFFER REMOVAL",toRemove,
                                     repositoryService.userRepository.findById(userID).get()
                             ));
+
+            toRemove.getImage().forEach(image -> imagesService.deleteFileFromS3Bucket(image));
 
             new Thread(()->
             mailService.sendMail

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.web.multipart.MultipartFile;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.User;
 import spring.repository_layer.models.cars.Car;
@@ -36,7 +37,7 @@ public class OfferDTO {
     private String vin;
     private String state;
     private List<String> additionalEquipment;
-    private List<String> images;
+    private List<MultipartFile> images;
 
     public String getTitle() {
         return title;
@@ -106,7 +107,7 @@ public class OfferDTO {
         return additionalEquipment;
     }
 
-    public List<String> getImages() {
+    public List<MultipartFile> getImages() {
         return images;
     }
 }
