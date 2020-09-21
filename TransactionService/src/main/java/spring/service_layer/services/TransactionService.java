@@ -120,9 +120,7 @@ public class TransactionService {
                             .save(new History("OFFER REMOVAL",toRemove,
                                     repositoryService.userRepository.findById(userID).get()
                             ));
-
-            toRemove.getImage().forEach(image -> imagesService.deleteFileFromS3Bucket(image));
-
+            
             new Thread(()->
             mailService.sendMail
                     (
