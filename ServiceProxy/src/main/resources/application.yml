@@ -27,15 +27,22 @@ zuul:
   ribbon:
     ConnectTimeout: 5000
     ReadTimeout: 60000
-  hystrix:
-    command:
-      default:
-        execution:
-          isolation:
-            thread:
-              timeoutInMilliseconds: 10000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
           timeout:
             enabled: false
+
+
+transactionservice:
+  ribbon:
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
 
 
 

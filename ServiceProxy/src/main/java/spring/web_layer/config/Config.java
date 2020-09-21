@@ -63,11 +63,6 @@ public class Config extends WebSecurityConfigurerAdapter {
                         "/transactionservice/offers/*").permitAll()
                 .anyRequest()
                 .authenticated()
-//                .and()
-//                .perm
-//                .anyRequest()
-//                .authenticated()
-//                .authorizeRequests().antMatchers("/**").permitAll().and()        // <---
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
