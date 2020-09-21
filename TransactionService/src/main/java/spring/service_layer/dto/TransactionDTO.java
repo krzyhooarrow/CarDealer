@@ -49,8 +49,8 @@ public class TransactionDTO {
         if(offer.getCar().getLocation_city()!=null) this.location_city = offer.getCar().getLocation_city();
         if(offer.getCar().getAdditionalEquipment()!=null) this.additionalEquipment = offer.getCar()
                 .getAdditionalEquipment().stream().map(String::valueOf).collect(Collectors.toList());
-        if(offer.getUser().getUsername()!=null) this.username = offer.getUser().getUsername();
-        if(offer.getUser().getEmail()!=null) this.email = offer.getUser().getEmail();
+        if(offer.getUser()!=null) this.username = offer.getUser().getUsername();
+        if(offer.getUser()!=null) this.email = offer.getUser().getEmail();
         if(offer.getOfferCreationTime()!=null) this.creationDate = offer.getOfferCreationTime();
         if(offer.getDescription()!=null) this.description = offer.getDescription();
         if(offer.getImage()!=null) this.images = offer.getImage();
