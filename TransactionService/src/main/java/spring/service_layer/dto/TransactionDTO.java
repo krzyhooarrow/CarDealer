@@ -44,7 +44,7 @@ public class TransactionDTO {
     this.model = offer.getCar().getCar().getModel().getModel();
     this.mark = offer.getCar().getCar().getModel().getCarMark().getMark();
     this.production_year = offer.getCar().getCar().getProduction_year();
-    this.fuelType = offer.getCar().getFuelType().getFuelTypeEnum().name();
+//    this.fuelType = offer.getCar().getFuelType().name();
     this.location_city = offer.getCar().getLocation_city();
 //    this.additionalEquipment = offer.getCar().getAdditionalEquipment();
 //    this.username = offer.getUser().getUsername();

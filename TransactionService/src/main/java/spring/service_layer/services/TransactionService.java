@@ -1,6 +1,7 @@
 package spring.service_layer.services;
 
 
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -12,14 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.repository_layer.builders.OfferBuilder;
 import spring.repository_layer.models.History;
 import spring.repository_layer.models.Offer;
-import spring.repository_layer.models.cars.FuelTypeEnum;
+import spring.repository_layer.models.cars.FuelType;
 import spring.repository_layer.models.cars.GearBox;
 import spring.repository_layer.models.cars.State;
 import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.dto.SearchDTO;
 import spring.service_layer.dto.TransactionDTO;
 import spring.web_layer.exceptions.OffersNotFoundException;
-import spring.web_layer.exceptions.UserNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,7 +36,6 @@ public class TransactionService {
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
-
     public List<TransactionDTO> getAllOffersBySpecifiedParams(SearchDTO searchDTO) {
         List<Offer> offersList = repositoryService.offerRepository.findAllByParameters
                 (
@@ -46,7 +45,7 @@ public class TransactionService {
                         searchDTO.getProduction_year_from(),
                         searchDTO.getProduction_year_to(),
                         searchDTO.getState() != null? State.valueOf(searchDTO.getState()):null,
-                        searchDTO.getFuelType() != null? FuelTypeEnum.valueOf(searchDTO.getFuelType()):null,
+                        searchDTO.getFuelType() != null? FuelType.valueOf(searchDTO.getFuelType()):null,
                         searchDTO.getMileage_from(),
                         searchDTO.getMileage_to(),
                         searchDTO.getLowPrice(),
@@ -63,11 +62,8 @@ public class TransactionService {
     }
 
 
-    public boolean createNewOffer(OfferDTO offerDTO,List<MultipartFile> images,Long userID) {
+    public Long createNewOffer(OfferDTO offerDTO,Long userID) {
         try {
-            Map<MultipartFile,String> filesWithUrl =images.stream()
-                            .collect(Collectors.toMap(image->image,image->imagesService.getFileUrl(image)));
-
             Offer offer = offerBuilder.createNewOffer()
                     .title(offerDTO.getTitle())
                     .tags(offerDTO.getTags())
@@ -85,7 +81,6 @@ public class TransactionService {
                     .withVINNumber(offerDTO.getVin())
                     .atState(offerDTO.getState())
                     .additionalEquipment(offerDTO.getAdditionalEquipment())
-                    .putImages(new ArrayList<>(filesWithUrl.values()))
                     .forUser(userID)
                     .build();
 
@@ -95,8 +90,6 @@ public class TransactionService {
                     .save(new History("OFFER CREATION", offer,
                             repositoryService.userRepository.findById(userID).get()
                     ));
-            logger.error("here");
-            filesWithUrl.forEach((image,url) -> imagesService.uploadFile(image,url));
 
             new Thread(()->
             mailService.sendMail
@@ -106,10 +99,10 @@ public class TransactionService {
                     )
             ).start();
 
-            return true;
+            return offer.getId();
         } catch (Exception exc) {
             logger.info("Error creating offer");
-            return false;
+            return null;
         }
     }
 
@@ -145,10 +138,7 @@ public class TransactionService {
         }
     }
 
-
     public TransactionDTO getOfferById(Long id) throws OffersNotFoundException {
         return repositoryService.offerRepository.findById(id).map(TransactionDTO::new).orElseThrow(OffersNotFoundException::new);
     }
-
-
 }

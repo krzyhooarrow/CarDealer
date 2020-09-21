@@ -9,7 +9,7 @@ cd ../..
 cd TransactionService
 mvn package
 cd target
-nohup java -jar TransactionService-0.0.1-SNAPSHOT.jar &
+nohup java -jar TransactionService-0.0.1-SNAPSHOT.jar < ./../deploy.properties &
 
 cd ../..
 cd SubscriptionService

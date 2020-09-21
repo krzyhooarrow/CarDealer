@@ -6,14 +6,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.repository_layer.models.cars.FuelType;
-import spring.repository_layer.models.cars.FuelTypeEnum;
 import spring.repository_layer.models.cars.GearBox;
 import spring.repository_layer.models.cars.State;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -46,7 +44,7 @@ public class FiltersService {
 
     public List<String> getDistinctFuelTypes() {
         return Arrays
-                .stream(FuelTypeEnum.values())
+                .stream(FuelType.values())
                 .map(String::valueOf)
                 .collect(Collectors.toList());
     }

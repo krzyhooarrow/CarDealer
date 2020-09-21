@@ -30,7 +30,8 @@ public class ConcreteCar{
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToOne
+
+    @Enumerated(EnumType.STRING)
     private FuelType fuelType;
     private String country;
 

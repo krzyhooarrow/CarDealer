@@ -44,7 +44,7 @@ public class OfferBuilder {
         private CarType carType;
         private CarModel model;
         private Integer production_year;
-        private FuelTypeEnum fuelType;
+        private FuelType fuelType;
         private String location;
         private Integer mileage;
         private Float capacity;
@@ -56,83 +56,83 @@ public class OfferBuilder {
         private List<String> images;
         private User user;
 
-        public Builder title(@NonNull String title){
+        public Builder title(String title){
             this.title = title;
             return this;
         }
 
-        public Builder tags(@NonNull String tags){
+        public Builder tags(String tags){
             this.tags = tags;
             return this;
         }
 
-        public Builder price(@NonNull int price) {
+        public Builder price(int price) {
             this.price = price;
             return this;
         }
 
-        public Builder description(@NonNull String description) {
+        public Builder description(String description) {
             this.description = description;
             return this;
         }
 
-        public Builder carType(@NonNull String carType) throws CarTypeNotFoundException {
+        public Builder carType(String carType) throws CarTypeNotFoundException {
             this.carType = repositoryService.carTypeRepository.findByCarType(carType).orElseThrow(CarTypeNotFoundException::new);
             return this;
         }
 
-        public Builder carModel(@NonNull String carModel) throws CarModelNotFoundException {
+        public Builder carModel(String carModel) throws CarModelNotFoundException {
             this.model = repositoryService.carModelRepository.findByModel(carModel).orElseThrow(CarModelNotFoundException::new);
             return this;
         }
 
-        public Builder productionYear(@NonNull Integer production_year) {
+        public Builder productionYear(Integer production_year) {
             this.production_year = production_year;
             return this;
         }
 
-        public Builder fuelType(@NonNull String fuelType) {
-            this.fuelType = FuelTypeEnum.valueOf(fuelType);
+        public Builder fuelType(String fuelType) {
+            this.fuelType = FuelType.valueOf(fuelType);
             return this;
         }
 
-        public Builder locatedIn(@NonNull String location) {
+        public Builder locatedIn(String location) {
             this.location = location;
             return this;
         }
 
-        public Builder withMileage(@NonNull Integer mileage) {
+        public Builder withMileage(Integer mileage) {
             this.mileage = mileage;
             return this;
         }
 
-        public Builder withCapacity(@NonNull Float capacity) {
+        public Builder withCapacity(Float capacity) {
             this.capacity = capacity;
             return this;
         }
 
-        public Builder ofPower(@NonNull Integer power) {
+        public Builder ofPower(Integer power) {
             this.power = power;
             return this;
         }
 
-        public Builder withGearboxType(@NonNull String gearboxType) {
+        public Builder withGearboxType(String gearboxType) {
             this.gearbox = GearBox.valueOf(gearboxType);
             return this;
         }
 
-        public Builder withVINNumber(@NonNull String VIN) {
+        public Builder withVINNumber(String VIN) {
             this.vin = VIN;
             return this;
         }
 
-        public Builder atState(@NonNull String state) {
+        public Builder atState(String state) {
             this.state = State.valueOf(state);
             return this;
         }
 
         public Builder additionalEquipment(List<String> eq) {
-            this.additionalEquipment = eq == null ? new LinkedList<>() :
+            this.additionalEquipment = eq == null || eq.size()==0 ? new LinkedList<>() :
                     repositoryService.equipmentRepository.findByList(eq).orElseGet(LinkedList::new);
             return this;
         }
@@ -142,7 +142,7 @@ public class OfferBuilder {
             return this;
         }
 
-        public Builder forUser(@NonNull Long userId) throws UserNotFoundException {
+        public Builder forUser(Long userId) throws UserNotFoundException {
             this.user = repositoryService.userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
             return this;
         }
@@ -151,11 +151,9 @@ public class OfferBuilder {
 
             Car car = carService.addNewCarDefinition(production_year, model, carType);
 
-            ConcreteCar concreteCar =  repositoryService.concreteCarRepository.save(
-                    new ConcreteCar(car,repositoryService.
-                            fuelTypeRepository.findByFuelTypeEnum(fuelType).get(),location,
-                            additionalEquipment, mileage,capacity,power,gearbox,vin ,state));
+            ConcreteCar concreteCar = new ConcreteCar(car,fuelType,location,additionalEquipment, mileage,capacity,power,gearbox,vin ,state);
 
+            repositoryService.concreteCarRepository.save(concreteCar);
 
             return new Offer(concreteCar, price, description, images, user,title,tags);
         }

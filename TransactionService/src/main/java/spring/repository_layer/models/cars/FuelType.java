@@ -8,25 +8,7 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@NonNull
-@Data
-public class FuelType {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
-
-    @Enumerated(EnumType.STRING)
-    private FuelTypeEnum fuelTypeEnum;
-
-    public FuelType(FuelTypeEnum fuelTypeEnum) {
-        this.fuelTypeEnum = fuelTypeEnum;
-    }
-
-    public FuelTypeEnum getFuelTypeEnum() {
-        return fuelTypeEnum;
-    }
+public enum FuelType {
+    diesel,petrol,gas,hybrid;
 }

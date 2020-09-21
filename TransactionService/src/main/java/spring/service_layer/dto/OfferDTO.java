@@ -1,20 +1,9 @@
 package spring.service_layer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import org.springframework.web.multipart.MultipartFile;
-import spring.repository_layer.models.Offer;
-import spring.repository_layer.models.User;
-import spring.repository_layer.models.cars.Car;
-import spring.repository_layer.models.cars.CarModel;
-import spring.repository_layer.models.cars.CarType;
-import spring.repository_layer.models.cars.FuelTypeEnum;
 
 
 import java.util.List;
-import java.util.function.Function;
 
 @NoArgsConstructor
 public class OfferDTO {
@@ -104,5 +93,28 @@ public class OfferDTO {
 
     public List<String> getAdditionalEquipment() {
         return additionalEquipment;
+    }
+
+    @Override
+    public String toString() {
+        return "OfferDTO{" +
+                "title='" + title + '\'' +
+                ", tags='" + tags + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", carType='" + carType + '\'' +
+                ", mark='" + mark + '\'' +
+                ", model='" + model + '\'' +
+                ", production_year=" + production_year +
+                ", fuelType='" + fuelType + '\'' +
+                ", location='" + location + '\'' +
+                ", mileage=" + mileage +
+                ", capacity=" + capacity +
+                ", power=" + power +
+                ", gearbox='" + gearbox + '\'' +
+                ", vin='" + vin + '\'' +
+                ", state='" + state + '\'' +
+                ", additionalEquipment=" + additionalEquipment +
+                '}';
     }
 }

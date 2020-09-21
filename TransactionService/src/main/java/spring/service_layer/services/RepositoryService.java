@@ -15,7 +15,6 @@ public class RepositoryService {
     public UserRepository userRepository;
     public CarTypeRepository carTypeRepository;
     public CarModelRepository carModelRepository;
-    public FuelTypeRepository fuelTypeRepository;
     public CarMarkRepository carMarkRepository;
     public CarRepository carRepository;
     public ConcreteCarRepository concreteCarRepository;

@@ -86,7 +86,7 @@ public class DBInitializer {
     private void createRandomOffers(List<Car> cars) {
 
         cars.forEach(car -> carService.addNewOffer(carService.addNewConcreteCar(
-                car,FuelTypeEnum.diesel,"rosja",null,"polska","wroclaw"
+                car,FuelType.diesel,"rosja",null,"polska","wroclaw"
         )));
     }
 

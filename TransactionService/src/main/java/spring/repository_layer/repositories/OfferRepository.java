@@ -48,7 +48,7 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
                 "(:productionYearFrom is null or o.car.car.production_year > :productionYearFrom) and " +
                 "(:productionYearTo is null or o.car.car.production_year < :productionYearTo) and" +
                 "(:state is null or o.car.state = :state) and" +
-                "(:fuelType is null or o.car.fuelType.fuelTypeEnum = :fuelType) and" +
+                "(:fuelType is null or o.car.fuelType = :fuelType) and" +
                 "(:mileage_from is null or o.car.mileage > :mileage_from ) and" +
                 "(:mileage_to is null or o.car.mileage < :mileage_to ) and" +
                 "(:lowPrice is null or o.price > :lowPrice ) and" +
@@ -68,7 +68,7 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
             @Param("productionYearFrom") Integer productionYearFrom,
             @Param("productionYearTo") Integer productionYearTo,
             @Param("state") State state,
-            @Param("fuelType") FuelTypeEnum fuelType,
+            @Param("fuelType") FuelType fuelType,
             @Param("mileage_from") Integer mileageFrom,
             @Param("mileage_to") Integer mileageTo,
             @Param("lowPrice") Integer lowPrice,

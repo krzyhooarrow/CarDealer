@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.service_layer.dto.OfferDTO;
+import spring.service_layer.services.ImagesService;
 import spring.service_layer.services.TransactionService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,18 +24,21 @@ import java.util.List;
 public class TransactionController {
 
     private TransactionService transactionService;
+    private ImagesService imagesService;
 
-    @PostMapping(value = "/createOffer",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> createOffer(@RequestPart("offer") OfferDTO offerDTO, @RequestPart("images") MultipartFile images, HttpServletRequest request) throws URISyntaxException {
-        return transactionService.createNewOffer(offerDTO, Collections.singletonList(images),Long.valueOf(request.getHeader("user-id"))) ?
-                  ResponseEntity.created(new URI("")).body(offerDTO) :
-                  ResponseEntity.status(HttpStatus.CONFLICT).body("Error creating offer");
+    @PostMapping(value = "/createOffer")
+    public Long createOffer(@RequestBody OfferDTO offerDTO, HttpServletRequest request) { Long offerId;
+        return (offerId = transactionService.createNewOffer(offerDTO,Long.valueOf(request.getHeader("user-id")))) != null ? offerId :  null;
     }
 
     @GetMapping("/removeOffer/{id}")
-    public ResponseEntity<String> removeOffer(@PathVariable Long id, HttpServletRequest request) {
-        return transactionService.removeOffer(id,Long.valueOf(request.getHeader("user-id"))) ?
-                ResponseEntity.ok().body("Offer deleted") :
-                ResponseEntity.status(HttpStatus.CONFLICT).body("Not allowed");
+    public boolean removeOffer(@PathVariable Long id, HttpServletRequest request) {
+        return transactionService.removeOffer(id,Long.valueOf(request.getHeader("user-id")));
     }
+
+    @PostMapping(value = "/uploadImages/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public boolean uploadImage(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        return imagesService.uploadImage(id,file,Long.valueOf(request.getHeader("user-id")));
+    }
+
 }

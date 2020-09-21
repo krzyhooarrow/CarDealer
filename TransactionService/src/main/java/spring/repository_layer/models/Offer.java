@@ -101,4 +101,8 @@ public class Offer  {
         this.title = title;
         this.tags = tags;
     }
+
+    public void setImage(List<String> image) {
+        this.image = image;
+    }
 }

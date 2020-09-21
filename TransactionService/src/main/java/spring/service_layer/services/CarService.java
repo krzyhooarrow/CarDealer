@@ -71,11 +71,11 @@ public class CarService {
         return carMark0.orElse(carMark1);
     }
 
-    public ConcreteCar addNewConcreteCar(Car car, FuelTypeEnum fuelTypeEnum, String country, List<Equipment> additionalEquipment, String location_country, String location_city) {
-            addFuelTypeDefinition(fuelTypeEnum);
+    public ConcreteCar addNewConcreteCar(Car car, FuelType fuelTypeEnum, String country, List<Equipment> additionalEquipment, String location_country, String location_city) {
+
 
         return repositoryService.concreteCarRepository.save(new ConcreteCar(car,
-                repositoryService.fuelTypeRepository.findByFuelTypeEnum(fuelTypeEnum).get()
+               fuelTypeEnum
                 , country, additionalEquipment, location_country, location_city));
 
     }
@@ -85,8 +85,4 @@ public class CarService {
     }
 
 
-    public void addFuelTypeDefinition(FuelTypeEnum value) {
-        if (!repositoryService.fuelTypeRepository.findByFuelTypeEnum(value).isPresent())
-            repositoryService.fuelTypeRepository.save(new FuelType(value));
-    }
 }
