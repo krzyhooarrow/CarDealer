@@ -28,7 +28,7 @@
             </div>
 
             <div class="big-space">
-              <button mat-button matStepperNext color="primary" (click)="onNext()">Next</button>
+              <button mat-button matStepperNext color="primary">Next</button>
             </div>
 
           </form>
@@ -140,15 +140,10 @@
      
               <div class="margin big-space">
                 <button mat-button matStepperPrevious color="primary">Back</button>
-                <button mat-button matStepperNext color="primary" (click)="onNext()">Next</button>
+                <button mat-button matStepperNext color="primary" >Next</button>
               </div>
             </form>
         </mat-step>
-
-
-
-
-
 
         <mat-step  editable="true">
             <ng-template matStepLabel>Images</ng-template>
@@ -159,16 +154,10 @@
                   <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
               </ngx-dropzone-preview>
           </ngx-dropzone>
-          <div class="grid">
-          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f">
-            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-          </ngx-dropzone-image-preview>
-
-
-        </div>
+        
             <div class="margin big-space">
               <button mat-button matStepperPrevious color="primary">Back</button>
-              <button mat-button color="warn"> Finish</button>
+              <button mat-button matStepperNext color="warn" (click)="createTransaction()"> Watch preview</button>
         </div>
       </mat-step>
 

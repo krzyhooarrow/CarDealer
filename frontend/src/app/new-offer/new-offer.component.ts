@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TransactionDTO } from 'src/models/transaction-interfaces';
 import { SelectMap, TransactionService } from '../services/transaction.service';
 
 @Component({
@@ -8,6 +9,8 @@ import { SelectMap, TransactionService } from '../services/transaction.service';
   styleUrls: ['./new-offer.component.scss']
 })
 export class NewOfferComponent implements OnInit {
+
+  createdTransaction:TransactionDTO;
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -76,7 +79,60 @@ export class NewOfferComponent implements OnInit {
  
   onRemove(event) { this.files.splice(this.files.indexOf(event), 1);}
 
+  createTransaction(){
 
-  onNext(){console.log(this.firstFormGroup);console.log(this.secondFormGroup)}
+    let offerDTO:OfferDTO = {
 
+      title:this.firstFormGroup.get('title').value,
+      tags:this.firstFormGroup.get('tags').value,
+      description:this.firstFormGroup.get('description').value,
+      price:+this.firstFormGroup.get('price').value,
+      carType:this.secondFormGroup.get('type').value,
+      mark:this.secondFormGroup.get('mark').value,
+      model:this.secondFormGroup.get('model').value,
+      production_year:this.secondFormGroup.get('year').value,
+      fuelType:this.secondFormGroup.get('fuel').value,
+      location_city:this.secondFormGroup.get('location').value,
+      mileage:this.secondFormGroup.get('mileage').value,
+      capacity:this.secondFormGroup.get('capacity').value,
+      power:this.secondFormGroup.get('power').value,
+      gearbox:this.secondFormGroup.get('gearbox').value,
+      vin:this.secondFormGroup.get('vin').value,
+      state:this.secondFormGroup.get('state').value,
+      additionalEquipment:this.secondFormGroup.get('equipment')?.value ? this.secondFormGroup.get('equipment').value  : [],
+    
+    }
+
+
+    this.service.createOffer(offerDTO).subscribe((id:number)=>{
+
+      for(let file of this.files){
+      let form = new FormData();
+      form.append('file',file)
+      this.service.uploadFileToOffer(id,form).subscribe(
+        (output:string)=>console.log(output), (output:string)=>console.log(output)
+      )
+      }
+    }, (output:string)=>console.log(output));
+  }
+
+}
+export interface OfferDTO{
+  title:string
+  tags:string
+  description:string
+  price:number
+  carType:string
+  mark:string
+  model:string
+  production_year:number
+  fuelType:string
+  location_city:string
+  mileage:string
+  capacity:string
+  power:number
+  gearbox:string
+  vin:string
+  state:string
+  additionalEquipment:string[]
 }

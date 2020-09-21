@@ -31,7 +31,6 @@ export class AuthService {
 
   public getAuthHeader() { return { headers:{"Content-type":"application/json","Authorization":"Bearer ".concat(this.cookieService.get("JWT"))}}}
     
- 
   public authenticationCheck(){  
     return this.http.get<string>(this.config.API_URL_SERVER,this.getAuthHeader())
     .subscribe(

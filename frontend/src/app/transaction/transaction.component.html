@@ -1,8 +1,12 @@
 
 <div class="mat-card" style="background:lavender" *ngIf="transaction">
   <header>
-    <carousel [images]="images" cellsToScroll="1" dots="true" autoplay="true" cellsToShow="1" autoplayInterval="3000" transitionDuration="600"
-    ></carousel>
+    <carousel  cellsToScroll="1" dots="true" autoplay="true" cellsToShow="1" autoplayInterval="3000" transitionDuration="600"
+    >
+    <div *ngFor="let img of transaction.images" class="carousel-cell">
+      <img [src]="img">
+   </div>
+  </carousel>
     <div class ="offer-card"><mat-card class ="offer-card"><app-transaction-user-details [transaction]="transaction"></app-transaction-user-details></mat-card></div>
   </header>
   <footer>

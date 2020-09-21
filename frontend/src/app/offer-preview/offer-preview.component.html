@@ -1,0 +1,18 @@
+
+<div class="mat-card" style="background:lavender" *ngIf="transaction">
+    <header>
+      <carousel [images]="images" cellsToScroll="1" dots="true" autoplay="true" cellsToShow="1" autoplayInterval="3000" transitionDuration="600"
+      ></carousel>
+      <div class ="offer-card"><mat-card class ="offer-card"><app-transaction-user-details [transaction]="transaction"></app-transaction-user-details></mat-card></div>
+    </header>
+    <footer>
+       <mat-card class ="details-card">
+        <app-transaction-details [transaction]="transaction"></app-transaction-details><mat-divider></mat-divider>
+        <app-transaction-equipment [transaction]="transaction"></app-transaction-equipment><mat-divider></mat-divider>
+        <app-transaction-description [transaction]="transaction"></app-transaction-description><mat-divider></mat-divider>
+        <app-transaction-price [transaction]="transaction"></app-transaction-price><mat-divider></mat-divider>
+      </mat-card>
+    </footer>
+  </div>
+  <mat-spinner *ngIf="!transaction" diameter="150"></mat-spinner>
+  
