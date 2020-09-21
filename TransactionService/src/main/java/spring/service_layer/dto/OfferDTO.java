@@ -37,7 +37,6 @@ public class OfferDTO {
     private String vin;
     private String state;
     private List<String> additionalEquipment;
-    private List<MultipartFile> images;
 
     public String getTitle() {
         return title;
@@ -105,9 +104,5 @@ public class OfferDTO {
 
     public List<String> getAdditionalEquipment() {
         return additionalEquipment;
-    }
-
-    public List<MultipartFile> getImages() {
-        return images;
     }
 }

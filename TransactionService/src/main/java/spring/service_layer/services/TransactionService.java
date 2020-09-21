@@ -63,9 +63,9 @@ public class TransactionService {
     }
 
 
-    public boolean createNewOffer(OfferDTO offerDTO,Long userID) {
+    public boolean createNewOffer(OfferDTO offerDTO,List<MultipartFile> images,Long userID) {
         try {
-            Map<MultipartFile,String> filesWithUrl = offerDTO.getImages().stream()
+            Map<MultipartFile,String> filesWithUrl =images.stream()
                             .collect(Collectors.toMap(image->image,image->imagesService.getFileUrl(image)));
 
             Offer offer = offerBuilder.createNewOffer()
@@ -95,7 +95,7 @@ public class TransactionService {
                     .save(new History("OFFER CREATION", offer,
                             repositoryService.userRepository.findById(userID).get()
                     ));
-
+            logger.error("here");
             filesWithUrl.forEach((image,url) -> imagesService.uploadFile(image,url));
 
             new Thread(()->
