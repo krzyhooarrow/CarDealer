@@ -22,5 +22,5 @@ public class MainController {
     public ResponseEntity<String> onlineVerification() {
         return new ResponseEntity<>("Server online", OK);
     }
-    }
+    
 }
