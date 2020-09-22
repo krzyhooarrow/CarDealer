@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import spring.repository_layer.models.cars.*;
+import spring.service_layer.services.RepositoryService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -33,30 +34,38 @@ public class DBInitializer {
 
     @Autowired
     private CarService carService;
+    @Autowired
+    private RepositoryService repositoryService;
 
     public void initializeCarsWithTheirMakesAndModels() {
+        logger.info("STARTING TO INITIALIZE DATABASE MODELS");
         List<Car> cars = new LinkedList<>();
         try (Stream<Path> paths = Files.walk(Paths.get(scriptsPath))) {
 
-               paths.filter(Files::isRegularFile)
+            paths.filter(Files::isRegularFile)
                     .forEach(fileName -> {
                                 try {
                                     BufferedReader csvReader = new BufferedReader(new FileReader(fileName.toFile()));
                                     String row;
-
+                                    int counter = 0;
                                     csvReader.readLine();
-                                    // leave first line
                                     while ((row = csvReader.readLine()) != null) {
+
+                                        if ((counter + 1) / 100 > counter / 100) {
+                                            logger.info("INITIALIZING DB.... ALREADY DONE " + counter / 100 + " HUNDREDS IN THIS FILE");
+                                        }
+                                        counter++;
+
                                         String[] data = row.split(",");
 
-                                        CarMake carMake = carService.addCarMarkDefinition(data[1]);
-                                        CarModel carModel = carService.addModelDefinition(data[2], carMake);
+                                        CarMake carMake = repositoryService.carMakeRepository.save(carService.addCarMarkDefinition(data[1]));
+                                        CarModel carModel = repositoryService.carModelRepository.save(carService.addModelDefinition(data[2], carMake));
 
                                         Arrays.asList(data).subList(3, data.length - 1).forEach(
                                                 carType ->
                                                 {
-                                                    CarType type = carService.addCarTypeDefinition(carType.trim());
-                                                    cars.add(carService.addNewCarDefinition(Integer.valueOf(data[0]),carModel, type));
+                                                    CarType type = repositoryService.carTypeRepository.save(carService.addCarTypeDefinition(carType.trim()));
+                                                    cars.add(repositoryService.carRepository.save(carService.addNewCarDefinition(Integer.valueOf(data[0]), carModel, type)));
                                                 }
                                         );
                                     }
@@ -64,7 +73,9 @@ public class DBInitializer {
                                     logger.error("Cannot read file to initiate database " + exception.getMessage());
                                 }
                             }
+
                     );
+            logger.info("FINISHED INITIALIZING DB");
         } catch (Exception er) {
             logger.error("Cannot find path to init files " + er.getMessage());
         }

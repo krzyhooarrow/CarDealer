@@ -20,31 +20,27 @@ public class CarService {
     private RepositoryService repositoryService;
 
     public Car addNewCarDefinition(Integer prodYear, CarModel carModel, CarType carType) {
-        Optional<Car> car; Car car1 = null;
-        if ((car = repositoryService.carRepository.findAllByParameters(carType,carModel,prodYear)).isEmpty())
-            car1 = new Car(carType, carModel, prodYear);
-        return car.orElse(car1);
+        Optional<Car> car;
+        return ((car = repositoryService.carRepository
+                .findAllByParameters(carType,carModel,prodYear)).isEmpty())? new Car(carType,carModel,prodYear) : car.get();
     }
 
     public CarModel addModelDefinition(String carModel, CarMake carMake) {
-        Optional<CarModel> model;  CarModel carModel1 = null;
-        if ((model = repositoryService.carModelRepository.findByModel(carModel)).isEmpty())
-            carModel1 = new CarModel(carModel, carMake);
-        return model.orElse(carModel1);
+        Optional<CarModel> model;
+        return ((model = repositoryService.carModelRepository
+                .findByModel(carModel)).isEmpty())? new CarModel(carModel,carMake) : model.get();
     }
 
     public CarType addCarTypeDefinition(String carType) {
-        Optional<CarType> carType1;  CarType carType2 = null;
-        if ((carType1 = repositoryService.carTypeRepository.findByCarType(carType)).isEmpty())
-            carType2 = new CarType(carType);
-        return carType1.orElse(carType2);
+        Optional<CarType> carType1;
+        return ((carType1 = repositoryService.carTypeRepository
+                .findByCarType(carType)).isEmpty()) ? new CarType(carType) : carType1.get();
     }
 
     public CarMake addCarMarkDefinition(String carMark) {
-        Optional<CarMake> carMark0;  CarMake carMake1 = null;
-        if ((carMark0 = repositoryService.carMarkRepository.findByCarMake(carMark)).isEmpty())
-            carMake1 = new CarMake(carMark);
-        return carMark0.orElse(carMake1);
+        Optional<CarMake> carMark0;
+        return ((carMark0 = repositoryService.carMakeRepository
+                .findByCarMake(carMark)).isEmpty()) ? new CarMake(carMark) : carMark0.get();
     }
 
     public ConcreteCar addNewConcreteCar(Car car, State state, Transmission gearbox, FuelType fuelType, List<Equipment> additionalEquipment,
@@ -54,8 +50,8 @@ public class CarService {
 
     }
 
-    public Offer addNewOfferBasedOnConcreteCar(ConcreteCar concreteCar,int price, String description, List<String> images, User user) {
-        return repositoryService.offerRepository.save(new Offer(concreteCar, price, description, images, user));
+    public Offer addNewOfferBasedOnConcreteCar(ConcreteCar concreteCar,int price, String description, List<String> images, User user,String title,String tags) {
+        return repositoryService.offerRepository.save(new Offer(concreteCar, price, description, images, user,title,tags));
     }
 
 

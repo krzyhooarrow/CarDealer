@@ -1,6 +1,8 @@
 package spring.repository_layer.db_init;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -37,7 +39,7 @@ public class RandomDataGenerator {
     private final int minPower = 50;
     private final int maxPower = 800;
     private final long minVIN = 10000000000L;
-
+    private static final Logger logger = LoggerFactory.getLogger(DBInitializer.class);
 
 
     public User createTestUser(){
@@ -47,9 +49,15 @@ public class RandomDataGenerator {
     }
 
     public void initializeRandomData(int offersSize) {
+        logger.info("STARTING TO INITIALIZE RANDOM DATA");
         User user = createTestUser();
-        int counter; List listOfSpecifiedTypes;
+        int counter = 0; List listOfSpecifiedTypes;
         for (int i = 0 ; i < offersSize; i ++){
+
+            if (100 *i/offersSize > counter) {
+                counter = 100 * i /offersSize;
+                logger.info("INITIALIZED ALREADY " + counter + "% OF DATA");
+            }
             Car car = (Car) (listOfSpecifiedTypes = service.carRepository.findAll()).get(generator.nextInt(listOfSpecifiedTypes.size()));
 
             ConcreteCar concreteCar = carService.
@@ -67,9 +75,10 @@ public class RandomDataGenerator {
                             );
 
             carService.addNewOfferBasedOnConcreteCar(concreteCar,generator.nextInt(maxPrice-minPrice+1)+minPrice,
-                    "RANDOM OFFER DESCRIPTION",new LinkedList<>(),user
+                    "RANDOM OFFER DESCRIPTION",new LinkedList<>(),user,"TITLE","TAGS"
                     );
 
         }
+        logger.info("RANDOM DATA INIT HAS STOPPED");
     }
 }

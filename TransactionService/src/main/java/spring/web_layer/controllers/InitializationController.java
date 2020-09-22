@@ -16,16 +16,18 @@ import java.util.Arrays;
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class InitializationController {
 
-    private static DBInitializer dbInitializer;
-    private static RandomDataGenerator generator;
+    private DBInitializer dbInitializer;
+    private RandomDataGenerator generator;
 
     @GetMapping("/init")
-    public void initDataBase(){
+    public boolean initDataBase(){
          dbInitializer.initializeCarsWithTheirMakesAndModels();
+         return true;
     }
 
     @GetMapping("/random")
-    public void createRandomData(){
+    public boolean createRandomData(){
         generator.initializeRandomData(2000);
+        return true;
     }
 }

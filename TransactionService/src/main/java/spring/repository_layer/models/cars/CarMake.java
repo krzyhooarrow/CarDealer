@@ -19,7 +19,7 @@ public class CarMake {
 
     private String carMake;
 
-    public CarMake(String carMark) {  this.carMake = carMake;  }
+    public CarMake(String carMark) {  this.carMake = carMark;  }
 
     public Long getId() {
         return id;

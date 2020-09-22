@@ -61,6 +61,18 @@ public class Offer  {
         this.offerCreationTime = new Date();
     }
 
+    public Offer(ConcreteCar car, Integer price, String description,
+                 List<String> image, User user, String title, String tags) {
+        this.car = car;
+        this.price = price;
+        this.description = description;
+        this.image = image;
+        this.user = user;
+        this.offerCreationTime = new Date();
+        this.title = title;
+        this.tags = tags;
+    }
+
     public ConcreteCar getCar() {
         return car;
     }
@@ -90,18 +102,6 @@ public class Offer  {
     public String getTitle() {  return title;   }
 
     public String getTags() {   return tags;   }
-
-
-
-    public Offer(ConcreteCar car, Integer price, String description, List<String> image, User user,  String title, String tags) {
-        this.car = car;
-        this.price = price;
-        this.description = description;
-        this.image = image;
-        this.user = user;
-        this.title = title;
-        this.tags = tags;
-    }
 
     public void setImage(List<String> image) {
         this.image = image;
