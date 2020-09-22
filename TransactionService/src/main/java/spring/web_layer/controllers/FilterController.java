@@ -26,41 +26,36 @@ public class FilterController {
 
     @GetMapping("/carType")
     public ResponseEntity<List<Object>> getDistinctCarTypes()  {
-        return ResponseEntity.ok(service.getDistinctCarTypes());
+        return ResponseEntity.ok(service.getDistinctCarTypesWithCounter());
     }
 
     @GetMapping("/marks")
     public ResponseEntity<List<Object>> getDistinctCarMarks()  {
-        return ResponseEntity.ok(service.getDistinctCarMarks());
+        return ResponseEntity.ok(service.getDistinctCarMarksWithCounter());
     }
 
     @PostMapping("/models")
     public ResponseEntity<List<Object>> getDistinctCarModelsBasedOnMark(@RequestBody String mark)  {
-        return ResponseEntity.ok(service.getDistinctCarModelsBasedOnMark(mark));
-    }
-
-    @GetMapping("/locations")
-    public ResponseEntity<List<Object>> getDistinctLocations()  {
-        return ResponseEntity.ok(service.getDistinctLocationCities());
+        return ResponseEntity.ok(service.getDistinctCarModelsBasedOnMarkWithCounter(mark));
     }
 
     @GetMapping("/fuelTypes")
     public ResponseEntity<List<String>> fuelTypes()  {
-        return ResponseEntity.ok(service.getDistinctFuelTypes());
+        return ResponseEntity.ok(service.getFuelTypeFilters());
     }
 
     @GetMapping("/additionalEquipment")
     public ResponseEntity<List<String>> getAdditionalEquipment()  {
-        return ResponseEntity.ok(service.getAdditionalEquipment());
+        return ResponseEntity.ok(service.getAdditionalEquipmentFilters());
     }
 
     @GetMapping("/gearboxes")
     public ResponseEntity<List<String>> getGearboxTypes()  {
-        return ResponseEntity.ok(service.getGearboxes());
+        return ResponseEntity.ok(service.getGearboxFilters());
     }
 
     @GetMapping("/states")
     public ResponseEntity<List<String>> getStates()  {
-        return ResponseEntity.ok(service.getStates());
+        return ResponseEntity.ok(service.getStateFilters());
     }
 }

@@ -18,7 +18,7 @@ public class History {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    private String action;
+    private ActionType action;
 
     @OneToOne
     private Offer offerId;
@@ -30,7 +30,7 @@ public class History {
         return date;
     }
 
-    public String getAction() {
+    public ActionType getAction() {
         return action;
     }
 
@@ -38,7 +38,7 @@ public class History {
         return offerId;
     }
 
-    public History(String action, Offer offerId, User user) {
+    public History(ActionType action, Offer offerId, User user) {
         this.action = action;
         this.offerId = offerId;
         this.user = user;
@@ -51,3 +51,4 @@ public class History {
 
     public History(){}
 }
+

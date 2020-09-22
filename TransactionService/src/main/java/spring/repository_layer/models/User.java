@@ -32,22 +32,16 @@ public class User {
 
     private boolean enabled;
 
-    @OneToMany
-    private List<Offer> subscribedOffers;
-
     private String phoneNumber;
 
 
-    public User(String username, String password, String email, Authorities role) {
+    public User(String username, String password, String email, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.authorities = role;
         this.enabled = true;
+        this.phoneNumber = phoneNumber;
     }
-
-    @Enumerated
-    private Authorities authorities;
 
     public String getEmail() {
         return email;
@@ -69,9 +63,7 @@ public class User {
         return offers;
     }
 
-    public Authorities getAuthorities() {
-        return authorities;
-    }
+    public String getPhoneNumber() {  return phoneNumber;  }
 
     @Override
     public String toString() {

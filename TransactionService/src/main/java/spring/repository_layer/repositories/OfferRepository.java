@@ -7,7 +7,6 @@ import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.User;
 import spring.repository_layer.models.cars.*;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,21 +29,18 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
         @Query("SELECT o.car.car.type.carType , COUNT (o) from Offer o GROUP BY o.car.car.type.carType")
         List<Object> getDistinctTypesWithCounter();
 
-        @Query("SELECT o.car.car.model.carMark.mark, COUNT (o) from Offer o GROUP BY o.car.car.model.carMark.mark")
-        List<Object> getDistinctMarksWithCounter();
+        @Query("SELECT o.car.car.model.carMake.carMake, COUNT (o) from Offer o GROUP BY o.car.car.model.carMake.carMake")
+        List<Object> getDistinctMakesWithCounter();
 
-        @Query("SELECT o.car.car.model.model, COUNT (o) from Offer o WHERE o.car.car.model.carMark.mark = :mark GROUP BY o.car.car.model.model")
-        List<Object> getDistinctModelsBasedOnMarkWithCounter(@Param("mark") String mark);
-
-        @Query("SELECT o.car.location_city, COUNT (o) from Offer o  GROUP BY o.car.location_city")
-        List<Object> getDistinctLocationsWithCounter();
+        @Query("SELECT o.car.car.model.model, COUNT (o) from Offer o WHERE o.car.car.model.carMake.carMake = :mark GROUP BY o.car.car.model.model")
+        List<Object> getDistinctModelsBasedOnCarMakeWithCounter(@Param("mark") String mark);
 
         //query will return all cars specified by parameters
         // model mark type additional-eq  year fuel country location
         @Query("FROM Offer o WHERE " +
                 "(:carType is null or o.car.car.type.carType = :carType) and " +
                 "(:model is null or o.car.car.model.model = :model) and" +
-                "(:mark is null or o.car.car.model.carMark.mark = :mark) and" +
+                "(:carMake is null or o.car.car.model.carMake.carMake = :carMake) and" +
                 "(:productionYearFrom is null or o.car.car.production_year > :productionYearFrom) and " +
                 "(:productionYearTo is null or o.car.car.production_year < :productionYearTo) and" +
                 "(:state is null or o.car.state = :state) and" +
@@ -64,7 +60,7 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
        (
             @Param("carType") String carType,
             @Param("model") String model,
-            @Param("mark") String mark,
+            @Param("carMake") String carMake,
             @Param("productionYearFrom") Integer productionYearFrom,
             @Param("productionYearTo") Integer productionYearTo,
             @Param("state") State state,
@@ -75,7 +71,7 @@ public interface OfferRepository extends CrudRepository<Offer,Long> {
             @Param("highPrice") Integer highPrice,
             @Param("capacityFrom") Float capacityFrom,
             @Param("capacityTo") Float capacityTo,
-            @Param("gearbox") GearBox gearbox,
+            @Param("gearbox") Transmission gearbox,
             @Param("powerFrom") Integer powerFrom,
             @Param("powerTo") Integer powerTo
         );

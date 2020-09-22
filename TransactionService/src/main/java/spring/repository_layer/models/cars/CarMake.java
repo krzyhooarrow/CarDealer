@@ -10,16 +10,16 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarMark {
+public class CarMake {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
 
-    private String mark;
+    private String carMake;
 
-    public CarMark(String carMark) {  this.mark = carMark;  }
+    public CarMake(String carMark) {  this.carMake = carMake;  }
 
     public Long getId() {
         return id;
@@ -30,17 +30,17 @@ public class CarMark {
     }
 
     public String getMark() {
-        return mark;
+        return carMake;
     }
 
     public void setMark(String mark) {
-        this.mark = mark;
+        this.carMake = mark;
     }
 
     @Override
     public String toString() {
         return "CarMark{" +
-                "mark='" + mark + '\'' +
+                "mark='" + carMake + '\'' +
                 '}';
     }
 }

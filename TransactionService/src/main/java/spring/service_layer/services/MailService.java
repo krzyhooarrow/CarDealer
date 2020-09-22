@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import spring.repository_layer.models.ActionType;
 import spring.repository_layer.models.Email;
 
 import javax.annotation.PostConstruct;
@@ -74,26 +75,26 @@ public class MailService {
     }
 
     @Async
-    public void sendMail(String recipients, NotificationType type) {
+    public void sendMail(String recipients, ActionType type) {
         sendMail(new Email(recipients, getSubject(type), getMessage(type)));
     }
 
-    private String getSubject(NotificationType type) {
-        if (type.equals(NotificationType.OFFER_CREATION)) {
+    private String getSubject(ActionType type) {
+        if (type.equals(ActionType.OFFER_CREATION)) {
             return notificationsBundle.getString("OFFER_CREATION_SUBJECT");
         } else {
             return notificationsBundle.getString("OFFER_REMOVAL_SUBJECT");
         }
     }
 
-    private String getMessage(NotificationType type) {
-        if (type.equals(NotificationType.OFFER_CREATION)) {
+    private String getMessage(ActionType type) {
+        if (type.equals(ActionType.OFFER_CREATION)) {
             return notificationsBundle.getString("OFFER_CREATION_MESSAGE");
         } else {
             return notificationsBundle.getString("OFFER_REMOVAL_MESSAGE");
         }
     }
 
-    public enum NotificationType {OFFER_REMOVAL, OFFER_CREATION}
+
 
 }

@@ -1,7 +1,6 @@
 package spring.service_layer.services;
 
 
-import com.amazonaws.services.s3.model.AmazonS3Exception;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,13 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import spring.repository_layer.builders.OfferBuilder;
-import spring.repository_layer.models.History;
+import spring.repository_layer.models.ActionType;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.cars.FuelType;
-import spring.repository_layer.models.cars.GearBox;
+import spring.repository_layer.models.cars.Transmission;
 import spring.repository_layer.models.cars.State;
+import spring.repository_layer.repositories.OfferRepository;
 import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.dto.SearchDTO;
 import spring.service_layer.dto.TransactionDTO;
@@ -29,30 +28,30 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class TransactionService {
 
-    private RepositoryService repositoryService;
-    private MailService mailService;
+    private OfferRepository offerRepository;
     private OfferBuilder offerBuilder;
+    private TriggerService triggerService;
     private ImagesService imagesService;
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
     public List<TransactionDTO> getAllOffersBySpecifiedParams(SearchDTO searchDTO) {
-        List<Offer> offersList = repositoryService.offerRepository.findAllByParameters
+        List<Offer> offersList = offerRepository.findAllByParameters
                 (
                         searchDTO.getType(),
                         searchDTO.getModel(),
                         searchDTO.getMark(),
                         searchDTO.getProduction_year_from(),
                         searchDTO.getProduction_year_to(),
-                        searchDTO.getState() != null? State.valueOf(searchDTO.getState()):null,
-                        searchDTO.getFuelType() != null? FuelType.valueOf(searchDTO.getFuelType()):null,
+                        searchDTO.getState() != null ? State.valueOf(searchDTO.getState()) : null,
+                        searchDTO.getFuelType() != null ? FuelType.valueOf(searchDTO.getFuelType()) : null,
                         searchDTO.getMileage_from(),
                         searchDTO.getMileage_to(),
                         searchDTO.getLowPrice(),
                         searchDTO.getHighPrice(),
                         searchDTO.getCapacity_from(),
                         searchDTO.getCapacity_to(),
-                        searchDTO.getGearbox() != null? GearBox.valueOf(searchDTO.getGearbox()):null,
+                        searchDTO.getGearbox() != null ? Transmission.valueOf(searchDTO.getGearbox()) : null,
                         searchDTO.getPower_from(),
                         searchDTO.getPower_to()
 
@@ -62,7 +61,7 @@ public class TransactionService {
     }
 
 
-    public Long createNewOffer(OfferDTO offerDTO,Long userID) {
+    public Long createNewOffer(OfferDTO offerDTO, Long userID) {
         try {
             Offer offer = offerBuilder.createNewOffer()
                     .title(offerDTO.getTitle())
@@ -81,23 +80,14 @@ public class TransactionService {
                     .withVINNumber(offerDTO.getVin())
                     .atState(offerDTO.getState())
                     .additionalEquipment(offerDTO.getAdditionalEquipment())
+                    .color("RED")
                     .forUser(userID)
                     .build();
 
-            repositoryService.offerRepository.save(offer);
-
-            repositoryService.historyRepository
-                    .save(new History("OFFER CREATION", offer,
-                            repositoryService.userRepository.findById(userID).get()
-                    ));
-
-            new Thread(()->
-            mailService.sendMail
-                    (
-                            repositoryService.userRepository.findById(userID).get().getEmail(),
-                            MailService.NotificationType.OFFER_CREATION
-                    )
-            ).start();
+            triggerService.castDatabaseUpdate(
+                    ActionType.OFFER_CREATION,
+                    offerRepository.save(offer),
+                    userID);
 
             return offer.getId();
         } catch (Exception exc) {
@@ -106,28 +96,18 @@ public class TransactionService {
         }
     }
 
-    public boolean removeOffer(Long offerId,Long userID) {
+    public boolean removeOffer(Long offerId, Long userID) {
         try {
+            Offer offerToBeRemoved;
 
-            Offer toRemove = repositoryService
-                    .offerRepository
-                    .findByUserIdAndOfferId(userID,offerId)
-                    .orElseThrow(OffersNotFoundException::new);
+            offerRepository.delete(
+                    imagesService.removeImages(
+                            offerToBeRemoved = offerRepository
+                                    .findByUserIdAndOfferId(userID, offerId)
+                                    .orElseThrow(OffersNotFoundException::new))
+            );
 
-            repositoryService.offerRepository.delete(toRemove);
-
-            repositoryService.historyRepository
-                            .save(new History("OFFER REMOVAL",toRemove,
-                                    repositoryService.userRepository.findById(userID).get()
-                            ));
-            
-            new Thread(()->
-            mailService.sendMail
-                    (
-                            repositoryService.userRepository.findById(offerId).get().getEmail(),
-                            MailService.NotificationType.OFFER_REMOVAL
-                    )
-            ).start();
+            triggerService.castDatabaseUpdate(ActionType.OFFER_REMOVAL, offerToBeRemoved, userID);
 
             return true;
         } catch (Exception exc) {
@@ -137,6 +117,6 @@ public class TransactionService {
     }
 
     public TransactionDTO getOfferById(Long id) throws OffersNotFoundException {
-        return repositoryService.offerRepository.findById(id).map(TransactionDTO::new).orElseThrow(OffersNotFoundException::new);
+        return offerRepository.findById(id).map(TransactionDTO::new).orElseThrow(OffersNotFoundException::new);
     }
 }

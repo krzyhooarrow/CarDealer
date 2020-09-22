@@ -1,16 +1,12 @@
 package spring.repository_layer.models.cars;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import spring.repository_layer.models.Offer;
 
 
 import javax.persistence.*;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -18,60 +14,42 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @NonNull
-//@JsonSerialize(using = ConcreteCarSerializer.class)
 public class ConcreteCar{
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-//    @JsonIgnore
     private Long id;
-
     @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
-
-
+    @Enumerated(EnumType.STRING)
+    private State state;
+    @Enumerated(EnumType.STRING)
+    private Transmission gearbox;
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
-    private String country;
-
-    @OneToMany
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
     private List<Equipment> additionalEquipment;
-
-    private String location_country;
-    private String location_city;
-
     private int mileage;
     private float capacity;
     private int power;
-    @Enumerated(EnumType.STRING)
-    private GearBox gearbox;
     private String vin;
     private String color;
-    @Enumerated(EnumType.STRING)
-    private State state;
 
-    public ConcreteCar(Car car, FuelType fuelType, String country, List<Equipment> additionalEquipment, String location_country, String location_city) {
-        this.car = car;
-        this.fuelType = fuelType;
-        this.country = country;
-        this.additionalEquipment = additionalEquipment;
-        this.location_country = location_country;
-        this.location_city = location_city;
-    }
+    public ConcreteCar(Car car, State state, Transmission gearbox, FuelType fuelType, List<Equipment> additionalEquipment,
+                       int mileage, float capacity, int power, String vin, String color) {
 
-    public ConcreteCar(Car car, FuelType fuelType, String country,
-         List<Equipment> additionalEquipment, int mileage, float capacity, int power, GearBox gearbox, String vin, State state) {
         this.car = car;
+        this.state = state;
+        this.gearbox = gearbox;
         this.fuelType = fuelType;
-        this.country = country;
         this.additionalEquipment = additionalEquipment;
         this.mileage = mileage;
         this.capacity = capacity;
         this.power = power;
-        this.gearbox = gearbox;
         this.vin = vin;
-        this.state = state;
+        this.color = color;
     }
 
     public Car getCar() {
@@ -82,20 +60,8 @@ public class ConcreteCar{
         return fuelType;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
     public List<Equipment> getAdditionalEquipment() {
         return additionalEquipment;
-    }
-
-    public String getLocation_country() {
-        return location_country;
-    }
-
-    public String getLocation_city() {
-        return location_city;
     }
 
     public int getMileage() {
@@ -110,7 +76,7 @@ public class ConcreteCar{
         return power;
     }
 
-    public GearBox getGearbox() {
+    public Transmission getGearbox() {
         return gearbox;
     }
 

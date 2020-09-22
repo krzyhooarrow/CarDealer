@@ -58,6 +58,7 @@ public class Offer  {
         this.description = description;
         this.image = image;
         this.user = user;
+        this.offerCreationTime = new Date();
     }
 
     public ConcreteCar getCar() {

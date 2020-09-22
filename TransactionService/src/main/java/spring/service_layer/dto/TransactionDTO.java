@@ -46,7 +46,6 @@ public class TransactionDTO {
         if(offer.getCar().getCar().getModel().getCarMark().getMark()!=null) this.mark = offer.getCar().getCar().getModel().getCarMark().getMark();
         if(offer.getCar().getCar().getProduction_year()!=null) this.production_year = offer.getCar().getCar().getProduction_year();
         if(offer.getCar().getFuelType()!=null) this.fuelType = offer.getCar().getFuelType().name();
-        if(offer.getCar().getLocation_city()!=null) this.location_city = offer.getCar().getLocation_city();
         if(offer.getCar().getAdditionalEquipment()!=null) this.additionalEquipment = offer.getCar()
                 .getAdditionalEquipment().stream().map(String::valueOf).collect(Collectors.toList());
         if(offer.getUser()!=null) this.username = offer.getUser().getUsername();

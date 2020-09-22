@@ -1,5 +1,5 @@
 package spring.repository_layer.models.cars;
 
-public enum GearBox {
+public enum Transmission {
     manual,automatic
 }

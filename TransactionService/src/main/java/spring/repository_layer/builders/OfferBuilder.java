@@ -2,7 +2,6 @@ package spring.repository_layer.builders;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import spring.repository_layer.db_init.DBInitializer;
 import spring.repository_layer.models.Offer;
 import spring.repository_layer.models.User;
 import spring.repository_layer.models.cars.*;
-import spring.service_layer.services.CarService;
+import spring.repository_layer.db_init.CarService;
 import spring.service_layer.services.RepositoryService;
 import spring.web_layer.exceptions.CarModelNotFoundException;
 import spring.web_layer.exceptions.CarTypeNotFoundException;
@@ -20,7 +19,7 @@ import spring.web_layer.exceptions.UserNotFoundException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
@@ -31,8 +30,9 @@ public class OfferBuilder {
     private CarService carService;
     private static final Logger logger = LoggerFactory.getLogger(DBInitializer.class);
 
-    public Builder createNewOffer() {  return new Builder();   }
-
+    public Builder createNewOffer() {
+        return new Builder();
+    }
 
 
     public class Builder {
@@ -49,19 +49,20 @@ public class OfferBuilder {
         private Integer mileage;
         private Float capacity;
         private Integer power;
-        private GearBox gearbox;
+        private Transmission gearbox;
         private String vin;
         private State state;
         private List<Equipment> additionalEquipment;
         private List<String> images;
         private User user;
+        private String color;
 
-        public Builder title(String title){
+        public Builder title(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder tags(String tags){
+        public Builder tags(String tags) {
             this.tags = tags;
             return this;
         }
@@ -117,7 +118,7 @@ public class OfferBuilder {
         }
 
         public Builder withGearboxType(String gearboxType) {
-            this.gearbox = GearBox.valueOf(gearboxType);
+            this.gearbox = Transmission.valueOf(gearboxType);
             return this;
         }
 
@@ -131,9 +132,14 @@ public class OfferBuilder {
             return this;
         }
 
+        public Builder color(String color) {
+            this.color = color;
+            return this;
+        }
+
         public Builder additionalEquipment(List<String> eq) {
-            this.additionalEquipment = eq == null || eq.size()==0 ? new LinkedList<>() :
-                    repositoryService.equipmentRepository.findByList(eq).orElseGet(LinkedList::new);
+            this.additionalEquipment = eq == null || eq.size() == 0 ? new LinkedList<>() :
+                    eq.stream().map(Equipment::fromString).collect(Collectors.toList());
             return this;
         }
 
@@ -151,11 +157,11 @@ public class OfferBuilder {
 
             Car car = carService.addNewCarDefinition(production_year, model, carType);
 
-            ConcreteCar concreteCar = new ConcreteCar(car,fuelType,location,additionalEquipment, mileage,capacity,power,gearbox,vin ,state);
+            ConcreteCar concreteCar = new ConcreteCar(car, state, gearbox, fuelType, additionalEquipment, mileage, capacity, power, vin, color);
 
             repositoryService.concreteCarRepository.save(concreteCar);
 
-            return new Offer(concreteCar, price, description, images, user,title,tags);
+            return new Offer(concreteCar, price, description, images, user, title, tags);
         }
 
     }

@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import spring.repository_layer.db_init.DBInitializer;
+import spring.repository_layer.db_init.RandomDataGenerator;
 import spring.web_layer.config.Constants;
 
 import java.util.Arrays;
@@ -17,19 +18,15 @@ import java.util.Arrays;
 public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         Constants.AMAZON_ID = Arrays.stream(args).filter(arg -> arg.contains("AMAZON_ID")).findFirst().get().replace("AMAZON_ID=","");
         Constants.AMAZON_KEY = Arrays.stream(args).filter(arg -> arg.contains("AMAZON_KEY")).findFirst().get().replace("AMAZON_KEY=","");
-
-        SpringApplication.run(Main.class, args);   }
-
-    @Autowired
-    private DBInitializer dbInitializer;
+        SpringApplication.run(Main.class, args);
+    }
 
     @Bean
     public CommandLineRunner commandLineRunner() {
-//        dbInitializer.initializeDB();
         return args ->  logger.info("------STARTING APPLICATION------" );
 
     }

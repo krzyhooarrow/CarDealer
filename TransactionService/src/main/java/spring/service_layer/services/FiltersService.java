@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.repository_layer.models.cars.Equipment;
 import spring.repository_layer.models.cars.FuelType;
-import spring.repository_layer.models.cars.GearBox;
+import spring.repository_layer.models.cars.Transmission;
 import spring.repository_layer.models.cars.State;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,53 +22,42 @@ public class FiltersService {
 
     private RepositoryService service;
 
-    public List<Object> getDistinctCarTypes(){
+    public List<Object> getDistinctCarTypesWithCounter(){
         return service.offerRepository
                 .getDistinctTypesWithCounter();
     }
 
-    public List<Object> getDistinctCarMarks(){
+    public List<Object> getDistinctCarMarksWithCounter(){
         return service.offerRepository
-                .getDistinctMarksWithCounter();
+                .getDistinctMakesWithCounter();
     }
 
-    public List<Object> getDistinctCarModelsBasedOnMark(String mark){
+    public List<Object> getDistinctCarModelsBasedOnMarkWithCounter(String mark){
         return service.offerRepository
-                .getDistinctModelsBasedOnMarkWithCounter(mark);
+                .getDistinctModelsBasedOnCarMakeWithCounter(mark);
     }
 
-    public List<Object> getDistinctLocationCities(){
-        return service.offerRepository
-            .getDistinctLocationsWithCounter();
-    }
-
-    public List<String> getDistinctFuelTypes() {
+    public List<String> getFuelTypeFilters() {
         return Arrays
                 .stream(FuelType.values())
                 .map(String::valueOf)
                 .collect(Collectors.toList());
     }
 
-
-    public List<String> getAdditionalEquipment() {
-        return service.equipmentRepository
-                .getDistinctEquipmentNames()
-                .orElseGet(LinkedList::new)
-                .stream()
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+    public List<String> getAdditionalEquipmentFilters() {
+        return Arrays.stream(Equipment.values()).map(String::valueOf).collect(Collectors.toList());
     }
 
-    public List<String> getStates() {
+    public List<String> getStateFilters() {
         return Arrays
                 .stream(State.values())
                 .map(String::valueOf)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getGearboxes() {
+    public List<String> getGearboxFilters() {
         return Arrays
-                .stream(GearBox.values())
+                .stream(Transmission.values())
                 .map(String::valueOf)
                 .collect(Collectors.toList());
     }

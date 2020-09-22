@@ -1,13 +1,9 @@
 package spring.repository_layer.models.cars;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.List;
 
 
 @Entity
@@ -22,11 +18,11 @@ public class CarModel {
     private String model;
 
     @OneToOne
-    private CarMark carMark;
+    private CarMake carMake;
 
-    public CarModel(String model, CarMark carMark) {
+    public CarModel(String model, CarMake carMake) {
         this.model = model;
-        this.carMark = carMark;
+        this.carMake = carMake;
     }
 
     public Long getId() {
@@ -37,8 +33,8 @@ public class CarModel {
         return model;
     }
 
-    public CarMark getCarMark() {
-        return carMark;
+    public CarMake getCarMark() {
+        return carMake;
     }
 
     public void setId(Long id) {
@@ -49,15 +45,15 @@ public class CarModel {
         this.model = model;
     }
 
-    public void setCarMark(CarMark carMark) {
-        this.carMark = carMark;
+    public void setCarMark(CarMake carMake) {
+        this.carMake = carMake;
     }
 
     @Override
     public String toString() {
         return "CarModel{" +
                 "model='" + model + '\'' +
-                ", carMark=" + carMark +
+                ", carMark=" + carMake +
                 '}';
     }
 }

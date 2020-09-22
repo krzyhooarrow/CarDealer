@@ -107,29 +107,8 @@ public class ImagesService {
         }
     }
 
-    private boolean removeImage(Long offerId, String url, Long userId) {
-        try {
-
-            Offer offer;
-
-            String urlToBeRemoved = (offer = repositoryService.offerRepository.
-                    findByUserIdAndOfferId(userId, offerId)
-                    .orElseThrow(OffersNotFoundException::new))
-                    .getImage()
-                    .stream()
-                    .filter(urls -> urls.equals(url))
-                    .findFirst()
-                    .orElseThrow(Exception::new);
-
-            offer.getImage().remove(urlToBeRemoved);
-
-            repositoryService.offerRepository.save(offer);
-
-
-            return true;
-        } catch (Exception exc) {
-            return false;
-        }
+    public Offer removeImages(Offer offer) {
+        offer.getImage().forEach(this::deleteFileFromS3Bucket);
+        return offer;
     }
-
 }

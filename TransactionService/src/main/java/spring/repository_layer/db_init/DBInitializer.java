@@ -9,10 +9,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import spring.repository_layer.models.cars.*;
-import spring.service_layer.services.CarService;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,18 +34,13 @@ public class DBInitializer {
     @Autowired
     private CarService carService;
 
-    public  void initializeDB() {
-
+    public void initializeCarsWithTheirMakesAndModels() {
         List<Car> cars = new LinkedList<>();
-
         try (Stream<Path> paths = Files.walk(Paths.get(scriptsPath))) {
 
-            paths
-                    .filter(Files::isRegularFile)
+               paths.filter(Files::isRegularFile)
                     .forEach(fileName -> {
-
                                 try {
-
                                     BufferedReader csvReader = new BufferedReader(new FileReader(fileName.toFile()));
                                     String row;
 
@@ -56,38 +49,24 @@ public class DBInitializer {
                                     while ((row = csvReader.readLine()) != null) {
                                         String[] data = row.split(",");
 
-                                        CarMark carMark = carService.addCarMarkDefinition(data[1]);
-                                        CarModel carModel = carService.addModelDefinition(data[2],carMark);
-
+                                        CarMake carMake = carService.addCarMarkDefinition(data[1]);
+                                        CarModel carModel = carService.addModelDefinition(data[2], carMake);
 
                                         Arrays.asList(data).subList(3, data.length - 1).forEach(
                                                 carType ->
                                                 {
-                                                    CarType type = carService.addCarTypeDefinition(carType);
+                                                    CarType type = carService.addCarTypeDefinition(carType.trim());
                                                     cars.add(carService.addNewCarDefinition(Integer.valueOf(data[0]),carModel, type));
                                                 }
-
                                         );
                                     }
-
                                 } catch (Exception exception) {
                                     logger.error("Cannot read file to initiate database " + exception.getMessage());
                                 }
-
                             }
                     );
-
         } catch (Exception er) {
             logger.error("Cannot find path to init files " + er.getMessage());
         }
-//        createRandomOffers(cars);
     }
-
-    private void createRandomOffers(List<Car> cars) {
-
-        cars.forEach(car -> carService.addNewOffer(carService.addNewConcreteCar(
-                car,FuelType.diesel,"rosja",null,"polska","wroclaw"
-        )));
-    }
-
 }
