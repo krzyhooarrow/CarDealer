@@ -34,8 +34,6 @@ public class PopularityService {
     }
 
     private OfferPopularity newOfferPopularity(Long offerID){
-        OfferPopularity o = new OfferPopularity(offerID);
-        offerPopularityRepository.save(o);
-        return o;
+        return offerPopularityRepository.save(new OfferPopularity(offerID));
     }
 }

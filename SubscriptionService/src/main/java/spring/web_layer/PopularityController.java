@@ -17,9 +17,9 @@ public class PopularityController {
     private PopularityService popularityService;
 
     @PostMapping("/popularize/{id}")
-    public ResponseEntity<String> popularize(@PathVariable Long id) {
+    public boolean popularize(@PathVariable Long id) {
         popularityService.updateOfferPopularity(id);
-        return ResponseEntity.ok().body("OK");
+        return true;
     }
 
     @GetMapping("/getPopularity/{id}")

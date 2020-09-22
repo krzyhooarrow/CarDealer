@@ -11,10 +11,7 @@ import spring.repository_layer.models.UserSubscriptions;
 import spring.repository_layer.repositories.UserSubscriptionsRepository;
 import spring.service_layer.exceptions.UserNotFoundException;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Scope("singleton")
@@ -35,8 +32,10 @@ public class SubscriptionsService {
         repository.save(subscriptions);
     }
 
-    public Set<Long> getSubscribedOffersIDs(Long userID) throws UserNotFoundException {
-       return repository.findById(userID).orElseThrow(UserNotFoundException::new).getSubscribedOffers();
+    public Set<Long> getSubscribedOffersIDs(Long userID) {
+        Optional<UserSubscriptions> userSubscriptions;
+       return (userSubscriptions = repository.findById(userID))
+               .isPresent()? userSubscriptions.get().getSubscribedOffers():new HashSet<>();
     }
 
 
