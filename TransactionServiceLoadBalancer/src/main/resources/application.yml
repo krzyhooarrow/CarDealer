@@ -1,0 +1,9 @@
+transactionservice:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+
+
+ribbon:
+  eureka:
+    enabled: true
