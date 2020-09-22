@@ -2,11 +2,12 @@
   <mat-toolbar color="primary" class="navbar">
     <span class="dealer"><a routerLink="/search" routerLinkActive="active"><button mat-flat-button    color="primary" class="dealer">CarDealer<mat-icon>domain</mat-icon></button></a></span>
     <span class="spacer"></span>
-    <span *ngIf="!auth.isAuthenticated" class="dealer"><a routerLink="/auth" routerLinkActive="active"><button mat-flat-button    color="primary" class="dealer">Login<mat-icon>login</mat-icon></button></a></span>
-    <span *ngIf="auth.isAuthenticated" class="dealer"><a routerLink="/myOffers" routerLinkActive="active"><button mat-flat-button    color="primary" class="dealer">My offers<mat-icon>local_offer</mat-icon></button></a></span>
-    <span *ngIf="auth.isAuthenticated" class="dealer"><button mat-flat-button color="primary" class="dealer" (click)="auth.logout()">Logout<mat-icon>exit_to_app</mat-icon></button></span>
+    <span *ngIf="auth.isOnline && !auth.isAuthenticated" class="dealer"><a routerLink="/auth" routerLinkActive="active"><button mat-flat-button    color="primary" class="dealer">Login<mat-icon>login</mat-icon></button></a></span>
+    <span *ngIf="auth.isOnline && auth.isAuthenticated" class="dealer"><a routerLink="/myOffers" routerLinkActive="active"><button mat-flat-button    color="primary" class="dealer">My offers<mat-icon>local_offer</mat-icon></button></a></span>
+    <span *ngIf="auth.isOnline && auth.isAuthenticated" class="dealer"><button mat-flat-button color="primary" class="dealer" (click)="auth.logout()">Logout<mat-icon>exit_to_app</mat-icon></button></span>
   </mat-toolbar>
 </p>
 <div class="content-container">
-<router-outlet></router-outlet>
+<app-server-unavailable *ngIf="!auth.isOnline"></app-server-unavailable>  
+<router-outlet *ngIf="auth.isOnline"></router-outlet>
 </div>

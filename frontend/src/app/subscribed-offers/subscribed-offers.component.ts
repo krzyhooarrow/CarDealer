@@ -17,31 +17,13 @@ export class SubscribedOffersComponent implements OnInit {
     this.getTransactions()
   }
 
-    getTransactions(){
-      this.subsriptions.getUserSubscriptions().subscribe(
-        (offerIds:number[])=> this.transactionService.getUserSubscribedOffers(offerIds)
-                              .subscribe((offers: Array<TransactionDTO>) =>   {  this.transactions = offers  } )
-      ); 
-  
-  }
+    getTransactions(){  this.subsriptions.getUserSubscriptions().subscribe(  (offerIds:number[])=>   {if(offerIds?.length>0)    this.transactionService.getUserSubscribedOffers(offerIds).subscribe((offers: Array<TransactionDTO>) =>   {  this.transactions = offers  } )}); }
 
 
   ngOnInit(): void {
   }
   transactions:TransactionDTO[]
 
-  no_images = [ {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},
-  {path: 'https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png'},
-  ]
-  img="https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png"
+  no_img="https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png"
 
-  rowSize = 1;
-  selectSize = 20;
-  bigSelectSize= 40;
-  maxCols = 40;
-  whiteColor = 'white'
-  images = [
-    {path: 'https://i.pinimg.com/originals/58/67/49/5867496ec9a6f50592a70f2219203aaf.jpg'},
-    {path: 'https://i.pinimg.com/originals/58/67/49/5867496ec9a6f50592a70f2219203aaf.jpg'}
-  ]
 }

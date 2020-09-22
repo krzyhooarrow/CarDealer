@@ -1,14 +1,11 @@
     <div class="mat-card" >
         <header>
-            <!-- <img src="https://via.placeholder.com/80">  //link   [color]="subscriptions?.indexOf(transaction.id) > -1? 'link':'accent'"--> 
             <button *ngIf="auth.isAuthenticated && subscribedList" (click)="sub_or_unsub(transaction.id)" mat-flat-button matRipple matRippleRadius='1'
               matInput [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'background-color':'brown'} : {'color':'white'}" [value]="transaction.id"> <mat-icon [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'color':'white'} : {'color':'black'}" >star_outline</mat-icon></button>
-              <!-- [color]="subscribedList?.indexOf(transaction.id) > -1? 'accent':'link'" -->
-            <h3>{{ transaction.title }}</h3>
-            <h4>{{ transaction.tags }}</h4>
+            <h3 *ngIf="transaction.title">{{ transaction.title }}</h3>
+            <h4 *ngIf="transaction.tags">{{ transaction.tags }}</h4>
         </header>
         <footer>
-            <mat-icon>location_on</mat-icon>{{ transaction.location_city }}
             <br>
             <mat-icon>language</mat-icon>{{ transaction.id }}
             <button mat-flat-button matRipple matRippleRadius='1' color="primary"   [routerLink]="['/offer', transaction.id]" routerLinkActive="active" >Zobacz ofertę</button>

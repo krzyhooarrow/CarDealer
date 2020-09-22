@@ -20,3 +20,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </mat-card>
+<mat-card *ngIf="transactionHistory?.length<1" class="card-container">History is empty</mat-card>

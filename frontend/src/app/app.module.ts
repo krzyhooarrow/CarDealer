@@ -59,6 +59,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { SubscribedOffersComponent } from './subscribed-offers/subscribed-offers.component';
 import { OfferPreviewComponent } from './offer-preview/offer-preview.component';
+import { ServerUnavailableComponent } from './server-unavailable/server-unavailable.component';
 FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
 
 
@@ -82,7 +83,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     NewOfferComponent,
     OffersHistoryComponent,
     SubscribedOffersComponent,
-    OfferPreviewComponent
+    OfferPreviewComponent,
+    ServerUnavailableComponent
   ],
 
   imports: [

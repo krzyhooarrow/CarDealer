@@ -51,7 +51,10 @@ height: 98%;
   border-radius: 4px;
   
 
-  carousel{
+  carousel,img{
+    background-color: white;
+    margin-top: 1%;
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, .14), 0 5px 1px -2px rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
     height: 60vh !important; 
     width: 60vw;
     // margin-left: auto;

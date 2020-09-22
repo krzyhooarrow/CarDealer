@@ -2,6 +2,10 @@ mat-card{
     width: 95%;
     margin:auto !important;
 }
-table{
-    width: 100%;
+table{  width: 100%;}
+
+.card-container{
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+    margin-top: 1% !important;
+    margin-bottom: 1% !important;
 }

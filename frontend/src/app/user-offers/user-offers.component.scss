@@ -2,7 +2,9 @@ mat-card::ng-deep.mat-card-header-text {
     width: 100%;
   }
 
-carousel, img{width: 20% !important;}
+
+  
+carousel, img{width: 20vh !important; height: 20vh!important;}
 
 
 .card-container{
@@ -10,19 +12,19 @@ carousel, img{width: 20% !important;}
     margin:auto;
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
     margin-top: 1%;
-
+    margin-bottom: 1%;
 
     display: flex;
     align-items: flex-start;
 
     .info{ 
         margin-left: 1%;
-        width: 45%;  }
-    .buttons{  width: 55%;  }
+        width: 100%;  }
+    .buttons{  width: 50%;  }
 
     button {
         margin: 0 1%;
-        width: 30%;
+        width: 45%;
     }
 
     header {

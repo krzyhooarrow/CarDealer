@@ -9,7 +9,7 @@ import { TransactionDTO } from 'src/models/transaction-interfaces';
 export class TransactionEquipmentComponent implements OnInit {
 
   constructor() { }
-
+  
   @Input() transaction:TransactionDTO;
 
   ngOnInit(): void {

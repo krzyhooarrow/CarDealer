@@ -9,34 +9,15 @@ import { SubscriptionService } from '../services/subscription.service';
 })
 export class OffersTileComponent implements OnInit {
 
-
   @Input() transactions:Array<TransactionDTO>;
   @Input() results:number;
   subscriptions:number[];
 
   no_img="https://sertame.com/wp-content/uploads/2019/11/No-Product-Image.png"
 
-  rowSize = 1;
-  selectSize = 20;
-  bigSelectSize= 40;
-  maxCols = 40;
-  whiteColor = 'white'
-  
-  tiles: OfferTile[] = [
-
-    {text: '', cols: this.maxCols, rows: 1, color: this.whiteColor},
-    {text: '', cols: 0.02*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor},
-    {text: '', cols: 0.1*this.maxCols, rows: 100/this.rowSize, color: 'lavender', isSlider:true, visible:true},
-    {text: '', cols: 0.38*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor, visible:true},
-    {text: '', cols: 0.1*this.maxCols, rows: 100/this.rowSize, color: 'lavender', isSlider : true, visible:true},
-    {text: '', cols: 0.38*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor, visible:true},
-    {text: '', cols: 0.02*this.maxCols, rows: 100/this.rowSize, color: this.whiteColor},
-    {text: '', cols: this.maxCols, rows: 1, color: this.whiteColor},
-  ];
-
   constructor(public subs: SubscriptionService) { }
 
-  ngOnInit(): void {   this.subs.getUserSubscriptions().subscribe( (list : number[]) => {this.subscriptions = list }); }
+  ngOnInit(): void {   this.subs.getUserSubscriptions().subscribe( (list : number[]) => {this.subscriptions = list; }); }
 
 }
 export interface OfferTile {

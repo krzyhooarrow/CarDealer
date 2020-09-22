@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Config } from './app-config';
 import { UserDTO } from 'src/models/interfaces';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { interval, Observable } from 'rxjs';
+import { delay,retry, retryWhen } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class AuthService {
 
 
   public isAuthenticated = false;
+  public isOnline;
 
   constructor(private config:Config ,private http:HttpClient,private cookieService:CookieService,private router: Router) {  }
 
@@ -33,11 +36,20 @@ export class AuthService {
     
   public authenticationCheck(){  
     return this.http.get<string>(this.config.API_URL_SERVER,this.getAuthHeader())
+    .pipe(retryWhen(delay(3000)))
     .subscribe(
-      () => this.isAuthenticated = true,
-      () => this.isAuthenticated = false
-       );
+      () => {this.isAuthenticated = true; this.isOnline = true;},
+
+      (response:HttpErrorResponse) => { 
+        
+        this.isAuthenticated = false;  
+  
+        if(response.status==0)
+        this.isOnline == false;
+        else this.isOnline = true;    
       }
+    );
+  }
   
       
    public logout(){this.cookieService.delete("JWT"); this.authenticationCheck(); this.redirectIfAuthenticated()}

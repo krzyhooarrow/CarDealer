@@ -1,8 +1,8 @@
 <div *ngIf="transactions">
 <div *ngFor="let transaction of transactions">
     <mat-card class="card-container">
-        <carousel *ngIf="transaction.images.length > 1" [images]="images" [cellsToScroll]="1" [dots]="true" [loop] = "true" ></carousel>
-        <img *ngIf="transaction.images.length <= 1" [src]="img">
+        <img *ngIf="transaction.images?.length > 0" [src]="transaction.images[0]">
+        <img *ngIf="transaction.images.length < 1" [src]="no_img">
         <div class="info">
         <header>
             <h3> {{ transaction.title }}</h3>
@@ -15,4 +15,4 @@
     </mat-card>
 </div> 
 </div>
-<p *ngIf="!transactions"> You haven't any subscribed offers</p>
+<mat-card *ngIf="!transactions" class="card-container">You haven't any subscribed offers</mat-card>

@@ -18,7 +18,6 @@ export class NewOfferComponent implements OnInit {
   distinctCarTypes:Array<SelectMap>;
   distinctCarMarks:Array<SelectMap>;
   distinctCarModels:Array<SelectMap>;
-  distinctLocations:Array<SelectMap>;
   distinctFuelTypes:Array<String>;
   distinctProductionCountry:Array<SelectMap>; 
   distinctAdditionalEquipmentList:Array<String>;
@@ -64,7 +63,6 @@ export class NewOfferComponent implements OnInit {
 
     this.service.getDistinctCarTypesWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarTypes = types })
     this.service.getDistinctCarMarksWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarMarks = types })
-    this.service.getDistinctLocationsWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctLocations = types })  
     this.service.getDistinctFuelTypes().subscribe((types: Array<String>) => {this.distinctFuelTypes = types })
     this.service.getDistinctAdditionalEquipment().subscribe((types: Array<String>) => {this.distinctAdditionalEquipmentList = types })
   }

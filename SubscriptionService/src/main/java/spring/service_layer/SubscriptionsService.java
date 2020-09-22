@@ -22,20 +22,24 @@ public class SubscriptionsService {
 
     public void subscribe(Long userID, Long offerID) {
         UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID));
+        if (subscriptions.getSubscribedOffers()!=null)
         subscriptions.getSubscribedOffers().add(offerID);
+        else subscriptions.setSubscribedOffers(Collections.singleton(offerID));
         repository.save(subscriptions);
     }
 
     public void unsubscribe(Long userID, Long offerID) throws UserNotFoundException {
         UserSubscriptions subscriptions = repository.findById(userID).orElseThrow(UserNotFoundException::new);
+        if (subscriptions.getSubscribedOffers()!=null)
         subscriptions.getSubscribedOffers().remove(offerID);
         repository.save(subscriptions);
     }
 
     public Set<Long> getSubscribedOffersIDs(Long userID) {
         Optional<UserSubscriptions> userSubscriptions;
-       return (userSubscriptions = repository.findById(userID))
-               .isPresent()? userSubscriptions.get().getSubscribedOffers():new HashSet<>();
+        return (userSubscriptions = repository.findById(userID))
+               .isPresent()? userSubscriptions.get().getSubscribedOffers() != null?
+               userSubscriptions.get().getSubscribedOffers() : new HashSet<>(): new HashSet<>();
     }
 
 

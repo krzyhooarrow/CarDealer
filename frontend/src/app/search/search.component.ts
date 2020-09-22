@@ -77,8 +77,6 @@ export class SearchComponent implements OnInit {
   public fuel_type:String
   public production_country:String;
   public state:String;
-  public location_city:String;
-  public location_country:String;
   public price_from:String;
   public price_to:String;
   public mileage_from:String;
@@ -92,14 +90,12 @@ export class SearchComponent implements OnInit {
   distinctCarTypes:Array<SelectMap>;
   distinctCarMarks:Array<SelectMap>;
   distinctCarModels:Array<SelectMap>;
-  distinctLocations:Array<SelectMap>;
   distinctFuelTypes:Array<String>;
   distinctProductionCountry:Array<SelectMap>;   
 
   ngOnInit(): void { 
     this.service.getDistinctCarTypesWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarTypes = types })
     this.service.getDistinctCarMarksWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctCarMarks = types })
-    this.service.getDistinctLocationsWithCounter().subscribe((types: Array<SelectMap>) => {this.distinctLocations = types })
     this.service.getDistinctFuelTypes().subscribe((types: Array<String>) => {this.distinctFuelTypes = types })
   }
 

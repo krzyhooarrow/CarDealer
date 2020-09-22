@@ -7,9 +7,8 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontend';
-  isUserAuthenticated = false;
-
+  title = 'CarDealer';
+  
     constructor(public auth:AuthService){ 
       auth.authenticationCheck()
     }

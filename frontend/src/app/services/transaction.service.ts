@@ -23,8 +23,6 @@ public getDistinctCarTypesWithCounter(){  return this.http.get<SelectMap[]>(this
 
 public getDistinctCarMarksWithCounter(){ return this.http.get<SelectMap[]>(this.config.API_URL_SERVER.concat(this.config.MARKS_WITH_COUNTER_ENDPOINT))  }
 
-public getDistinctLocationsWithCounter(){ return this.http.get<SelectMap[]>(this.config.API_URL_SERVER.concat(this.config.LOCATIONS_WITH_COUNTER_ENDPOINT))  }
-
 public getDistinctCarModelsByMarkWithCounter(mark:String){ return this.http.post<SelectMap[]>(this.config.API_URL_SERVER.concat(this.config.MODELS_WITH_COUNTER_ENDPOINT),mark) }
 
 public getDistinctFuelTypes(){return  this.http.get<String[]>(this.config.API_URL_SERVER.concat(this.config.GET_FUEL_TYPES)) }
