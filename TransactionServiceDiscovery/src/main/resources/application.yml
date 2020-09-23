@@ -1,8 +1,0 @@
-server:
-  port: 8762
-eureka:
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
-  server:
-    waitTimeInMsWhenSyncEmpty: 5
