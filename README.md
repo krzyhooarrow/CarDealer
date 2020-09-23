@@ -13,8 +13,6 @@ Service that offers support for vehicles transaction (buy, sell) in distributed 
 ### Architecture
 
 #####  App architecture consists of two main parts:
-- ###### 1.frontend
-- ###### 2.backend
 
 ##### 1. Frontend
 Frontend consists of angular app for end client user
