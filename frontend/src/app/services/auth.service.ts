@@ -36,14 +36,14 @@ export class AuthService {
     
   public authenticationCheck(){  
     return this.http.get<string>(this.config.API_URL_SERVER,this.getAuthHeader())
-    .pipe(retryWhen(delay(3000)))
+    // .pipe(retryWhen(delay(3000)))
     .subscribe(
       () => {this.isAuthenticated = true; this.isOnline = true;},
 
       (response:HttpErrorResponse) => { 
         
         this.isAuthenticated = false;  
-  
+          
         if(response.status==0)
         this.isOnline == false;
         else this.isOnline = true;    

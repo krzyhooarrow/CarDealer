@@ -14,7 +14,7 @@ export class Config {
   public LOGIN_USER_ENDPOINT = "/auth"
 
   private SUBS_SERVICE_NAME="subscriptionservice"
-  private TRANSACTION_SERVICE_NAME="transactionservice"
+  private TRANSACTION_SERVICE_NAME="balancer/transactionservice"
 
   // TRANSACTION SERVICE ENDPOINTS
   public OFFER_SEARCH_ENDPOINT = "/"+this.TRANSACTION_SERVICE_NAME+"/offers/search"
