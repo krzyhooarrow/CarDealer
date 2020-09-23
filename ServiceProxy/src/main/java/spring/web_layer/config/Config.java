@@ -59,8 +59,8 @@ public class Config extends WebSecurityConfigurerAdapter {
 
         httpSecurity.csrf().disable().authorizeRequests()
 
-                .antMatchers("/auth","/register","/subscriptionservice/popularity/**","/transactionservice/filters/*",
-                        "/transactionservice/offers/*").permitAll()
+                .antMatchers("/auth","/register","/subscriptionservice/popularity/**","/balancer/filters/*",
+                        "/balancer/offers/*").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
