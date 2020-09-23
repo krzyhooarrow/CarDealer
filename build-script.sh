@@ -6,6 +6,12 @@ cd target
 nohup java -jar ServiceDiscovery-1.0-SNAPSHOT.jar &
 
 cd ../..
+cd TransactionServiceLoadBalancer
+mvn package
+cd target
+nohup java -jar TransactionServiceLoadBalancer-0.0.1-SNAPSHOT.jar &
+
+cd ../..
 cd TransactionService
 mvn package
 cd target
