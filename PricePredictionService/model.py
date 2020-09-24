@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
 
@@ -25,10 +24,7 @@ scaler.fit_transform(df_num[['mileage','mpg','engineSize']])
 df1 = pd.concat([df_num,df_cat,dataframe['price']],axis=1)
 X = df1.drop("price", axis = 1)
 y = df1["price"]
-X_train,  X_test, y_train, y_test = train_test_split(X, y, test_size = 0.30, random_state = 101)
-lin_reg = LinearRegression()
-lin_reg.fit(X_train,y_train)
-y_pred =lin_reg.predict(X_test)
+X_train,  X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=101)
 forest = RandomForestRegressor()
 forest.fit(X_train,y_train)
 forest_y_pred = forest.predict(X_test)
@@ -36,4 +32,4 @@ forest_rmse = np.sqrt(mean_squared_error(y_test,forest_y_pred))
 forest_r2score = r2_score(y_test,forest_y_pred)
 
 print("R2 score is ", forest_r2score)
-print("rmse is ", forest_rmse )
+print("rmse is ", forest_rmse)
