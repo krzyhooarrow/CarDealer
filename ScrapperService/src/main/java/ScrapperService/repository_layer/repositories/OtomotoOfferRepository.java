@@ -1,0 +1,20 @@
+package ScrapperService.repository_layer.repositories;
+
+import ScrapperService.repository_layer.models.OtomotoOffer;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface OtomotoOfferRepository extends CrudRepository<OtomotoOffer,Long> {
+
+    @Query("FROM OtomotoOffer WHERE OtomotoOffer.make =:make AND OtomotoOffer .model =:model")
+    Optional<List<OtomotoOffer>> getAllOffers(
+            @Param("make") String make,
+            @Param("model") String model
+    );
+}
