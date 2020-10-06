@@ -5,14 +5,11 @@ import ScrapperService.repository_layer.models.OfferMatches;
 import ScrapperService.repository_layer.models.OtomotoOffer;
 import ScrapperService.repository_layer.repositories.OfferMatchesRepository;
 import ScrapperService.repository_layer.repositories.OtomotoOfferRepository;
-import ScrapperService.service_layer.dto.CarDTO;
-import ScrapperService.service_layer.scrappers.OtomotoScrapper;
+import ScrapperService.service_layer.dto.OfferDTO;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,11 +29,11 @@ public class OfferComparatorService {
                 .getOffersList();
     }
 
-    public void matchOffers(CarDTO carDTO, int howMany){
+    public void matchOffers(OfferDTO carDTO, int howMany){
         List<OtomotoOffer> mostMatchingOffers = new LinkedList<>();
 
         Stream<OtomotoOffer> offers = Objects
-                .requireNonNull(repository.getAllOffersByMakeAndModel(carDTO.getMake(), carDTO.getModel())
+                .requireNonNull(repository.getAllOffersByMakeAndModel(carDTO.getMark(), carDTO.getModel())
                         .orElse(null))
                 .stream();
 

@@ -15,8 +15,8 @@ public class VINController {
 
     private VinService service;
 
-    @GetMapping("/{number}")
-    public CarData getCarDataByVIN(@PathVariable String number){
-        return service.getCarDataByVIN(number);
+    @GetMapping("/{id}")
+    public CarData getVINData(@PathVariable Long id) {
+        return service.getCarDataByOfferId(id);
     }
 }

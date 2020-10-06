@@ -17,4 +17,8 @@ public interface OtomotoOfferRepository extends CrudRepository<OtomotoOffer,Long
             @Param("make") String make,
             @Param("model") String model
     );
+
+
+    void deleteAllByMake(String make);
+
 }

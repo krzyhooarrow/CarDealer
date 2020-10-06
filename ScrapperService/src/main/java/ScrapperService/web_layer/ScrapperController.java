@@ -21,4 +21,10 @@ public class ScrapperController {
         service.scrapOtomotoByMakeAndModel(make);
         return true;
     }
+
+    @GetMapping("/clear/{make}")
+    public boolean clearByMake(@PathVariable String make) {
+        service.clearOtomotoOffersByMake(make);
+        return true;
+    }
 }
