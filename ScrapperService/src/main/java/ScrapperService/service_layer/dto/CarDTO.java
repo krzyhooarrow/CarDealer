@@ -4,6 +4,7 @@ import ScrapperService.repository_layer.models.Transmission;
 
 public class CarDTO {
 
+    private Long id;
     private int power;
     private int mileage;
     private int price;
@@ -38,5 +39,9 @@ public class CarDTO {
 
     public int getProductionYear() {
         return productionYear;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

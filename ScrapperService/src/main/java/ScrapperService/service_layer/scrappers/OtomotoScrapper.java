@@ -1,28 +1,41 @@
 package ScrapperService.service_layer.scrappers;
 
 import ScrapperService.repository_layer.models.OtomotoOffer;
+import ScrapperService.repository_layer.models.OtomotoScrappedPage;
+import ScrapperService.repository_layer.repositories.OtomotoOfferRepository;
+import ScrapperService.repository_layer.repositories.ScrappedPagesRepository;
+import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
 @Lazy
+@AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class OtomotoScrapper implements Observator {
 
     private final String BASE_LINK = "https://www.otomoto.pl/osobowe/";
-    private List<OtomotoOffer> offers = new LinkedList<>();
+    private final List<OtomotoOffer> offers = new LinkedList<>();
+    private ScrappedPagesRepository pagesRepository;
+    private OtomotoOfferRepository otomotoOfferRepository;
 
-    public List<OtomotoOffer> scrapOtomotoOffersByMake(String make) throws IOException {
-        String query = setupLink(make);
+    public void scrapOtomotoOffersByMake(String make) throws IOException {
+        String linkToOffersList = setupLink(make);
 
-        int pagesCounter = Jsoup.connect(query)
+        int pagesCounter = Jsoup.connect(linkToOffersList)
                 .get()
                 .getElementsByClass("page")
                 .stream()
@@ -31,7 +44,7 @@ public class OtomotoScrapper implements Observator {
                 .map(Integer::valueOf)
                 .max(Comparator.comparing(Integer::valueOf)).orElse(0);
 
-        String pageHref, finalPageHref = (pageHref = Jsoup.connect(query)
+        String pageHref, finalPageHref = (pageHref = Jsoup.connect(linkToOffersList)
                 .get()
                 .getElementsByClass("next")
                 .select("a")
@@ -41,44 +54,40 @@ public class OtomotoScrapper implements Observator {
                 .get()).substring(0, pageHref.length() - 1);
 
 
-        List<Thread> threadsList = IntStream
-                .range(2, pagesCounter)
-                .mapToObj(value -> new Thread(new OtomotoPageScrapper(finalPageHref + value, this)))
-                .collect(Collectors.toList());
+        ExecutorService singleThreadPageScrapperExecutor = Executors.newSingleThreadExecutor();
 
-        threadsList.forEach(thread -> {
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+        IntStream.range(getLastScrappedPageNumberByMake(make), pagesCounter)
+                .boxed()
+                .forEach(
+                        value -> {
+                            try {
+                                List<OtomotoOffer> scrappedOffers = singleThreadPageScrapperExecutor.submit(new OtomotoPageScrapper(finalPageHref + value)).get();
+                                otomotoOfferRepository.saveAll(scrappedOffers);
+                                saveScrappedPageNumberByMake(make, value);
+                            } catch (InterruptedException | ExecutionException e) {
+                            }
+                        });
 
-        return offers;
+        singleThreadPageScrapperExecutor.shutdown();
     }
 
-    private String setupLink(@NotNull String make) {    return BASE_LINK + make + '/';   }
-
-
-    public List<OtomotoOffer> scrapAllOffersFromOtomoto(List<String> makesList) throws IOException {
-        return makesList
-                .stream()
-                .map(make -> {
-                    try {
-                        return scrapOtomotoOffersByMake(make);
-                    } catch (IOException e) {
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+    private String setupLink(@NotNull String make) {
+        return BASE_LINK + make + '/';
     }
-
 
     @Override
     public void updateOfferList(List<OtomotoOffer> offers) {
         this.offers.addAll(offers);
+    }
+
+    private void saveScrappedPageNumberByMake(String make, int pageNumber) {
+        OtomotoScrappedPage page = pagesRepository.getByMake(make).orElse(new OtomotoScrappedPage(make, pageNumber));
+        if (pageNumber>page.getNumberOfLastScrappedPage()){
+        page.setNumberOfLastScrappedPage(pageNumber);
+        pagesRepository.save(page);}
+    }
+
+    private Integer getLastScrappedPageNumberByMake(String make) {
+        return pagesRepository.getLastScrappedPageByMake(make).orElse(2);
     }
 }

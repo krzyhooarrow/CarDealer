@@ -8,38 +8,16 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
-public class OtomotoPageScrapper implements Runnable {
+public class OtomotoPageScrapper implements Callable<List<OtomotoOffer>> {
 
-    private List<OtomotoOffer> offers;
     private final String url;
-    private final Observator observator;
     private final Logger logger = LoggerFactory.getLogger(OtomotoPageScrapper.class);
 
-    public OtomotoPageScrapper(String url, Observator observator) {
+    public OtomotoPageScrapper(String url) {
         this.url = url;
-        this.observator = observator;
-    }
-
-    @Override
-    public void run() {
-        try {
-            offers = scrapLinksToOffers(url).stream().map(url -> {
-                try {
-                    return getBaseCarParameters(url);
-                } catch (IOException e) {
-                    return null;
-                }
-            }).filter(Objects::nonNull).map(OtomotoOffer::new).collect(Collectors.toList());
-
-            observator.updateOfferList(offers);
-            logger.info("Page has been scrapped " + Thread.currentThread().getName() + " with "+ offers +" offers");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private List<String> scrapLinksToOffers(String baseLink) throws IOException {
@@ -70,8 +48,24 @@ public class OtomotoPageScrapper implements Runnable {
                 .trim()
                 .replace("PLN", "")
                 .replace(" ", ""));
-        parameters.put("URL",url);
+        parameters.put("URL", url);
 
         return parameters;
+    }
+
+    @Override
+    public List<OtomotoOffer> call() throws Exception {
+        List<OtomotoOffer> offers = scrapLinksToOffers(url).stream().map(url -> {
+            try {
+                return getBaseCarParameters(url);
+            } catch (IOException e) {
+                return null;
+            }
+        }).filter(Objects::nonNull)
+                .map(OtomotoOffer::new)
+                .filter(offer -> offer.getMake() != null)
+                .collect(Collectors.toList());
+        logger.info("Page has been scrapped " + (offers.size() > 0 ? "successfully with " + offers.size() + " offers" : "unsuccessfully"));
+        return offers.size() == 0 ? new LinkedList<>() : offers;
     }
 }

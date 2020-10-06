@@ -1,5 +1,6 @@
 package ScrapperService.repository_layer.repositories;
 
+import ScrapperService.repository_layer.models.OfferMatches;
 import ScrapperService.repository_layer.models.OtomotoOffer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,11 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OtomotoOfferRepository extends CrudRepository<OtomotoOffer,Long> {
+public interface OfferMatchesRepository  extends CrudRepository<OfferMatches,Long> {
 
-    @Query("FROM OtomotoOffer o WHERE o.make =:make AND o.model =:model")
-    Optional<List<OtomotoOffer>> getAllOffersByMakeAndModel(
-            @Param("make") String make,
-            @Param("model") String model
-    );
+
+    @Query("FROM OfferMatches o where o.id =:id")
+    Optional<OfferMatches> findByOfferId(@Param("id") Long id);
 }

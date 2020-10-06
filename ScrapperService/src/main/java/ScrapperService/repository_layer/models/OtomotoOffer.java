@@ -35,7 +35,7 @@ public class OtomotoOffer {
         try {
             this.power = PatternMatcher.matchInteger(parameters.get("Moc"));
             this.mileage = PatternMatcher.matchInteger(parameters.get("Przebieg"));
-            this.isNew = parameters.get("Stan").equals("Używane");
+            this.isNew = !parameters.get("Stan").equals("Używane");
             this.type = parameters.get("Typ");
             this.price = PatternMatcher.matchInteger(parameters.get("Cena"));
             this.capacity = Math.round(PatternMatcher.matchInteger(parameters.get("Pojemność skokowa"))/100F)/10F;
@@ -48,9 +48,7 @@ public class OtomotoOffer {
             this.transmission = PatternMatcher.matchByPattern(parameters.get("Skrzynia biegów"),"Manualna")!=null
                     ? Transmission.manual:Transmission.automatic;
             this.color = parameters.get("Kolor");
-        }catch (NullPointerException | NumberFormatException exc){
-            System.out.println(exc.getCause().toString());
-        }
+        }catch (NullPointerException | NumberFormatException ignored){}
     }
 
     public OtomotoOffer(){}
