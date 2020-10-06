@@ -22,25 +22,25 @@ public class CarService {
     public Car addNewCarDefinition(Integer prodYear, CarModel carModel, CarType carType) {
         Optional<Car> car;
         return ((car = repositoryService.carRepository
-                .findAllByParameters(carType,carModel,prodYear)).isEmpty())? new Car(carType,carModel,prodYear) : car.get();
+                .findAllByParameters(carType,carModel,prodYear)).isEmpty())? repositoryService.carRepository.save(new Car(carType,carModel,prodYear)) : car.get();
     }
 
     public CarModel addModelDefinition(String carModel, CarMake carMake) {
         Optional<CarModel> model;
         return ((model = repositoryService.carModelRepository
-                .findByModel(carModel)).isEmpty())? new CarModel(carModel,carMake) : model.get();
+                .findByModel(carModel)).isEmpty())? repositoryService.carModelRepository.save(new CarModel(carModel,carMake)) : model.get();
     }
 
     public CarType addCarTypeDefinition(String carType) {
         Optional<CarType> carType1;
         return ((carType1 = repositoryService.carTypeRepository
-                .findByCarType(carType)).isEmpty()) ? new CarType(carType) : carType1.get();
+                .findByCarType(carType)).isEmpty()) ? repositoryService.carTypeRepository.save(new CarType(carType)) : carType1.get();
     }
 
     public CarMake addCarMarkDefinition(String carMark) {
         Optional<CarMake> carMark0;
         return ((carMark0 = repositoryService.carMakeRepository
-                .findByCarMake(carMark)).isEmpty()) ? new CarMake(carMark) : carMark0.get();
+                .findByCarMake(carMark)).isEmpty()) ? repositoryService.carMakeRepository.save(new CarMake(carMark)) : carMark0.get();
     }
 
     public ConcreteCar addNewConcreteCar(Car car, State state, Transmission gearbox, FuelType fuelType, List<Equipment> additionalEquipment,

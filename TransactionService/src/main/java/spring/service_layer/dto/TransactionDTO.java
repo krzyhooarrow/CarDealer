@@ -19,9 +19,9 @@ public class TransactionDTO {
     private Integer production_year;
     private String fuelType;
     private String location_city;
-    private final Integer mileage ;
-    private final Float capacity ;
-    private final Integer power ;
+    private Integer mileage ;
+    private Float capacity ;
+    private Integer power ;
     private String gearbox ;
     private String VIN;
     private String color;
@@ -64,6 +64,7 @@ public class TransactionDTO {
         this.power = offer.getCar().getPower();
     }
 
+    public TransactionDTO(){this.id=5L;}
     public Integer getPrice() {
         return price;
     }

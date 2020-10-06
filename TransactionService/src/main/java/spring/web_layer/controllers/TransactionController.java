@@ -13,6 +13,7 @@ import spring.service_layer.services.ImagesService;
 import spring.service_layer.services.TransactionService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -25,6 +26,7 @@ public class TransactionController {
 
     private TransactionService transactionService;
     private ImagesService imagesService;
+
 
     @PostMapping(value = "/createOffer")
     public Long createOffer(@RequestBody OfferDTO offerDTO, HttpServletRequest request) { Long offerId;

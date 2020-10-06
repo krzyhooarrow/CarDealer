@@ -64,7 +64,7 @@ public class OtomotoScrapper implements Observator {
                                 List<OtomotoOffer> scrappedOffers = singleThreadPageScrapperExecutor.submit(new OtomotoPageScrapper(finalPageHref + value)).get();
                                 otomotoOfferRepository.saveAll(scrappedOffers);
                                 saveScrappedPageNumberByMake(make, value);
-                            } catch (InterruptedException | ExecutionException e) {
+                            } catch (InterruptedException | ExecutionException ignored) {
                             }
                         });
 

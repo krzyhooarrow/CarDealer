@@ -32,6 +32,7 @@ public class TransactionService {
     private OfferBuilder offerBuilder;
     private TriggerService triggerService;
     private ImagesService imagesService;
+    private KafkaService kafkaService;
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
@@ -89,9 +90,11 @@ public class TransactionService {
                     offerRepository.save(offer),
                     userID);
 
+            kafkaService.notifyOfferCreation(offerDTO);
+
             return offer.getId();
         } catch (Exception exc) {
-            logger.info("Error creating offer");
+            logger.info("Error creating offer due to " + exc.getMessage());
             return null;
         }
     }
@@ -111,7 +114,7 @@ public class TransactionService {
 
             return true;
         } catch (Exception exc) {
-            logger.error("Couldn't remove offer");
+            logger.error("Couldn't remove offer due to "+ exc.getMessage());
             return false;
         }
     }

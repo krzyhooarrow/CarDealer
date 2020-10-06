@@ -154,14 +154,9 @@ public class OfferBuilder {
         }
 
         public Offer build() {
-
             Car car = carService.addNewCarDefinition(production_year, model, carType);
-
-            ConcreteCar concreteCar = new ConcreteCar(car, state, gearbox, fuelType, additionalEquipment, mileage, capacity, power, vin, color);
-
-            repositoryService.concreteCarRepository.save(concreteCar);
-
-            return new Offer(concreteCar, price, description, images, user, title, tags);
+            ConcreteCar concreteCar = carService.addNewConcreteCar(car, state, gearbox, fuelType, additionalEquipment, mileage, capacity, power, vin, color);
+            return carService.addNewOfferBasedOnConcreteCar(concreteCar, price, description, images, user, title, tags);
         }
 
     }
