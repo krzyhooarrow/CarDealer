@@ -90,7 +90,7 @@ public class TransactionService {
                     offerRepository.save(offer),
                     userID);
 
-            kafkaService.notifyOfferCreation(offerDTO);
+            kafkaService.notifyOfferCreation(offerDTO.setId(offer.getId()));
 
             return offer.getId();
         } catch (Exception exc) {

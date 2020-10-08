@@ -32,7 +32,8 @@ public class KafkaService implements MessagesProcessor {
 
     @Override
     public void process(Object o) {
-        offerComparatorService.matchOffers((OfferDTO) o,5);
-        vinService.saveCarData(vinService.scrapCarData(((OfferDTO) o).getVin()));
+        logger.info("New incoming message " + o.toString());
+        offerComparatorService.matchOffers((OfferDTO) o,2);
+        vinService.scrapCarData(((OfferDTO) o));
     }
 }

@@ -14,6 +14,6 @@ import java.util.Optional;
 public interface OfferMatchesRepository  extends CrudRepository<OfferMatches,Long> {
 
 
-    @Query("FROM OfferMatches o where o.id =:id")
+    @Query("FROM OfferMatches o where o.offerId =:id")
     Optional<OfferMatches> findByOfferId(@Param("id") Long id);
 }

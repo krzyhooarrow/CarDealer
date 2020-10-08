@@ -18,7 +18,11 @@ public interface OtomotoOfferRepository extends CrudRepository<OtomotoOffer,Long
             @Param("model") String model
     );
 
-
     void deleteAllByMake(String make);
+
+    @Query("FROM OtomotoOffer o WHERE o.make =:make")
+    Optional<List<OtomotoOffer>> getAllOffersByMake(@Param("make") String make);
+
+    Optional<List<OtomotoOffer>> getByMakeIgnoreCase(String make);
 
 }

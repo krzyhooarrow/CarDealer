@@ -6,14 +6,15 @@ import ScrapperService.repository_layer.models.OtomotoOffer;
 import ScrapperService.repository_layer.repositories.OfferMatchesRepository;
 import ScrapperService.repository_layer.repositories.OtomotoOfferRepository;
 import ScrapperService.service_layer.dto.OfferDTO;
+import ScrapperService.web_layer.exceptions.OffersNotFoundException;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -22,6 +23,7 @@ public class OfferComparatorService {
 
     private OtomotoOfferRepository repository;
     private OfferMatchesRepository matchesRepository;
+    private final static Logger logger = LoggerFactory.getLogger(OfferComparatorService.class);
 
     public List<OtomotoOffer> getMatchingOffers(Long offerId) {
         return Objects.requireNonNull(matchesRepository.findByOfferId(offerId)
@@ -29,20 +31,23 @@ public class OfferComparatorService {
                 .getOffersList();
     }
 
-    public void matchOffers(OfferDTO carDTO, int howMany){
-        List<OtomotoOffer> mostMatchingOffers = new LinkedList<>();
+    public void matchOffers(OfferDTO carDTO, int howMany)  {
+        try {
+            List<OtomotoOffer> mostMatchingOffers = new LinkedList<>();
+            OtomotoOffer bestOffer;
 
-        Stream<OtomotoOffer> offers = Objects
-                .requireNonNull(repository.getAllOffersByMakeAndModel(carDTO.getMark(), carDTO.getModel())
-                        .orElse(null))
-                .stream();
+            List<OtomotoOffer> offers = new ArrayList<>(Objects
+                    .requireNonNull(repository.getByMakeIgnoreCase(carDTO.getMark())
+                            .orElseThrow(OffersNotFoundException::new)));
 
-        for (int i = 0 ; i < howMany ; i ++)
-            mostMatchingOffers.add(offers
-                    .filter(offer -> !mostMatchingOffers.contains(offer))
-                    .max(Comparator.comparing(offer -> OffersComparator.compare(offer,carDTO)))
-                    .get());
+            for (int i = 0; i < howMany; i++) {
+                mostMatchingOffers.add(bestOffer = offers.stream().max(Comparator.comparing(offer -> OffersComparator.compare(offer, carDTO))).get());
+                offers.remove(bestOffer);
+            }
 
-        matchesRepository.save(new OfferMatches(carDTO.getId(),mostMatchingOffers));
+            matchesRepository.save(new OfferMatches(carDTO.getId(), mostMatchingOffers));
+        }catch (OffersNotFoundException e){
+            logger.error("Couldn't find simmilar offers due to "+e.getMessage());
+        }
     }
 }

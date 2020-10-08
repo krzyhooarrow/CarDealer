@@ -100,7 +100,8 @@ public class OfferDTO {
     @Override
     public String toString() {
         return "OfferDTO{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", tags='" + tags + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +

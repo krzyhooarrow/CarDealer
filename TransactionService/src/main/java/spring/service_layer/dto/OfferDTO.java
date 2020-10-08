@@ -8,7 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OfferDTO {
 
-
+    private Long id;
     private String title;
     private String tags;
     private Integer price;
@@ -26,6 +26,15 @@ public class OfferDTO {
     private String vin;
     private String state;
     private List<String> additionalEquipment;
+
+    public OfferDTO setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;
@@ -98,7 +107,8 @@ public class OfferDTO {
     @Override
     public String toString() {
         return "OfferDTO{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", tags='" + tags + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
