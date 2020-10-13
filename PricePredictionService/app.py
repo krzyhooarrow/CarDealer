@@ -1,6 +1,7 @@
 from flask import Flask
 import mysql.connector
 import json
+import py_eureka_client.eureka_client as eureka_client
 
 app = Flask(__name__)
 
@@ -30,7 +31,7 @@ def cut_first_element_from_tuple(list):
 
 
 cursor, connection = connect_to_database()
-
+eureka_client.init(eureka_server="http://localhost:8761/eureka",app_name="priceservice",instance_port=int(5000))
 
 @app.route('/')
 def health_check():
@@ -40,6 +41,7 @@ def health_check():
 @app.route('/getPrices/<offer_id>')
 def getPredictedPrices(offer_id):
     return json.dumps(cut_first_element_from_tuple(selectPredictedPricesById(cursor, offer_id)))
+
 
 
 if __name__ == '__main__':
