@@ -16,6 +16,10 @@ cd ../TransactionServiceLoadBalancer
 sudo docker build -t transaction-service-load-balancer . 
 sudo docker run -d --network host -it transaction-service-load-balancer
 
+cd ../ScrapperService
+sudo docker build -t scrapper-service . 
+sudo docker run -d --network host -it scrapper-service
+
 cd ../SubscriptionService
 sudo docker build -t subscription-service . 
 sudo docker run -d --network host -it subscription-service

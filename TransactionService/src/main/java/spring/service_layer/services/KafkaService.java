@@ -27,7 +27,7 @@ public class KafkaService {
 
     public void notifyOfferCreation(OfferDTO offer) {
         try {
-            producer.publishMessage(OFFER_TOPIC, "new-offer", offer);
+            producer.publishMessage(OFFER_TOPIC, offer.getId().toString(), offer);
         }catch (Exception e){
             logger.error("Error putting message to Kafka due to " + e.getMessage());
         }
