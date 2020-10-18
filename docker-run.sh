@@ -1,5 +1,8 @@
 sudo docker stop $(sudo docker ps -aq)
 
+sudo docker pull bitnami/kafka
+sudo docker run --network host -it -e ALLOW_PLAINTEXT_LISTENER=yes bitnami/kafka
+
 cd ServiceDiscovery
 sudo docker build -t service-discovery . 
 sudo docker run -d --network host -it service-discovery
