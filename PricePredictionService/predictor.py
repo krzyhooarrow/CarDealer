@@ -36,7 +36,7 @@ def cut_first_element_from_tuple(list):
 
 
 def start_consuming_messages_from_kafka():
-    years_predicting_range = 5
+    years_predicting_range = 10
 
     cursor, connection = connect_to_database()
     transforming_dict = pickle.load(open('model/transforming_dict.pkl', "rb"))
@@ -63,7 +63,7 @@ def start_consuming_messages_from_kafka():
         counter = 0
         for x in predict(inputsList, transforming_dict, model):
             insertPredictedPrices(cursor, connection,
-                                  (json_values['id'], json_values['production_year'] + counter, x))
+                                  (json_values['id'], 2020 + counter, x))
             counter += 1
 
 

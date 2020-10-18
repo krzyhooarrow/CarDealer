@@ -8,8 +8,6 @@ WORKDIR /code
 COPY . .
 
 # install dependencies
-#RUN pip install -r requirements.txt
-RUN pip install Flask
 RUN pip install mysql-connector-python
 RUN pip install pandas
 RUN pip install pickle5

@@ -10,7 +10,7 @@ sudo docker run -d --network host -it service-proxy
 
 cd ../TransactionService
 sudo docker build -t transaction-service . 
-sudo docker run -d --network host -it transaction-service $(cat ../../../deploy.properties) 
+sudo docker run -d --network host -it transaction-service
 
 cd ../TransactionServiceLoadBalancer
 sudo docker build -t transaction-service-load-balancer . 
@@ -23,3 +23,12 @@ sudo docker run -d --network host -it scrapper-service
 cd ../SubscriptionService
 sudo docker build -t subscription-service . 
 sudo docker run -d --network host -it subscription-service
+
+cd ../PricePredictionService
+sudo docker build -t price-prediction-service . 
+sudo docker run -d --network host -it price-prediction-service
+
+cd service
+sudo docker build -t price-prediction-app-service . 
+sudo docker run -d --network host -it price-prediction-app-service
+
