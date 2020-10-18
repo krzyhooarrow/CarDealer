@@ -27,7 +27,7 @@ def insertPredictedPrices(cursor, connection, valuesTuple):
 
 def selectPredictedPricesById(cursor, id):
     query = """SELECT * FROM predicted_price WHERE offer_id = (%s) """
-    cursor.execute(query, (id,))
+    cursor.execute(query, id)
     return cursor.fetchall()
 
 
@@ -46,7 +46,7 @@ def start_consuming_messages_from_kafka():
     for msg in consumer:
         json_values = json.loads(msg.value)
 
-        if len(selectPredictedPricesById(cursor, (json_values['id'],))) == 0:
+        if len(selectPredictedPricesById(cursor, (json_values['id'],))) != 0:
             continue
 
         input = get_input(
@@ -106,3 +106,4 @@ def predict(input, transforming_dict, model):
 
 if __name__ == '__main__':
     start_consuming_messages_from_kafka()
+
