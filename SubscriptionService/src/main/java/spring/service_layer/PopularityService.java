@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import spring.repository_layer.models.OfferPopularity;
 import spring.repository_layer.repositories.OfferPopularityRepository;
+import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.exceptions.OfferNotFoundException;
 
 import javax.annotation.PostConstruct;
@@ -24,16 +25,25 @@ public class PopularityService {
     private OfferPopularityRepository offerPopularityRepository;
 
     public void updateOfferPopularity(Long offerID) {
-        OfferPopularity o = offerPopularityRepository.findById(offerID).orElseGet(()->new OfferPopularity(offerID));
-        o.setVisitsCounter(o.getVisitsCounter()+1);
-        offerPopularityRepository.save(o);
+        try {
+            OfferPopularity o = offerPopularityRepository.findById(offerID).orElseThrow(OfferNotFoundException::new);
+            o.setVisitsCounter(o.getVisitsCounter() + 1);
+            offerPopularityRepository.save(o);
+        } catch (OfferNotFoundException exc) {
+            logger.error("Offer not found :" + offerID);
+        }
     }
 
     public Integer getOfferPopularity(Long offerID) {
-      return offerPopularityRepository.findById(offerID).orElseGet(()->newOfferPopularity(offerID)).getVisitsCounter();
+        try {
+            return offerPopularityRepository.findById(offerID).orElseThrow(OfferNotFoundException::new).getVisitsCounter();
+        } catch (OfferNotFoundException exc) {
+            logger.error("Offer not found :" + offerID);
+            return 0;
+        }
     }
 
-    private OfferPopularity newOfferPopularity(Long offerID){
-        return offerPopularityRepository.save(new OfferPopularity(offerID));
+    public void createNewOfferPopularity(OfferDTO o) {
+        offerPopularityRepository.save(new OfferPopularity(o.getId()));
     }
 }

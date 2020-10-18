@@ -41,8 +41,4 @@ public class SubscriptionsService {
                .isPresent()? userSubscriptions.get().getSubscribedOffers() != null?
                userSubscriptions.get().getSubscribedOffers() : new HashSet<>(): new HashSet<>();
     }
-
-
-
-
 }
