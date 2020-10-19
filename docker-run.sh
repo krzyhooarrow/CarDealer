@@ -1,7 +1,8 @@
 sudo docker stop $(sudo docker ps -aq)
+sudo docker system prune
 
-sudo docker run --name zoo --network host wurstmeister/zookeeper:latest
-sudo docker run --network host wurstmeister/kafka:1.0.1
+sudo docker run -d --name zoo --network host wurstmeister/zookeeper:latest
+sudo docker run -d --network host wurstmeister/kafka:1.0.1
 
 cd ServiceDiscovery
 sudo docker build -t service-discovery . 
