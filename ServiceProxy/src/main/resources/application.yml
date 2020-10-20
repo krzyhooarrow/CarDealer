@@ -44,5 +44,26 @@ balancer:
     MaxTotalHttpConnections: 500
     MaxConnectionsPerHost: 100
 
+subscriptionservice:
+  ribbon:
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
+
+priceservice:
+  ribbon:
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
+
+scrapperservice:
+  ribbon:
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
+
 
 

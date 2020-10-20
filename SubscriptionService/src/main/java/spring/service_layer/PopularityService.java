@@ -57,8 +57,8 @@ public class PopularityService {
 
     public float getOfferWatchersRatio(Long offerId) {
         try {
-            return (float) (offerPopularityRepository.findById(offerId).orElseThrow(OfferNotFoundException::new)).getVisitsCounter() /
-                    (float) popularityService.getMaxPopularity(Type.POPULARITY).orElseThrow(OfferNotFoundException::new).getCounter();
+            return ((float) (offerPopularityRepository.findById(offerId).orElseThrow(OfferNotFoundException::new)).getVisitsCounter() /
+                    (float) popularityService.getMaxPopularity(Type.POPULARITY).orElseThrow(OfferNotFoundException::new).getCounter());
 
         } catch (OfferNotFoundException e) {
             logger.error("Offer not found :" + offerId);

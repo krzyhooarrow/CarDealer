@@ -18,7 +18,7 @@ public class MaxPopularityService {
 
     public void updateMaxPopularity(Long offerId, int offerPopularity, Type type) {
         Optional<MaxPopularityCounter> counter;
-        if ((counter = popularityRepository.findByType(Type.POPULARITY)).isPresent() && counter.get().getCounter() > offerPopularity) {
+        if ((counter = popularityRepository.findByType(type)).isPresent() && counter.get().getCounter() < offerPopularity) {
             popularityRepository.delete(counter.get());
             popularityRepository.save(new MaxPopularityCounter(offerId, offerPopularity, type));
         } else if (!counter.isPresent())

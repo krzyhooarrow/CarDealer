@@ -49,19 +49,4 @@ public class SubscriptionsService {
                userSubscriptions.get().getSubscribedOffers() : new HashSet<>(): new HashSet<>();
     }
 
-    public float getOffersSubscribersRatio(Long offerId){
-        try {
-            return (float) (StreamSupport.stream(repository.findAll().spliterator(),false)
-                    .filter(userSubs -> userSubs.getSubscribedOffers().contains(offerId)).count()
-                                          /
-                    popularityService.getMaxPopularity(Type.POPULARITY)
-                            .orElseThrow(OfferNotFoundException::new)
-                            .getCounter());
-
-        } catch (OfferNotFoundException e) {
-            logger.error("Couldn't find offer with " + offerId + " id");
-        }
-        return 0;
-    }
-
 }

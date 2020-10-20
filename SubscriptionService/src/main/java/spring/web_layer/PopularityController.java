@@ -34,8 +34,6 @@ public class PopularityController {
 
     @GetMapping("/getRatio/{id}")
     public Map<String,Float> getRatios(@PathVariable Long id) {
-        Map<String,Float> ratios = new HashMap<>(Collections.singletonMap("popularity", popularityService.getOfferWatchersRatio(id)));
-        ratios.put("subscriptions",subscriptionsService.getOffersSubscribersRatio(id));
-        return ratios;
+        return Collections.singletonMap("popularity", popularityService.getOfferWatchersRatio(id));
     }
 }
