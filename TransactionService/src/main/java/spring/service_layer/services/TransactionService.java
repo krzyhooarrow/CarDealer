@@ -122,4 +122,23 @@ public class TransactionService {
     public TransactionDTO getOfferById(Long id) throws OffersNotFoundException {
         return offerRepository.findById(id).map(TransactionDTO::new).orElseThrow(OffersNotFoundException::new);
     }
+
+    public Map<String,Float> getCheaperAndMoreExpensiveOffersRatio(Long offerId){
+        Map<String,Float> ratiosMap = new HashMap<>();
+
+        ratiosMap.put("more",(float) offerRepository.findAll().stream().filter(offer -> {
+            try {
+                return offer.getPrice()>offerRepository.findById(offerId)
+                        .orElseThrow(OffersNotFoundException::new)
+                        .getPrice();
+            } catch (OffersNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }).count()/offerRepository.findAll().size());
+
+        ratiosMap.put("less", 1-ratiosMap.get("more"));
+
+        return ratiosMap;
+    }
 }

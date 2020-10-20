@@ -8,13 +8,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import spring.repository_layer.models.MaxPopularityCounter;
 import spring.repository_layer.models.OfferPopularity;
+import spring.repository_layer.models.Type;
+import spring.repository_layer.repositories.MaxPopularityRepository;
 import spring.repository_layer.repositories.OfferPopularityRepository;
 import spring.service_layer.dto.OfferDTO;
 import spring.service_layer.exceptions.OfferNotFoundException;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 @Scope("singleton")
@@ -23,12 +29,14 @@ public class PopularityService {
 
     private static final Logger logger = LoggerFactory.getLogger(PopularityService.class);
     private OfferPopularityRepository offerPopularityRepository;
+    private MaxPopularityService popularityService;
 
     public void updateOfferPopularity(Long offerID) {
         try {
             OfferPopularity o = offerPopularityRepository.findById(offerID).orElseThrow(OfferNotFoundException::new);
             o.setVisitsCounter(o.getVisitsCounter() + 1);
-            offerPopularityRepository.save(o);
+            o = offerPopularityRepository.save(o);
+            popularityService.updateMaxPopularity(offerID,o.getVisitsCounter(),Type.POPULARITY);
         } catch (OfferNotFoundException exc) {
             logger.error("Offer not found :" + offerID);
         }
@@ -46,4 +54,16 @@ public class PopularityService {
     public void createNewOfferPopularity(OfferDTO o) {
         offerPopularityRepository.save(new OfferPopularity(o.getId()));
     }
+
+    public float getOfferWatchersRatio(Long offerId) {
+        try {
+            return (float) (offerPopularityRepository.findById(offerId).orElseThrow(OfferNotFoundException::new)).getVisitsCounter() /
+                    (float) popularityService.getMaxPopularity(Type.POPULARITY).orElseThrow(OfferNotFoundException::new).getCounter();
+
+        } catch (OfferNotFoundException e) {
+            logger.error("Offer not found :" + offerId);
+        }
+        return 0;
+    }
+
 }

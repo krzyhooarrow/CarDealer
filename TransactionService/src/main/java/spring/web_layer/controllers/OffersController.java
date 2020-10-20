@@ -10,6 +10,7 @@ import spring.service_layer.services.TransactionService;
 import spring.web_layer.exceptions.OffersNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/offers")
@@ -27,6 +28,11 @@ public class OffersController {
     @GetMapping("/{id}")
     public TransactionDTO getOfferById(@PathVariable Long id) throws OffersNotFoundException {
         return transactionService.getOfferById(id);
+    }
+
+    @GetMapping("/ratio/{id}")
+    public Map<String,Float> getCheaperAndMoreExpensiveOffersRatio(@PathVariable Long id){
+        return transactionService.getCheaperAndMoreExpensiveOffersRatio(id);
     }
 
 }

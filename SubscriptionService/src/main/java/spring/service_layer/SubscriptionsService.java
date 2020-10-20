@@ -7,18 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import spring.Main;
+import spring.repository_layer.models.MaxPopularityCounter;
+import spring.repository_layer.models.OfferPopularity;
+import spring.repository_layer.models.Type;
 import spring.repository_layer.models.UserSubscriptions;
 import spring.repository_layer.repositories.UserSubscriptionsRepository;
+import spring.service_layer.exceptions.OfferNotFoundException;
 import spring.service_layer.exceptions.UserNotFoundException;
 
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 @Service
 @Scope("singleton")
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class SubscriptionsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(SubscriptionsService.class);
     private UserSubscriptionsRepository repository;
+    private MaxPopularityService popularityService;
 
     public void subscribe(Long userID, Long offerID) {
         UserSubscriptions subscriptions = repository.findById(userID).orElse(new UserSubscriptions(userID));
@@ -41,4 +48,20 @@ public class SubscriptionsService {
                .isPresent()? userSubscriptions.get().getSubscribedOffers() != null?
                userSubscriptions.get().getSubscribedOffers() : new HashSet<>(): new HashSet<>();
     }
+
+    public float getOffersSubscribersRatio(Long offerId){
+        try {
+            return (float) (StreamSupport.stream(repository.findAll().spliterator(),false)
+                    .filter(userSubs -> userSubs.getSubscribedOffers().contains(offerId)).count()
+                                          /
+                    popularityService.getMaxPopularity(Type.POPULARITY)
+                            .orElseThrow(OfferNotFoundException::new)
+                            .getCounter());
+
+        } catch (OfferNotFoundException e) {
+            logger.error("Couldn't find offer with " + offerId + " id");
+        }
+        return 0;
+    }
+
 }
