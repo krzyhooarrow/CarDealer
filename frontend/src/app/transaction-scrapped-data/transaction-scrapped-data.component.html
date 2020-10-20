@@ -1,0 +1,74 @@
+<div *ngIf="data">
+<h3>Scrapped similar offers on other websites:</h3>
+<mat-card *ngIf="data" class="card-container"><table *ngFor="let offer of data">
+    <tr>
+        <td>Capacity:</td>
+        <td>{{offer.capacity}}</td>
+    </tr>
+
+    <tr>
+        <td>Color:</td>
+        <td>{{offer.color}}</td>
+    </tr>
+
+    <tr  *ngIf="offer.country">
+        <td>Country:</td>
+        <td>{{offer.country}}</td>
+    </tr>
+
+    <tr>
+        <td>Fuel type:</td>
+        <td>{{offer.fuelType}}</td>
+    </tr>
+
+    <tr>
+        <td>Make:</td>
+        <td>{{offer.make}}</td>
+    </tr>
+
+    <tr>
+        <td>Model</td>
+        <td>{{offer.model}}</td>
+    </tr>
+
+    <tr>
+        <td>Mileage</td>
+        <td>{{offer.mileage}}</td>
+    </tr>
+
+    <tr>
+        <td>State</td>
+        <td>{{offer.new == true? 'New':'Used' }}</td>
+    </tr>
+    
+    <tr>
+        <td>Power</td>
+        <td>{{offer.power}}</td>
+    </tr>
+
+    <tr>
+        <td>Price</td>
+        <td>{{offer.price}}</td>
+    </tr>
+
+    <tr>
+        <td>Production year</td>
+        <td>{{offer.productionYear}}</td>
+    </tr>
+
+    <tr>
+        <td>Transmission</td>
+        <td>{{offer.transmission}}</td>
+    </tr>
+
+    <tr>
+        <td>Type</td>
+        <td>{{offer.type}}</td>
+    </tr>
+
+    <tr>
+        <td>URL:</td>
+        <td><a href="{{offer.url}}">{{offer.url}}</a></td>
+    </tr>
+</table></mat-card>
+</div>

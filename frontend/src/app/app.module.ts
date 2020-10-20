@@ -60,6 +60,8 @@ import {MatSortModule} from '@angular/material/sort';
 import { SubscribedOffersComponent } from './subscribed-offers/subscribed-offers.component';
 import { OfferPreviewComponent } from './offer-preview/offer-preview.component';
 import { ServerUnavailableComponent } from './server-unavailable/server-unavailable.component';
+import { TransactionScrappedOffersComponent } from './transaction-scrapped-offers/transaction-scrapped-offers.component';
+import { TransactionScrappedDataComponent } from './transaction-scrapped-data/transaction-scrapped-data.component';
 FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
 
 
@@ -84,7 +86,9 @@ FusionChartsModule.fcRoot(FusionCharts, Charts,FusionTheme);
     OffersHistoryComponent,
     SubscribedOffersComponent,
     OfferPreviewComponent,
-    ServerUnavailableComponent
+    ServerUnavailableComponent,
+    TransactionScrappedOffersComponent,
+    TransactionScrappedDataComponent
   ],
 
   imports: [

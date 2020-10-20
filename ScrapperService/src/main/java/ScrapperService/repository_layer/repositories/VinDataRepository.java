@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface VinDataRepository extends CrudRepository<VINData,Long> {
 
-    Optional<VINData> findById(Long id);
+    Optional<VINData> findByOfferId(Long id);
 
 }

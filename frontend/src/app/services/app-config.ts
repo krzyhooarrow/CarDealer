@@ -15,6 +15,16 @@ export class Config {
 
   private SUBS_SERVICE_NAME="subscriptionservice"
   private TRANSACTION_SERVICE_NAME="balancer/transactionservice"
+  private PRICE_PREDICTION_SERVICE_NAME="priceservice"
+  private SCRAPPER_SERVICE_NAME="scrapperservice"
+
+  // PRICE PREDITION ENDPOINTS
+  public PRICE_PREDICTION_ENDPOINT = "/"+this.PRICE_PREDICTION_SERVICE_NAME+"/getPrices"
+  public PRICE_POSITION_RATIOS_ENDPOINT = "/"+this.TRANSACTION_SERVICE_NAME+"/offers/ratio"
+  public OFFER_POPULARITY_RATIOS_ENDPOINT = "/"+this.SUBS_SERVICE_NAME+"/popularity/getRatio"
+
+  public VIN_DATA_ENDPOINT="/"+this.SCRAPPER_SERVICE_NAME+"/vin"
+  public SCRAPPED_OFFERS_ENDPOINT="/"+this.SCRAPPER_SERVICE_NAME+"/comparator/offer"
 
   // TRANSACTION SERVICE ENDPOINTS
   public OFFER_SEARCH_ENDPOINT = "/"+this.TRANSACTION_SERVICE_NAME+"/offers/search"

@@ -20,7 +20,7 @@ public class VinService {
     private static final Logger logger = LoggerFactory.getLogger(VinService.class);
 
     public VINData getCarDataByOfferId(Long offerId) {
-        return vinDataRepository.findById(offerId).orElse(null);
+        return vinDataRepository.findByOfferId(offerId).orElse(null);
     }
 
     public void scrapCarData(OfferDTO o) {

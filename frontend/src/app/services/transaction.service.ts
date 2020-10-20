@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Config } from './app-config';
 import { config, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Offer, OfferRemovalDTO, OfferDTO, SearchDTO } from '../../models/interfaces'
+import { Offer, OfferRemovalDTO, OfferDTO, SearchDTO, ScrappedVINDTO, SimilarOffersDTO } from '../../models/interfaces'
 import { AuthService } from './auth.service';
 import { TransactionDTO } from 'src/models/transaction-interfaces';
 import { HistoryDTO } from '../offers-history/offers-history.component';
@@ -16,6 +16,16 @@ export class TransactionService {
   
 
 constructor(private config: Config,private http: HttpClient, private authService:AuthService, private cookieService:CookieService) { }
+
+public getVINData(offerId:Number){return this.http.get<ScrappedVINDTO>(this.config.API_URL_SERVER.concat(this.config.VIN_DATA_ENDPOINT).concat('/').concat(offerId.toString()))}
+
+public getScrappedOffers(offerId:Number){return this.http.get<SimilarOffersDTO[]>(this.config.API_URL_SERVER.concat(this.config.SCRAPPED_OFFERS_ENDPOINT).concat('/').concat(offerId.toString()))}
+
+public getPricePositionRatios(offerId:Number){return this.http.get<Map<String,Number>>(this.config.API_URL_SERVER.concat(this.config.PRICE_POSITION_RATIOS_ENDPOINT).concat('/').concat(offerId.toString()))}
+
+public getOfferPopularityRatios(offerId:Number){return this.http.get<Map<String,Number>>(this.config.API_URL_SERVER.concat(this.config.OFFER_POPULARITY_RATIOS_ENDPOINT).concat('/').concat(offerId.toString()))}
+
+public getPredictedPrices(offerID:Number){return this.http.get<number[][]>(this.config.API_URL_SERVER.concat(this.config.PRICE_PREDICTION_ENDPOINT).concat('/').concat(offerID.toString()),this.authService.getAuthHeader())}
 
 public getTransactionById(id:Number){ return this.http.get<TransactionDTO>(this.config.API_URL_SERVER.concat(this.config.CONCRETE_OFFER_ENDPOINT).concat(id.toString())) }
 

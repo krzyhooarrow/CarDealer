@@ -37,7 +37,7 @@ export class OffersHistoryComponent implements OnInit {
   ngOnInit(): void { 
     this.auth.authenticationCheck()
     if(this.auth.isAuthenticated)
-    this.transactionService.getUserHistory().subscribe((history:HistoryDTO[])=>{this.transactionHistory = history;console.log(history)},()=>null)
+    this.transactionService.getUserHistory().subscribe((history:HistoryDTO[])=>{this.transactionHistory = history;},()=>null)
   }
 }
 

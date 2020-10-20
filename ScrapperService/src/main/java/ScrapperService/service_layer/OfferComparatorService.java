@@ -25,10 +25,8 @@ public class OfferComparatorService {
     private OfferMatchesRepository matchesRepository;
     private final static Logger logger = LoggerFactory.getLogger(OfferComparatorService.class);
 
-    public List<OtomotoOffer> getMatchingOffers(Long offerId) {
-        return Objects.requireNonNull(matchesRepository.findByOfferId(offerId)
-                .orElse(null))
-                .getOffersList();
+    public List<OtomotoOffer> getMatchingOffers(Long offerId) throws OffersNotFoundException {
+        return matchesRepository.findByOfferId(offerId).orElseThrow(OffersNotFoundException::new).getOffersList();
     }
 
     public void matchOffers(OfferDTO carDTO, int howMany)  {
@@ -47,7 +45,7 @@ public class OfferComparatorService {
 
             matchesRepository.save(new OfferMatches(carDTO.getId(), mostMatchingOffers));
         }catch (OffersNotFoundException e){
-            logger.error("Couldn't find simmilar offers due to "+e.getMessage());
+            logger.error("Couldn't find similar offers due to "+e.getMessage());
         }
     }
 }

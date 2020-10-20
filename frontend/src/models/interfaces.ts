@@ -104,3 +104,26 @@ export interface UserOfferDTO{
     creationDate:Date;
     userSubscriptions:Array<number>;
 }
+
+export interface ScrappedVINDTO{
+    id:number,
+    offerId:number,
+    parameters:Map<String,String>
+}
+
+export interface SimilarOffersDTO{
+    capacity:number,
+    color:String,
+    country:String,
+    fuelType:String,
+    make:String,
+    mileage:number,
+    model:String,
+    new: boolean,
+    power: number,
+    price: number,
+    productionYear:number,
+    transmission:String,
+    type:String,
+    url:String
+}

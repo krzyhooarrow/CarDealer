@@ -1,6 +1,6 @@
-<h1> </h1>
+<h3>Charts:</h3>
 <div class="charts">
-<div class="price-chart"><fusioncharts class="price-chart" height="350"  type="Column3D" dataFormat="JSON" [dataSource]="predictionChart" ></fusioncharts></div> 
-<div class="average-price-chart"><fusioncharts class="average-price-chart"  height="350" type="doughnut3D" dataFormat="JSON" [dataSource]="averagePriceChart"></fusioncharts></div> 
-<div class="average-price-chart"><fusioncharts class="average-price-chart"  height="350" type="stackedcolumn3d" dataFormat="JSON" [dataSource]="popularityChart"></fusioncharts></div> 
+<div *ngIf="priceData.length > 0" class="price-chart"><fusioncharts class="price-chart" height="350"  type="Column3D" dataFormat="JSON" [dataSource]="predictionChart" ></fusioncharts></div> 
+<div *ngIf="priceRatioData" class="average-price-chart"><fusioncharts class="average-price-chart"  height="350" type="doughnut3D" dataFormat="JSON" [dataSource]="averagePriceChart"></fusioncharts></div> 
+<div *ngIf="popularityRatioData" class="average-price-chart"><fusioncharts class="average-price-chart"  height="350" type="stackedcolumn3d" dataFormat="JSON" [dataSource]="popularityChart"></fusioncharts></div> 
 </div>

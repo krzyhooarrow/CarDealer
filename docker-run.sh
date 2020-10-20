@@ -1,5 +1,5 @@
 sudo docker stop $(sudo docker ps -aq)
-sudo docker container prune
+sudo docker system prune
 
 sudo docker run -d --name zoo --network host wurstmeister/zookeeper:latest
 sudo docker run -d --network host wurstmeister/kafka:1.0.1
