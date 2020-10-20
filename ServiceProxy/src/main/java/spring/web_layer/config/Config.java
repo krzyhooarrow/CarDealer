@@ -65,7 +65,9 @@ public class Config extends WebSecurityConfigurerAdapter {
                         "/subscriptionservice/popularity/**",
                         "/balancer/transactionservice/filters/*",
                         "/balancer/transactionservice/offers/**",
-                        "/priceservice/getPrices/*"
+                        "/priceservice/getPrices/*",
+                        "/scrapperservice/vin/**",
+                        "/scrapperservice/comparator/**"
                 )
                 .permitAll()
                 .anyRequest()
