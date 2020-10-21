@@ -20,7 +20,6 @@ public class History {
 
     private ActionType action;
 
-
     private Long offerId;
 
     @OneToOne
