@@ -17,7 +17,7 @@ export class OffersTileComponent implements OnInit {
 
   constructor(public subs: SubscriptionService) { }
 
-  ngOnInit(): void {   this.subs.getUserSubscriptions().subscribe( (list : number[]) => {this.subscriptions = list; }); }
+  ngOnInit(): void {   this.subs.getUserSubscriptions().subscribe( (list : number[]) => {this.subscriptions = list; },()=>{}); }
 
 }
 export interface OfferTile {

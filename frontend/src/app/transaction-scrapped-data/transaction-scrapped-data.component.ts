@@ -19,11 +19,7 @@ export class TransactionScrappedDataComponent implements OnInit {
 
 
   getScrappedOffers(offerId:number){
-    this.transactionService.getScrappedOffers(offerId).subscribe(
-      (values) => { this.data=values
-      console.log(values)
-      }
-    );
+    this.transactionService.getScrappedOffers(offerId).subscribe((values) => { this.data=values},()=>{});
   }
 
 }

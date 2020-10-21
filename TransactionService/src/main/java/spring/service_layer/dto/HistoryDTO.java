@@ -18,7 +18,7 @@ public class HistoryDTO {
 
         this.date = history.getDate();
         this.action = history.getAction().name();
-        this.offerId = history.getOfferId().getId();
+        this.offerId = history.getOfferId();
     }
 
     public Date getDate() {

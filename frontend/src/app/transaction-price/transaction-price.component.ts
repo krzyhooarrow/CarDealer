@@ -40,7 +40,7 @@ export class TransactionPriceComponent implements OnInit {
         },
         data: this.priceData
       };
-    }
+    },()=>{}
     );
   }
 
@@ -59,7 +59,7 @@ export class TransactionPriceComponent implements OnInit {
         "dataset": [{"seriesname": "This offer visitors ", "data": [{ "value": 100*(values['popularity']) },]}, 
         {"seriesname": "Most common visited offer","data": [{ "value": 100*(1-values['popularity']) },]}]};
 
-      })
+      },()=>{})
   }
 
   getPricePositionRatios(offerId:number){
@@ -77,7 +77,7 @@ export class TransactionPriceComponent implements OnInit {
           { label: 'Your offer', value: '0,01' },
           { label: 'More expensive offers', value: values['more'] },
         ]
-      }}
+      }},()=>{}
 
       );
   }

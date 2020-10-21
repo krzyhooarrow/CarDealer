@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TransactionDTO } from 'src/models/transaction-interfaces';
 import { SelectMap, TransactionService } from '../services/transaction.service';
 
@@ -36,7 +37,7 @@ export class NewOfferComponent implements OnInit {
 
   private service:TransactionService;
   
-  constructor(private _formBuilder: FormBuilder,service:TransactionService) { this.service = service;}
+  constructor(private _formBuilder: FormBuilder,service:TransactionService,private router:Router) { this.service = service;}
 
   ngOnInit(): void {
     this.firstFormGroup = this._formBuilder.group({  
@@ -101,17 +102,13 @@ export class NewOfferComponent implements OnInit {
     
     }
 
-
     this.service.createOffer(offerDTO).subscribe((id:number)=>{
-
       for(let file of this.files){
       let form = new FormData();
       form.append('file',file)
-      this.service.uploadFileToOffer(id,form).subscribe(
-        (output:string)=>console.log(output), (output:string)=>console.log(output)
-      )
-      }
-    }, (output:string)=>console.log(output));
+      this.service.uploadFileToOffer(id,form).subscribe(()=>{}, ()=>{})}},
+     ()=>{},()=>{this.router.navigate(['search']);}
+    );
   }
 
 }

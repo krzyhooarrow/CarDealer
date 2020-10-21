@@ -23,7 +23,7 @@ public class TriggerService {
     public void castDatabaseUpdate(ActionType actionType, Offer offer, Long userID) {
 
         repositoryService.historyRepository.save(
-                new History(actionType, offer,
+                new History(actionType, offer.getId(),
                         repositoryService.userRepository.findById(userID).get()
                 ));
 

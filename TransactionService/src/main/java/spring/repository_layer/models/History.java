@@ -20,8 +20,8 @@ public class History {
 
     private ActionType action;
 
-    @OneToOne
-    private Offer offerId;
+
+    private Long offerId;
 
     @OneToOne
     private User user;
@@ -34,11 +34,11 @@ public class History {
         return action;
     }
 
-    public Offer getOfferId() {
+    public Long getOfferId() {
         return offerId;
     }
 
-    public History(ActionType action, Offer offerId, User user) {
+    public History(ActionType action, Long offerId, User user) {
         this.action = action;
         this.offerId = offerId;
         this.user = user;
