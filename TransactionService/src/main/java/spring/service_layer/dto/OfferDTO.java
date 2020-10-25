@@ -1,9 +1,11 @@
 package spring.service_layer.dto;
 
 import lombok.NoArgsConstructor;
+import spring.repository_layer.models.Offer;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 public class OfferDTO {
@@ -26,6 +28,31 @@ public class OfferDTO {
     private String vin;
     private String state;
     private List<String> additionalEquipment;
+
+    public OfferDTO(Offer offer) {
+        if (offer.getId() != null) this.id = offer.getId();
+        if (offer.getPrice() != null) this.price = offer.getPrice();
+        if (offer.getCar().getCar().getType().getCarType() != null)
+            this.carType = offer.getCar().getCar().getType().getCarType();
+        if (offer.getCar().getCar().getModel().getModel() != null)
+            this.model = offer.getCar().getCar().getModel().getModel();
+        if (offer.getCar().getCar().getModel().getCarMark().getMark() != null)
+            this.mark = offer.getCar().getCar().getModel().getCarMark().getMark();
+        if (offer.getCar().getCar().getProduction_year() != null)
+            this.production_year = offer.getCar().getCar().getProduction_year();
+        if (offer.getCar().getFuelType() != null) this.fuelType = offer.getCar().getFuelType().name();
+        if (offer.getCar().getAdditionalEquipment() != null) this.additionalEquipment = offer.getCar()
+                .getAdditionalEquipment().stream().map(String::valueOf).collect(Collectors.toList());
+        if (offer.getDescription() != null) this.description = offer.getDescription();
+        if (offer.getTitle() != null) this.title = offer.getTitle();
+        if (offer.getTags() != null) this.tags = offer.getTags();
+        if (offer.getCar().getState() != null) this.state = offer.getCar().getState().name();
+        if (offer.getCar().getVin() != null) this.vin = offer.getCar().getVin();
+        if (offer.getCar().getGearbox() != null) this.gearbox = offer.getCar().getGearbox().name();
+        this.mileage = offer.getCar().getMileage();
+        this.capacity = offer.getCar().getCapacity();
+        this.power = offer.getCar().getPower();
+    }
 
     public OfferDTO setId(Long id) {
         this.id = id;

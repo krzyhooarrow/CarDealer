@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import spring.repository_layer.db_init.DBInitializer;
-import spring.repository_layer.db_init.RandomDataGenerator;
-
-import java.util.Arrays;
+import spring.repository_layer.db_init.random_data.RandomDataGenerator;
 
 @RestController
 @RequestMapping("/database")

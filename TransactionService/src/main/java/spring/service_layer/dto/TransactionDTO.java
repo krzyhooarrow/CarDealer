@@ -19,17 +19,17 @@ public class TransactionDTO {
     private Integer production_year;
     private String fuelType;
     private String location_city;
-    private Integer mileage ;
-    private Float capacity ;
-    private Integer power ;
-    private String gearbox ;
+    private Integer mileage;
+    private Float capacity;
+    private Integer power;
+    private String gearbox;
     private String VIN;
     private String color;
-    private String state ;
+    private String state;
     private List<String> additionalEquipment;
 
-    private String username ;
-    private int phone ;
+    private String username;
+    private int phone;
     private String email;
     private Date creationDate = new Date();
 
@@ -38,33 +38,40 @@ public class TransactionDTO {
     private String description;
     private List<String> images;
 
-    public TransactionDTO(Offer offer){
-        if(offer.getId()!=null) this.id = offer.getId();
-        if(offer.getPrice()!=null) this.price = offer.getPrice();
-        if(offer.getCar().getCar().getType().getCarType()!=null) this.carType = offer.getCar().getCar().getType().getCarType();
-        if(offer.getCar().getCar().getModel().getModel()!=null) this.model = offer.getCar().getCar().getModel().getModel();
-        if(offer.getCar().getCar().getModel().getCarMark().getMark()!=null) this.mark = offer.getCar().getCar().getModel().getCarMark().getMark();
-        if(offer.getCar().getCar().getProduction_year()!=null) this.production_year = offer.getCar().getCar().getProduction_year();
-        if(offer.getCar().getFuelType()!=null) this.fuelType = offer.getCar().getFuelType().name();
-        if(offer.getCar().getAdditionalEquipment()!=null) this.additionalEquipment = offer.getCar()
+    public TransactionDTO(Offer offer) {
+        if (offer.getId() != null) this.id = offer.getId();
+        if (offer.getPrice() != null) this.price = offer.getPrice();
+        if (offer.getCar().getCar().getType().getCarType() != null)
+            this.carType = offer.getCar().getCar().getType().getCarType();
+        if (offer.getCar().getCar().getModel().getModel() != null)
+            this.model = offer.getCar().getCar().getModel().getModel();
+        if (offer.getCar().getCar().getModel().getCarMark().getMark() != null)
+            this.mark = offer.getCar().getCar().getModel().getCarMark().getMark();
+        if (offer.getCar().getCar().getProduction_year() != null)
+            this.production_year = offer.getCar().getCar().getProduction_year();
+        if (offer.getCar().getFuelType() != null) this.fuelType = offer.getCar().getFuelType().name();
+        if (offer.getCar().getAdditionalEquipment() != null) this.additionalEquipment = offer.getCar()
                 .getAdditionalEquipment().stream().map(String::valueOf).collect(Collectors.toList());
-        if(offer.getUser()!=null) this.username = offer.getUser().getUsername();
-        if(offer.getUser()!=null) this.email = offer.getUser().getEmail();
-        if(offer.getOfferCreationTime()!=null) this.creationDate = offer.getOfferCreationTime();
-        if(offer.getDescription()!=null) this.description = offer.getDescription();
-        if(offer.getImage()!=null) this.images = offer.getImage();
-        if(offer.getTitle()!=null)this.title = offer.getTitle();
-        if(offer.getTags()!=null)this.tags = offer.getTags();
-        if(offer.getCar().getState()!=null)this.state = offer.getCar().getState().name();
-        if(offer.getCar().getColor()!=null)this.color = offer.getCar().getColor();
-        if(offer.getCar().getVin()!=null)this.VIN = offer.getCar().getVin();
-        if(offer.getCar().getGearbox()!=null)this.gearbox = offer.getCar().getGearbox().name();
+        if (offer.getUser() != null) this.username = offer.getUser().getUsername();
+        if (offer.getUser() != null) this.email = offer.getUser().getEmail();
+        if (offer.getOfferCreationTime() != null) this.creationDate = offer.getOfferCreationTime();
+        if (offer.getDescription() != null) this.description = offer.getDescription();
+        if (offer.getImage() != null) this.images = offer.getImage();
+        if (offer.getTitle() != null) this.title = offer.getTitle();
+        if (offer.getTags() != null) this.tags = offer.getTags();
+        if (offer.getCar().getState() != null) this.state = offer.getCar().getState().name();
+        if (offer.getCar().getColor() != null) this.color = offer.getCar().getColor();
+        if (offer.getCar().getVin() != null) this.VIN = offer.getCar().getVin();
+        if (offer.getCar().getGearbox() != null) this.gearbox = offer.getCar().getGearbox().name();
         this.mileage = offer.getCar().getMileage();
         this.capacity = offer.getCar().getCapacity();
         this.power = offer.getCar().getPower();
     }
 
-    public TransactionDTO(){this.id=5L;}
+    public TransactionDTO() {
+        this.id = 5L;
+    }
+
     public Integer getPrice() {
         return price;
     }

@@ -10,8 +10,6 @@ public class KafkaTransactionDTO {
     @JsonProperty
     public String lastName;
 
-
-
     public KafkaTransactionDTO(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
