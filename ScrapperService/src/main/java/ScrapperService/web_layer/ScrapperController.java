@@ -27,4 +27,10 @@ public class ScrapperController {
         service.clearOtomotoOffersByMake(make);
         return true;
     }
+
+    @GetMapping("/scrapAll")
+    public boolean scrapAllMakes() {
+        service.scrapAllMakes();
+        return true;
+    }
 }

@@ -36,7 +36,7 @@ def cut_first_element_from_tuple(list):
 
 
 def start_consuming_messages_from_kafka():
-    years_predicting_range = 10
+    years_predicting_range = 5
 
     cursor, connection = connect_to_database()
     transforming_dict = pickle.load(open('model/transforming_dict.pkl', "rb"))

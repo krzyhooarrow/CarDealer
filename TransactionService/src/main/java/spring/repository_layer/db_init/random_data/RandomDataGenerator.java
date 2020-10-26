@@ -49,47 +49,49 @@ public class RandomDataGenerator {
 
 
     public User createTestUser() {
-        return userRepository.findByUsername("TEST_USER").orElse(
-                userRepository.save(new User("TEST_USER", "$2a$10$HlXIjjQyM//Uho9ZRPwiJOlzOxSIp7y2J1LWuKHo6RmBaugGtyG0C",
-                        "TEST@TEST.COM", this.generateRandomDigit(9))));
+        return userRepository.findByUsername("test_user").orElse(
+                userRepository.save(new User("test_user", "$2a$10$HlXIjjQyM//Uho9ZRPwiJOlzOxSIp7y2J1LWuKHo6RmBaugGtyG0C",
+                        "test@user.com", this.generateRandomDigit(9))));
 
     }
 
     public void initializeRandomData(int offersSize) {
         logger.info("STARTING TO INITIALIZE RANDOM DATA");
-        User user = createTestUser();
-        int counter = 0;
-        List<Car> listOfSpecifiedTypes;
-        for (int i = 0; i < offersSize; i++) {
+        new Thread(() -> {
+            User user = createTestUser();
+            int counter = 0;
+            List<Car> listOfSpecifiedTypes;
+            for (int i = 0; i < offersSize; i++) {
 
-            if (100 * i / offersSize > counter) {
-                counter = 100 * i / offersSize;
-                logger.info("INITIALIZED ALREADY " + counter + "% OF DATA");
+                if (100 * i / offersSize > counter) {
+                    counter = 100 * i / offersSize;
+                    logger.info("INITIALIZED ALREADY " + counter + "% OF DATA");
+                }
+                Car car = (listOfSpecifiedTypes = service.carRepository.findAll()).get(generator.nextInt(listOfSpecifiedTypes.size()));
+
+                ConcreteCar concreteCar = carService.
+                        addNewConcreteCar(car,
+                                State.values()[generator.nextInt(State.values().length)],
+                                Transmission.values()[generator.nextInt(Transmission.values().length)],
+                                FuelType.values()[generator.nextInt(FuelType.values().length)],
+                                Arrays.stream(Equipment.values()).filter(willBePresent -> generator.nextBoolean()).collect(Collectors.toList()),
+                                generator.nextInt(maxMileage - minMileage + 1) + minMileage,
+                                generator.nextInt((maxCapacity - minCapacity + 1) * 5) * capacityDistances + minCapacity,
+                                generator.nextInt(maxPower - minPower + 1) + minPower,
+                                generateRandomDigit(11),
+                                Color.values()[generator.nextInt(Color.values().length)].toString()
+                        );
+
+                kafkaService.notifyOfferCreation(new OfferDTO(carService.addNewOfferBasedOnConcreteCar(concreteCar, generator.nextInt(maxPrice - minPrice + 1) + minPrice,
+                        Description.values()[generator.nextInt(Description.values().length)].toString(),
+                        new LinkedList<>(),
+                        user,
+                        car.getModel().getCarMark().getMark() + " " + car.getModel().getModel(),
+                        Tag.values()[generator.nextInt(Tag.values().length)].toString()))
+                );
             }
-            Car car = (listOfSpecifiedTypes = service.carRepository.findAll()).get(generator.nextInt(listOfSpecifiedTypes.size()));
-
-            ConcreteCar concreteCar = carService.
-                    addNewConcreteCar(car,
-                            State.values()[generator.nextInt(State.values().length)],
-                            Transmission.values()[generator.nextInt(Transmission.values().length)],
-                            FuelType.values()[generator.nextInt(FuelType.values().length)],
-                            Arrays.stream(Equipment.values()).filter(willBePresent -> generator.nextBoolean()).collect(Collectors.toList()),
-                            generator.nextInt(maxMileage - minMileage + 1) + minMileage,
-                            generator.nextInt((maxCapacity - minCapacity + 1) * 5) * capacityDistances + minCapacity,
-                            generator.nextInt(maxPower - minPower + 1) + minPower,
-                            String.valueOf(generator.nextDouble() * minVIN + minVIN),
-                            Color.values()[generator.nextInt(Color.values().length)].toString()
-                    );
-
-            kafkaService.notifyOfferCreation(new OfferDTO(carService.addNewOfferBasedOnConcreteCar(concreteCar, generator.nextInt(maxPrice - minPrice + 1) + minPrice,
-                    Description.values()[generator.nextInt(Description.values().length)].toString(),
-                    new LinkedList<>(),
-                    user,
-                    car.getModel().getCarMark().getMark() + " " + car.getModel().getModel(),
-                    Tag.values()[generator.nextInt(Tag.values().length)].toString()))
-            );
-        }
-        logger.info("RANDOM DATA INIT HAS STOPPED");
+            logger.info("RANDOM DATA INIT HAS STOPPED");
+        }).start();
     }
 
     private String generateRandomDigit(int length) {

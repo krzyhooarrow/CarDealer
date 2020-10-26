@@ -1,6 +1,7 @@
 package ScrapperService.repository_layer.models;
 
 import lombok.NoArgsConstructor;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,17 +11,11 @@ import java.util.List;
 public class OfferMatches {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    @Unique
     private Long offerId;
 
     @ManyToMany
     private List<OtomotoOffer> offersList;
-
-    public Long getId() {
-        return id;
-    }
 
     public List<OtomotoOffer> getOffersList() {
         return offersList;

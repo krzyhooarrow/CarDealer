@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   public register(userDTO:UserDTO){
-      this.http.post<String>(this.config.API_URL_SERVER.concat(this.config.REGISTER_USER_ENDPOINT),userDTO,this.config.HEADER).subscribe()
+      return this.http.post<String>(this.config.API_URL_SERVER.concat(this.config.REGISTER_USER_ENDPOINT),userDTO,this.config.HEADER)
   }
 
   public getAuthHeader() { return { headers:{"Content-type":"application/json","Authorization":"Bearer ".concat(this.cookieService.get("JWT"))}}}

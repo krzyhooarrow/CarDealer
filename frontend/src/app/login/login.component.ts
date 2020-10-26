@@ -32,9 +32,7 @@ export class LoginComponent implements OnInit {
   onLogin(){   
     this.service.auth(this.login,this.password).subscribe(
         (token:string) =>  {this.cookieService.set("JWT",token["jwt"]); this.successfullLogin(); },
-         () => {this.matRef = this.snackBar.open( 'Wrong credentials' ,null,{ duration: 2000,})
-        }
-         );
+         () => {this.matRef = this.snackBar.open( 'Wrong credentials' ,null,{ duration: 2000,})});
   }
 
   successfullLogin(){    this.service.isAuthenticated = true;   this.service.redirectIfAuthenticated() }

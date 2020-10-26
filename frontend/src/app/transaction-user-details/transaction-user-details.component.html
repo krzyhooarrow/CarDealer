@@ -1,7 +1,7 @@
 <div class="price">Price: {{ transaction.price }}$</div>
 
 
-<div class="title"><mat-slide-toggle  *ngIf="isLogged" color="primary" [disabled]="!subscribedList && tryingToSub" [checked]="subscribedList?.indexOf(transaction.id) > -1? true:false"  (change)="sub_or_unsub()">Subscribe offer</mat-slide-toggle><h3>User details</h3></div>
+<div class="title"><mat-slide-toggle  *ngIf="isLogged" color="primary" [disabled]="!subscribedList && tryingToSub" [checked]="subscribedList?.indexOf(transaction.id) > -1? true:false"  (change)="sub_or_unsub()">Subscribe offer</mat-slide-toggle><h3>Seller details:</h3></div>
 <div class="data">
           <div class="panel">
           <mat-divider></mat-divider>

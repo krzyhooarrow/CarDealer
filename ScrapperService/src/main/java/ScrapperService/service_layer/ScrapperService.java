@@ -26,4 +26,10 @@ public class ScrapperService {
     }
 
     public void clearOtomotoOffersByMake(String make) {  repository.deleteAllByMake(make);  }
+
+    public void scrapAllMakes() {
+        new Thread(() -> {
+            otomotoScrapper.scrapAllOtomotoMakes();
+        }).start();
+    }
 }

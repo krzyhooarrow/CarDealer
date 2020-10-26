@@ -48,6 +48,8 @@ export class TransactionPriceComponent implements OnInit {
     this.transactionService.getOfferPopularityRatios(offerId).subscribe(
       values => { this.popularityRatioData = values
 
+        const value = Math.round(100*(values['popularity']));
+
         this.popularityChart = {
           chart: {
             caption: 'Offer popularity ratio',
@@ -56,8 +58,8 @@ export class TransactionPriceComponent implements OnInit {
             theme: 'fusion',
             yAxisMaxValue: '100'
           },"categories": [{"category": [{ "label": "Offer visits",},]}],
-        "dataset": [{"seriesname": "This offer visitors ", "data": [{ "value": 100*(values['popularity']) },]}, 
-        {"seriesname": "Most common visited offer","data": [{ "value": 100*(1-values['popularity']) },]}]};
+        "dataset": [{"seriesname": "This offer visitors ", "data": [{ "value": value },]}, 
+        {"seriesname": "Most common visited offer","data": [{ "value": 100 - value },]}]};
 
       },()=>{})
   }

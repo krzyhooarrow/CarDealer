@@ -30,10 +30,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public ResponseEntity<String> registerAccount(@RequestBody UserDTO userDTO){
-        return authService.registerUser(userDTO) ?
-                new ResponseEntity<>("Registered successfully", HttpStatus.CREATED) :
-                new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
+    public boolean registerAccount(@RequestBody UserDTO userDTO){
+        return authService.registerUser(userDTO);
     }
 
     @GetMapping("")

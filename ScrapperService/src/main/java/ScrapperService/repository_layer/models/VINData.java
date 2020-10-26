@@ -1,6 +1,7 @@
 package ScrapperService.repository_layer.models;
 
 import org.apache.kafka.common.protocol.types.Field;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -9,11 +10,8 @@ import java.util.Map;
 public class VINData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    @Unique
     private Long offerId;
-
     private String VIN;
 
     @ElementCollection
@@ -30,10 +28,6 @@ public class VINData {
     }
 
     public VINData() {
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getVIN() {

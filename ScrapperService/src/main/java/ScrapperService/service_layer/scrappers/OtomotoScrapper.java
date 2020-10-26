@@ -21,6 +21,7 @@ import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Component
 @Lazy
@@ -64,8 +65,7 @@ public class OtomotoScrapper implements Observator {
                                 List<OtomotoOffer> scrappedOffers = singleThreadPageScrapperExecutor.submit(new OtomotoPageScrapper(finalPageHref + value)).get();
                                 otomotoOfferRepository.saveAll(scrappedOffers);
                                 saveScrappedPageNumberByMake(make, value);
-                            } catch (InterruptedException | ExecutionException ignored) {
-                            }
+                            } catch (Exception e) {}
                         });
 
         singleThreadPageScrapperExecutor.shutdown();
@@ -82,12 +82,45 @@ public class OtomotoScrapper implements Observator {
 
     private void saveScrappedPageNumberByMake(String make, int pageNumber) {
         OtomotoScrappedPage page = pagesRepository.getByMake(make).orElse(new OtomotoScrappedPage(make, pageNumber));
-        if (pageNumber>page.getNumberOfLastScrappedPage()){
-        page.setNumberOfLastScrappedPage(pageNumber);
-        pagesRepository.save(page);}
+        if (pageNumber > page.getNumberOfLastScrappedPage()) {
+            page.setNumberOfLastScrappedPage(pageNumber);
+            pagesRepository.save(page);
+        }
     }
 
     private Integer getLastScrappedPageNumberByMake(String make) {
         return pagesRepository.getLastScrappedPageByMake(make).orElse(2);
+    }
+
+    public void scrapAllOtomotoMakes()  {
+        Stream.of(
+//                "ford",
+                "audi",
+                "bmw",
+                "chevrolet",
+                "citroen",
+                "dacia",
+                "hyundai",
+                "kia",
+                "mazda",
+                "mercedes-benz",
+                "mitsubishi",
+                "nissan",
+                "opel",
+                "peugeot",
+                "porsche",
+                "renault",
+                "skoda",
+                "suzuki",
+                "toyota",
+                "volkswagen",
+                "volvo"
+        ).forEach(carMake -> {
+            try {
+                scrapOtomotoOffersByMake(carMake);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -21,8 +21,8 @@ export class TransactionScrappedOffersComponent implements OnInit {
 
   getScrappedOffers(offerId:number){
     this.transactionService.getVINData(offerId).subscribe(
-      (values) => { if(values && Object.entries(values.parameters).length !== 0) this.parameters = values.parameters}
-  
+      (values) => { if(values && Object.entries(values.parameters).length !== 0) this.parameters = values.parameters},
+      ()=>{},()=>{}      
     );
   }
 }
