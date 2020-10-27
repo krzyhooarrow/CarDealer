@@ -33,7 +33,7 @@ public class OfferComparatorService {
         try {
             final float maxDistance = 2F;
 
-            List<OtomotoOffer> offers = new ArrayList<>(Objects .requireNonNull(repository.getByMakeIgnoreCase(carDTO.getMark()).orElseThrow(OffersNotFoundException::new)));
+            List<OtomotoOffer> offers = new ArrayList<>(Objects .requireNonNull(repository.findFirst1000ByMakeIgnoreCase(carDTO.getMark()).orElseThrow(OffersNotFoundException::new)));
 
             List<OtomotoOffer> mostMatchingOffers = offers.stream()
                     .filter(offer -> OffersComparator.compare(offer, carDTO) < maxDistance)

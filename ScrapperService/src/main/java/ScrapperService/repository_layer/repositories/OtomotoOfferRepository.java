@@ -23,6 +23,8 @@ public interface OtomotoOfferRepository extends CrudRepository<OtomotoOffer,Long
     @Query("FROM OtomotoOffer o WHERE o.make =:make")
     Optional<List<OtomotoOffer>> getAllOffersByMake(@Param("make") String make);
 
+    Optional<List<OtomotoOffer>> findFirst1000ByMakeIgnoreCase(String make);
+
     Optional<List<OtomotoOffer>> getByMakeIgnoreCase(String make);
 
 }
