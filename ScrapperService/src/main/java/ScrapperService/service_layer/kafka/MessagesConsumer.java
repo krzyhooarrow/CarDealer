@@ -27,8 +27,7 @@ public class MessagesConsumer {
     public void start(MessagesProcessor processor, Long timeout) {
         try {
             while (true) {
-                consumer.poll(timeout).forEach(record -> processor.process(record.value()));
-            }
+                consumer.poll(timeout).forEach(record -> processor.process(record.value()));     }
         } finally {
             consumer.close();
         }

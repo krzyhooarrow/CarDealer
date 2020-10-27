@@ -31,21 +31,18 @@ public class OfferComparatorService {
 
     public void matchOffers(OfferDTO carDTO, int howMany)  {
         try {
-            List<OtomotoOffer> mostMatchingOffers = new LinkedList<>();
-            OtomotoOffer bestOffer;
+            final float maxDistance = 0.8F;
 
-            List<OtomotoOffer> offers = new ArrayList<>(Objects
-                    .requireNonNull(repository.getByMakeIgnoreCase(carDTO.getMark())
-                            .orElseThrow(OffersNotFoundException::new)));
+            List<OtomotoOffer> offers = new ArrayList<>(Objects .requireNonNull(repository.getByMakeIgnoreCase(carDTO.getMark()).orElseThrow(OffersNotFoundException::new)));
 
-            for (int i = 0; i < howMany; i++) {
-                mostMatchingOffers.add(bestOffer = offers.stream().max(Comparator.comparing(offer -> OffersComparator.compare(offer, carDTO))).get());
-                offers.remove(bestOffer);
-            }
+            List<OtomotoOffer> mostMatchingOffers = offers.stream()
+                    .filter(offer -> OffersComparator.compare(offer, carDTO) < maxDistance)
+                    .limit(howMany)
+                    .collect(Collectors.toList());
 
             matchesRepository.save(new OfferMatches(carDTO.getId(), mostMatchingOffers));
         }catch (OffersNotFoundException e){
-            logger.error("Couldn't find similar offers due to "+e.getMessage());
+            logger.error("Couldn't find similar offers due to "+ e.getMessage());
         }
     }
 }
