@@ -25,7 +25,7 @@ public getPricePositionRatios(offerId:Number){return this.http.get<Map<String,Nu
 
 public getOfferPopularityRatios(offerId:Number){return this.http.get<Map<String,Number>>(this.config.API_URL_SERVER.concat(this.config.OFFER_POPULARITY_RATIOS_ENDPOINT).concat('/').concat(offerId.toString()))}
 
-public getPredictedPrices(offerID:Number){return this.http.get<number[][]>(this.config.API_URL_SERVER.concat(this.config.PRICE_PREDICTION_ENDPOINT).concat('/').concat(offerID.toString()),this.authService.getAuthHeader())}
+public getPredictedPrices(offerID:Number){return this.http.get<number[][]>(this.config.API_URL_SERVER.concat(this.config.PRICE_PREDICTION_ENDPOINT).concat('/').concat(offerID.toString()))}
 
 public getTransactionById(id:Number){ return this.http.get<TransactionDTO>(this.config.API_URL_SERVER.concat(this.config.CONCRETE_OFFER_ENDPOINT).concat(id.toString())) }
 

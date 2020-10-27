@@ -99,7 +99,6 @@ export class NewOfferComponent implements OnInit {
       vin:this.secondFormGroup.get('vin').value,
       state:this.secondFormGroup.get('state').value,
       additionalEquipment:this.secondFormGroup.get('equipment')?.value ? this.secondFormGroup.get('equipment').value  : [],
-    
     }
 
     this.service.createOffer(offerDTO).subscribe((id:number)=>{

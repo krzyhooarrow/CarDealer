@@ -13,6 +13,7 @@ import spring.repository_layer.repositories.UserRepository;
 import spring.service_layer.dto.AuthenticationRequest;
 import spring.service_layer.dto.AuthenticationResponse;
 import spring.service_layer.dto.UserDTO;
+import spring.service_layer.services.auth.RegisterValidator;
 import spring.service_layer.services.jwt.Encoder;
 import spring.service_layer.services.jwt.JwtComponent;
 import spring.service_layer.services.jwt.UserDetailsServiceProvider;
@@ -27,8 +28,9 @@ public class AuthService {
     private UserRepository userRepository;
     private Encoder encoder;
 
+
     public boolean registerUser(UserDTO userDTO){
-        return !userRepository.findByUsername(userDTO.getUsername()).isPresent() && createUser(userDTO);
+        return !userRepository.findByUsername(userDTO.getUsername()).isPresent() && RegisterValidator.validate(userDTO) && createUser(userDTO);
     }
 
     public boolean createUser(UserDTO userDTO){

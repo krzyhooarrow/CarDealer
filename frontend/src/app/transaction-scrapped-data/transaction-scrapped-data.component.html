@@ -1,4 +1,4 @@
-<div *ngIf="data">
+<div *ngIf="data?.length>0">
 <h3>Scrapped similar offers on other websites:</h3>
 <mat-card *ngIf="data" class="card-container"><table *ngFor="let offer of data">
     <tr>
