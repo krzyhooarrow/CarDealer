@@ -18,6 +18,9 @@ public class Main {
     public static void main(String[] args) {
         Constants.AMAZON_ID = Arrays.stream(args).filter(arg -> arg.contains("AMAZON_ID")).findFirst().get().replace("AMAZON_ID=","");
         Constants.AMAZON_KEY = Arrays.stream(args).filter(arg -> arg.contains("AMAZON_KEY")).findFirst().get().replace("AMAZON_KEY=","");
+        Constants.MAILBOX = Arrays.stream(args).filter(arg -> arg.contains("MAILBOX")).findFirst().get().replace("MAILBOX=","");
+        Constants.MAILBOX_PASSWORD = Arrays.stream(args).filter(arg -> arg.contains("MAILBOX_PASSWORD")).findFirst().get().replace("MAILBOX_PASSWORD=","");
+
         SpringApplication.run(Main.class, args);
     }
 

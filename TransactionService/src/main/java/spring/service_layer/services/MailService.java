@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import spring.repository_layer.models.ActionType;
 import spring.repository_layer.models.Email;
+import spring.web_layer.config.Constants;
 
 import javax.annotation.PostConstruct;
 import javax.mail.*;
@@ -20,14 +21,7 @@ import java.util.*;
 @Lazy
 @Service
 @Scope("singleton")
-@PropertySource("classpath:application.properties")
 public class MailService {
-
-    @Value("mailbox")
-    private String mailbox;
-
-    @Value("mailboxPassword")
-    private String password;
 
     private Session session;
 
@@ -45,7 +39,7 @@ public class MailService {
         session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(mailbox, password);
+                        return new PasswordAuthentication(Constants.MAILBOX, Constants.MAILBOX_PASSWORD);
                     }
                 });
     }
@@ -57,7 +51,7 @@ public class MailService {
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(mailbox));
+            message.setFrom(new InternetAddress(Constants.MAILBOX));
             message.setRecipients(
                     Message.RecipientType.TO,
                     InternetAddress.parse(
