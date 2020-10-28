@@ -32,9 +32,11 @@ Name of each service corresponds to its job. Price prediction service uses machi
 Each service communicate with another using Apache Kafka queue to reduce latency and load of each service. Architecture schema is presented below. 
 
 - Architecture schema:
+
 ![Architecture schema](architecture.png)
 
 - Database schema:
+
 ![database schema](db_schema.png)
 
 
