@@ -14,7 +14,8 @@ sudo docker run -d --network host -it service-proxy
 
 cd ../TransactionService
 sudo docker build -t transaction-service . 
-sudo docker run -d --network host -it transaction-service $(cat ../../deploy.properties)
+sudo docker run -d --network host -it transaction-service $(cat ../../deploy.properties) -e --server.port=8081
+sudo docker run -d --network host -it transaction-service $(cat ../../deploy.properties) -e --server.port=8083
 
 cd ../TransactionServiceLoadBalancer
 sudo docker build -t transaction-service-load-balancer . 
