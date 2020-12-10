@@ -38,12 +38,13 @@ def cut_first_element_from_tuple(list):
 def start_consuming_messages_from_kafka():
     years_predicting_range = 5
 
-    cursor, connection = connect_to_database()
+
     transforming_dict = pickle.load(open('model/transforming_dict.pkl', "rb"))
     model = pickle.load(open('model/model.pkl', "rb"))
 
     consumer = KafkaConsumer('offer-topic', group_id='price-prediction')
     for msg in consumer:
+        cursor, connection = connect_to_database()
         json_values = json.loads(msg.value)
 
         if len(selectPredictedPricesById(cursor, (json_values['id'],))) != 0:
