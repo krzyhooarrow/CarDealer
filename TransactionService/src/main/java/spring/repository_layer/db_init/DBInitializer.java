@@ -7,18 +7,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 import spring.repository_layer.models.cars.*;
 import spring.service_layer.services.RepositoryService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
@@ -40,7 +44,11 @@ public class DBInitializer {
     public void initializeCarsWithTheirMakesAndModels() {
         logger.info("STARTING TO INITIALIZE DATABASE MODELS");
         List<Car> cars = new LinkedList<>();
-        try (Stream<Path> paths = Files.walk(Paths.get(scriptsPath))) {
+        
+        PathMatchingResourcePatternResolver scanner = new PathMatchingResourcePatternResolver();
+        try {
+            Resource[] resources = scanner.getResources(scriptsPath);
+        try (Stream<Path> paths = Arrays.stream(resources).map(resource->{try{return resource.getFile().toPath();}catch (IOException e){return null;}})) {
 
             paths.filter(Files::isRegularFile)
                     .forEach(fileName -> {
@@ -79,5 +87,9 @@ public class DBInitializer {
         } catch (Exception er) {
             logger.error("Cannot find path to init files " + er.getMessage());
         }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
+
