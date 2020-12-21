@@ -34,41 +34,45 @@ public class OtomotoScrapper implements Observator {
     private OtomotoOfferRepository otomotoOfferRepository;
 
     public void scrapOtomotoOffersByMake(String make) throws IOException {
-        String linkToOffersList = setupLink(make);
+        try {
+            String linkToOffersList = setupLink(make);
 
-        int pagesCounter = Jsoup.connect(linkToOffersList)
-                .get()
-                .getElementsByClass("page")
-                .stream()
-                .map(Element::text)
-                .filter(value -> !value.equals("..."))
-                .map(Integer::valueOf)
-                .max(Comparator.comparing(Integer::valueOf)).orElse(0);
+            int pagesCounter = Jsoup.connect(linkToOffersList)
+                    .get()
+                    .getElementsByClass("page")
+                    .stream()
+                    .map(Element::text)
+                    .filter(value -> !value.equals("..."))
+                    .map(Integer::valueOf)
+                    .max(Comparator.comparing(Integer::valueOf)).orElse(0);
 
-        String pageHref, finalPageHref = (pageHref = Jsoup.connect(linkToOffersList)
-                .get()
-                .getElementsByClass("next")
-                .select("a")
-                .stream()
-                .map(Element::attributes).map(el -> el.get("href"))
-                .findFirst()
-                .get()).substring(0, pageHref.length() - 1);
+            String pageHref, finalPageHref = (pageHref = Jsoup.connect(linkToOffersList)
+                    .get()
+                    .getElementsByClass("next")
+                    .select("a")
+                    .stream()
+                    .map(Element::attributes).map(el -> el.get("href"))
+                    .findFirst()
+                    .get()).substring(0, pageHref.length() - 1);
 
 
-        ExecutorService singleThreadPageScrapperExecutor = Executors.newSingleThreadExecutor();
+            ExecutorService singleThreadPageScrapperExecutor = Executors.newSingleThreadExecutor();
 
-        IntStream.range(getLastScrappedPageNumberByMake(make), pagesCounter)
-                .boxed()
-                .forEach(
-                        value -> {
-                            try {
-                                List<OtomotoOffer> scrappedOffers = singleThreadPageScrapperExecutor.submit(new OtomotoPageScrapper(finalPageHref + value)).get();
-                                otomotoOfferRepository.saveAll(scrappedOffers);
-                                saveScrappedPageNumberByMake(make, value);
-                            } catch (Exception e) {}
-                        });
+            IntStream.range(getLastScrappedPageNumberByMake(make), pagesCounter)
+                    .boxed()
+                    .forEach(
+                            value -> {
+                                try {
+                                    List<OtomotoOffer> scrappedOffers = singleThreadPageScrapperExecutor.submit(new OtomotoPageScrapper(finalPageHref + value)).get();
+                                    otomotoOfferRepository.saveAll(scrappedOffers);
+                                    saveScrappedPageNumberByMake(make, value);
+                                } catch (Exception e) {
+                                }
+                            });
 
-        singleThreadPageScrapperExecutor.shutdown();
+            singleThreadPageScrapperExecutor.shutdown();
+        } catch (Exception e) {//exceptions thrown by host on too much connections
+        }
     }
 
     private String setupLink(@NotNull String make) {
@@ -92,7 +96,7 @@ public class OtomotoScrapper implements Observator {
         return pagesRepository.getLastScrappedPageByMake(make).orElse(2);
     }
 
-    public void scrapAllOtomotoMakes()  {
+    public void scrapAllOtomotoMakes() {
         Stream.of(
                 "ford",
                 "audi",
@@ -124,3 +128,4 @@ public class OtomotoScrapper implements Observator {
         });
     }
 }
+
