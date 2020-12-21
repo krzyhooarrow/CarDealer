@@ -18,11 +18,5 @@ export class TransactionScrappedOffersComponent implements OnInit {
 
   ngOnInit(): void { this.getScrappedOffers(this.transaction.id)}
 
-
-  getScrappedOffers(offerId:number){
-    this.transactionService.getVINData(offerId).subscribe(
-      (values) => { if(values && Object.entries(values.parameters).length !== 0) this.parameters = values.parameters},
-      ()=>{},()=>{}      
-    );
-  }
+  getScrappedOffers(offerId:number){this.transactionService.getVINData(offerId).subscribe((values) => { if(values && Object.entries(values.parameters).length !== 0) this.parameters = values.parameters},()=>{},()=>{});}
 }

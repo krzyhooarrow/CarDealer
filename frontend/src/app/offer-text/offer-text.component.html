@@ -2,13 +2,12 @@
         <header>
             <button *ngIf="auth.isAuthenticated && subscribedList" (click)="sub_or_unsub(transaction.id)" mat-flat-button matRipple matRippleRadius='1'
               matInput [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'background-color':'brown'} : {'color':'white'}" [value]="transaction.id"> <mat-icon [ngStyle]="subscribedList?.indexOf(transaction.id) > -1? {'color':'white'} : {'color':'black'}" >star_outline</mat-icon></button>
-            <h3 *ngIf="transaction.title">{{ transaction.title }}</h3>
+            <div class="title-price"><h3 *ngIf="transaction.title">{{ transaction.title }}</h3><h3 style="color:red" *ngIf="transaction.price">{{ transaction.price }} PLN</h3></div>
             <h4 *ngIf="transaction.tags">{{ transaction.tags }}</h4>
         </header>
         <footer>
-            <br>
-            <mat-icon>language</mat-icon>{{ transaction.id }}
-            <button mat-flat-button matRipple matRippleRadius='1' color="primary"   [routerLink]="['/offer', transaction.id]" routerLinkActive="active" >Zobacz ofertę</button>
+            <br><mat-icon>language</mat-icon>{{ transaction.id }}
+            <button mat-flat-button matRipple matRippleRadius='1' color="primary" [routerLink]="['/offer', transaction.id]" routerLinkActive="active" >Zobacz ofertę</button>
         </footer>
         <div class="space"></div>
     </div>

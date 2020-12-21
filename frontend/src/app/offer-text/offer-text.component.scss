@@ -1,3 +1,8 @@
+.title-price{
+    display: flex;
+    justify-content: space-between;
+}
+
 .space{
     margin-top: 2%;
 }
@@ -27,7 +32,7 @@
         }
 
         h4 {
-            margin: 8px;
+            margin-left: 8px;
             color: #00000099;
             text-shadow: #00000020 0 0 2px;
             font-size: 14px;

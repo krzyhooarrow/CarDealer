@@ -1,4 +1,4 @@
-<div class="price">Price: {{ transaction.price }}$</div>
+<div class="price">Price: {{ transaction.price }} PLN</div>
 
 
 <div class="title"><mat-slide-toggle  *ngIf="isLogged" color="primary" [disabled]="!subscribedList && tryingToSub" [checked]="subscribedList?.indexOf(transaction.id) > -1? true:false"  (change)="sub_or_unsub()">Subscribe offer</mat-slide-toggle><h3>Seller details:</h3></div>
@@ -9,9 +9,9 @@
           <mat-divider></mat-divider>
           <p>Phone number:{{ transaction.phone }}  <mat-icon color="warn">phone_android</mat-icon></p>
           <mat-divider></mat-divider>
-          <p>Localization:{{ transaction.location_city }}  <mat-icon color="warn">email</mat-icon></p>
+          <p>Localization:{{ transaction.location_city }}  <mat-icon color="warn">location_on</mat-icon></p>
           <mat-divider></mat-divider>
-          <p>Email:{{ transaction.email }}  <mat-icon color="warn">location_on</mat-icon></p>
+          <p>Email:{{ transaction.email }}  <mat-icon color="warn">email</mat-icon></p>
           <mat-divider></mat-divider>
           <p>Creation date: {{ transaction.creationDate | date}} <mat-icon color="warn">date_range</mat-icon></p>
           <mat-divider></mat-divider>

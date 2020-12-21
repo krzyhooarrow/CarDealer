@@ -18,8 +18,6 @@ export class TransactionScrappedDataComponent implements OnInit {
   ngOnInit(): void { this.getScrappedOffers(this.transaction.id)}
 
 
-  getScrappedOffers(offerId:number){
-    this.transactionService.getScrappedOffers(offerId).subscribe((values) => { this.data=values},()=>{});
-  }
+  getScrappedOffers(offerId:number){ this.transactionService.getScrappedOffers(offerId).subscribe((values) => { this.data=values},()=>{},()=>{}); }
 
 }

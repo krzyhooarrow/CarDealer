@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   public formGroup:FormGroup = this._formBuilder.group({
     username: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
     password: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
-    email:['', [Validators.required,Validators.email,Validators.minLength(5),Validators.maxLength(15)]]
+    email:['', [Validators.required,Validators.email]]
   });
 
   matcher = new Matcher();
