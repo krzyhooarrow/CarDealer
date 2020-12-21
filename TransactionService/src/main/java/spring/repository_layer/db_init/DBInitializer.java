@@ -16,6 +16,7 @@ import spring.service_layer.services.RepositoryService;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,16 +45,15 @@ public class DBInitializer {
     public void initializeCarsWithTheirMakesAndModels() {
         logger.info("STARTING TO INITIALIZE DATABASE MODELS");
         List<Car> cars = new LinkedList<>();
-        
+
         PathMatchingResourcePatternResolver scanner = new PathMatchingResourcePatternResolver();
         try {
             Resource[] resources = scanner.getResources(scriptsPath);
-        try (Stream<Path> paths = Arrays.stream(resources).map(resource->{try{return resource.getFile().toPath();}catch (IOException e){return null;}})) {
+        try (Stream<Resource> paths = Arrays.stream(scanner.getResources(scriptsPath))) {
 
-            paths.filter(Files::isRegularFile)
-                    .forEach(fileName -> {
+            paths.forEach(fileName -> {
                                 try {
-                                    BufferedReader csvReader = new BufferedReader(new FileReader(fileName.toFile()));
+                                    BufferedReader csvReader = new BufferedReader(new InputStreamReader(fileName.getInputStream()));
                                     String row;
                                     int counter = 0;
                                     csvReader.readLine();
