@@ -37,3 +37,9 @@ cd service
 sudo docker build -t price-prediction-app-service . 
 sudo docker run -d --network host -it price-prediction-app-service
 
+cd ../../frontend
+npm install
+nohup ng serve &
+
+
+
