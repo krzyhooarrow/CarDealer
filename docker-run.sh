@@ -39,7 +39,7 @@ sudo docker run -d --network host -it price-prediction-app-service
 
 cd ../../frontend
 npm install
-nohup ng serve &
+nohup ng serve --host 0.0.0.0 &
 
 
 
