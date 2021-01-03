@@ -41,3 +41,10 @@ Each service communicate with another using Apache Kafka queue to reduce latency
 
 
 
+##### Below there are some screenshots of web application.
+
+![search](search.png)
+
+
+![transaction](custom_transaction.jpg)
+
